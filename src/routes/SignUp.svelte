@@ -2,7 +2,7 @@
     import { push } from "svelte-spa-router";
     import { SIGN_UP } from "../url.js";
 
-    // TODO:if login / go to todo page
+    // TODO:if login -> go to todo page
 
     let email = "";
     let password = "";
@@ -36,29 +36,29 @@
             } else {
                 submit.classList.add('spin');
                 fetch(SIGN_UP, {
-                    method: "POST",
+                    method: 'POST',
                     body: JSON.stringify({
-                        "email": email,
-                        "password": password
+                        email: email,
+                        password: password,
                     }),
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
                 })
                     .then((resp) => resp.json())
                     .then((json) => {
-                        if(json.status === true) {
+                        if (json.status === true) {
                             alert(json.message);
-                            push("/login");
+                            push('/login');
                         } else if (json.status === false) {
                             alert(json.message);
                             submit.classList.remove('spin');
                         } else {
-                            throw "req_fail";
+                            throw 'req_fail';
                         }
                     })
                     .catch(() => {
-                        alert("알 수 없는 오류가 발생했습니다.");
+                        alert('알 수 없는 오류가 발생했습니다.');
                         submit.classList.remove('spin');
                     });
             }
