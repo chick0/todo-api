@@ -44,9 +44,8 @@
     left: 0;
     right: 0;
     margin: auto;
-    border: 6px solid transparent;
-    border-top-color: var(--button-text);
-    border-left-color: var(--button-text);
+    border: 6px solid var(--button-text);
+    border-top-color: transparent;
     border-radius: 50%;
     animation: spinner 0.8s linear infinite;
 }
