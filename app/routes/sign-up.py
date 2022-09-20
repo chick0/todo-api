@@ -51,7 +51,7 @@ def sign_up():
         user.password = password
         user.created_at = datetime.now()
         user.lastlogin = None
-        user.email_verified = None
+        user.email_verified = False
 
         db.session.add(user)
         db.session.commit()
