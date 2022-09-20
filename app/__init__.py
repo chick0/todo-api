@@ -2,6 +2,7 @@ from os import environ
 from os.path import join
 from os.path import abspath
 from os.path import dirname
+from logging import getLogger
 from importlib import import_module
 
 from flask import Flask
@@ -12,12 +13,20 @@ from flask_migrate import Migrate
 
 db = SQLAlchemy()
 migrate = Migrate()
+logger = getLogger()
 
 
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = environ['SQLALCHEMY_DATABASE_URI']
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    try:
+        from flask_cors import CORS
+        CORS(app, resources={r"/api/*": {"origins": "*"}})
+        logger.info("CORS is enabled")
+    except ImportError:
+        logger.info("CORS is disabled")
 
     import_module("app.models")
     db.init_app(app=app)
@@ -41,5 +50,9 @@ def create_app():
             response.content_type = "text/javascript; charset=utf-8"
 
         return response
+
+    from app import routes
+    for route in [getattr(routes, name) for name in routes.__all__]:
+        app.register_blueprint(blueprint=route.bp)
 
     return app

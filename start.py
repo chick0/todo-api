@@ -16,9 +16,20 @@ def init_logger():
     logger.addHandler(hdlr=handler)
 
 
+def get_app():
+    try:
+        from paste.translogger import TransLogger
+        app = TransLogger(create_app())
+    except ImportError:
+        app = create_app()
+        logger.info("TransLogger is disabled")
+    
+    return app
+
+
 def main():
     host, port = "127.0.0.1", 18282
-    serve(app=create_app(), host=host, port=port)
+    serve(app=get_app(), host=host, port=port)
 
 
 if __name__ == "__main__":
