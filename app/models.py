@@ -68,3 +68,8 @@ class Todo(db.Model):
         db.DateTime,
         nullable=False,
     )
+
+    checked_at = db.Column(
+        db.DateTime,
+        nullable=True,
+    )

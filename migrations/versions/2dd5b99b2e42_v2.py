@@ -1,8 +1,8 @@
-"""v1
+"""v2
 
-Revision ID: a1c7f32c8813
+Revision ID: 2dd5b99b2e42
 Revises: 
-Create Date: 2022-09-20 15:15:47.208924
+Create Date: 2022-09-20 20:04:22.299702
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a1c7f32c8813'
+revision = '2dd5b99b2e42'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -35,6 +35,7 @@ def upgrade():
     sa.Column('checked', sa.Boolean(), nullable=False),
     sa.Column('text', sa.Text(length=500), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.Column('checked_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['owner'], ['td_user.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('id')
