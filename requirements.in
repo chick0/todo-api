@@ -4,3 +4,5 @@ flask-migrate
 mysqlclient
 waitress
 python-dotenv
+pydantic
+pyjwt

@@ -1,4 +1,5 @@
 .env
+.jwt.json
 dist/
 venv/
 __pycache__/
