@@ -29,7 +29,7 @@ class User(db.Model):
 
     lastlogin = db.Column(
         db.DateTime,
-        nullable=False,
+        nullable=True,
     )
 
     email_verified = db.Column(
