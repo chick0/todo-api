@@ -1,8 +1,11 @@
 <script>
     import { push } from "svelte-spa-router";
     import { SIGN_UP } from "../url.js";
+    import { is_login } from "../user.js";
 
-    // TODO:if login -> go to todo page
+    if (is_login()) {
+        push("/todo");
+    }
 
     let email = "";
     let password = "";
@@ -54,7 +57,7 @@
                             alert(json.message);
                             submit.classList.remove('spin');
                         } else {
-                            throw 'req_fail';
+                            throw 'req_fail:sign-up';
                         }
                     })
                     .catch(() => {

@@ -1,11 +1,17 @@
 <script>
-    // TODO:if login goto todos
+    import { push } from "svelte-spa-router";
+    import { LOGIN } from "../url.js";
+    import { is_login, set_token } from "../user.js";
 
+    if (is_login()) {
+        push("/todo");
+    }
+
+    // TODO:auto login
     let is_trying_auto_login = false;
-    if (localStorage.getItem("to-do.token") != undefined) is_trying_auto_login = true;
 
-    let email = undefined;
-    let password = undefined;
+    let email = "";
+    let password = "";
     let submit = undefined;
 </script>
 
@@ -24,7 +30,7 @@
 
         <div class="field">
             <label for="email">이메일</label>
-            <input type="email" id="email" bind:this="{email}" placeholder="Email" required />
+            <input type="email" id="email" bind:value="{email}" placeholder="Email" required />
         </div>
 
         <div class="field">
@@ -32,7 +38,7 @@
             <input
                 type="password"
                 id="password"
-                bind:this="{password}"
+                bind:value="{password}"
                 placeholder="Password"
                 required
                 minlength="8" />
@@ -47,8 +53,32 @@
                     alert('이미 처리중입니다!');
                 } else {
                     submit.classList.add('spin');
-
-                    // TODO:fetch to api
+                    fetch(LOGIN, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            email: email,
+                            password: password,
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                        .then((resp) => resp.json())
+                        .then((json) => {
+                            if (json.status === true) {
+                                set_token(json.token);
+                                push('/todo');
+                            } else if (json.status === false) {
+                                alert(json.message);
+                                submit.classList.remove('spin');
+                            } else {
+                                throw 'req_fail:login';
+                            }
+                        })
+                        .catch(() => {
+                            alert('알 수 없는 오류가 발생했습니다.');
+                            submit.classList.remove('spin');
+                        });
                 }
             }}">로그인</button>
     </div>
