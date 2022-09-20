@@ -1,17 +1,16 @@
-import { wrap } from "svelte-spa-router/wrap";
+// import { wrap } from "svelte-spa-router/wrap";
 
 import About from "./routes/About.svelte";
+import Login from "./routes/Login.svelte";
+import SignUp from "./routes/SignUp.svelte";
+
 import NotFound from "./NotFound.svelte";
 
 export const routes = {
     "/": About,
 
-    "/login": wrap({
-        asyncComponent: () => import("./routes/Login.svelte"),
-    }),
-    "/sign-up": wrap({
-        asyncComponent: () => import("./routes/SignUp.svelte"),
-    }),
+    "/login": Login,
+    "/sign-up": SignUp,
 
     "*": NotFound,
 };
