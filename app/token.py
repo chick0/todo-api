@@ -19,7 +19,8 @@ def parse_token(token: str, name: str) -> dict:
     try:
         return decode(
             jwt=token,
-            key=get_secret(name=name)
+            key=get_secret(name=name),
+            algorithms=app.config.algorithms
         )
     except ExpiredSignatureError as e:
         raise VerifyFail(
