@@ -32,6 +32,11 @@ class User(db.Model):
         nullable=False,
     )
 
+    email_verified = db.Column(
+        db.Boolean,
+        nullable=False,
+    )
+
 
 class Todo(db.Model):
     __tablename__ = "td_todo"
