@@ -35,7 +35,7 @@ def sign_up():
 
     if user is not None:
         return SignUpResponse(
-            status=False,
+            status=True,
             message="이미 가입한 이메일입니다! 비밀번호를 잊은 경우 계정 찾기를 통해 비밀번호를 재설정하세요."
         ).dict()
 
