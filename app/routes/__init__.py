@@ -1,4 +1,5 @@
 __all__ = [
+    "login",
     "sign-up",
     "verify",
 ]
