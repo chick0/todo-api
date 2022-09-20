@@ -42,11 +42,4 @@ def create_app():
 
         return response
 
-
-    @app.get("/api/sudo")
-    def sudo():
-        return {
-            "sudo": False
-        }, 404
-
     return app
