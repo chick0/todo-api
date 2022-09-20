@@ -3,7 +3,9 @@ hr {
     border: none;
 }
 
-input[type=email], input[type=text], input[type=password] {
+input[type="email"],
+input[type="text"],
+input[type="password"] {
     display: block;
     width: 100%;
     font-size: 20px;

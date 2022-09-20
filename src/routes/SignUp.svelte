@@ -24,15 +24,19 @@
             <input type="password" id="password" bind:this="{password}" placeholder="Password" required minlength="8" />
         </div>
 
-        <button class="button max" type="submit" bind:this="{submit}" on:click="{() => {
-            if(submit.classList.contains("spin")){
-                alert("이미 처리중입니다!");
-            } else {
-                submit.classList.add("spin");
+        <button
+            class="button max"
+            type="submit"
+            bind:this="{submit}"
+            on:click="{() => {
+                if (submit.classList.contains('spin')) {
+                    alert('이미 처리중입니다!');
+                } else {
+                    submit.classList.add('spin');
 
-                // TODO:fetch to api
-            }
-        }}">회원가입</button>
+                    // TODO:fetch to api
+                }
+            }}">회원가입</button>
     </div>
 </div>
 

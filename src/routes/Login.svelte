@@ -27,21 +27,31 @@
                 <label for="email">이메일</label>
                 <input type="email" id="email" bind:this="{email}" placeholder="Email" required />
             </div>
-    
+
             <div class="field">
                 <label for="password">비밀번호</label>
-                <input type="password" id="password" bind:this="{password}" placeholder="Password" required minlength="8" />
+                <input
+                    type="password"
+                    id="password"
+                    bind:this="{password}"
+                    placeholder="Password"
+                    required
+                    minlength="8" />
             </div>
 
-            <button class="button max" type="submit" bind:this="{submit}" on:click="{() => {
-                if(submit.classList.contains("spin")){
-                    alert("이미 처리중입니다!");
-                } else {
-                    submit.classList.add("spin");
+            <button
+                class="button max"
+                type="submit"
+                bind:this="{submit}"
+                on:click="{() => {
+                    if (submit.classList.contains('spin')) {
+                        alert('이미 처리중입니다!');
+                    } else {
+                        submit.classList.add('spin');
 
-                    // TODO:fetch to api
-                }
-            }}">로그인</button>
+                        // TODO:fetch to api
+                    }
+                }}">로그인</button>
         </div>
     </div>
 {/if}

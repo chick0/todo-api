@@ -13,5 +13,5 @@ export const routes = {
         asyncComponent: () => import("./routes/SignUp.svelte"),
     }),
 
-    "*": NotFound
+    "*": NotFound,
 };

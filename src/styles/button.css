@@ -48,14 +48,14 @@
     border-top-color: var(--button-text);
     border-left-color: var(--button-text);
     border-radius: 50%;
-    animation: spinner .8s linear infinite;
+    animation: spinner 0.8s linear infinite;
 }
-  
+
 @keyframes spinner {
     from {
         transform: rotate(0turn);
     }
-  
+
     to {
         transform: rotate(1turn);
     }
