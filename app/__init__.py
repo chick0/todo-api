@@ -55,4 +55,13 @@ def create_app():
     for route in [getattr(routes, name) for name in routes.__all__]:
         app.register_blueprint(blueprint=route.bp)
 
+    # error handler
+    from app.error import VerifyFail
+    from app.error import handle_error_with_reason
+
+    app.register_error_handler(
+        code_or_exception=VerifyFail,
+        f=handle_error_with_reason
+    )
+
     return app
