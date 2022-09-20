@@ -20,6 +20,9 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = environ['SQLALCHEMY_DATABASE_URI']
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config.algorithms = [
+        "HS256",
+    ]
 
     try:
         from flask_cors import CORS
