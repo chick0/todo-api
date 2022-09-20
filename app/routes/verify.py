@@ -10,7 +10,7 @@ from app import db
 from app.models import User
 from app.verify import parse_token
 
-bp = Blueprint("email", __name__, url_prefix="/api/email")
+bp = Blueprint("verify", __name__, url_prefix="/api/verify")
 
 
 @bp.get("")
@@ -31,19 +31,20 @@ def verify():
 
 
 @bp.post("/drop")
-def verify_drop():
+def drop():
     token = request.form.get("token", "")
     payload = parse_token(token=token)
 
     user: User = User.query.filter_by(
+        id=payload.user_id,
         email=payload.email
     ).first()
 
     if user is None:
-        return redirect(url_for("email.verify_none"))
+        return redirect(url_for("verify.none"))
 
     if user.email_verified:
-        return redirect(url_for("email.verify_fail"))
+        return redirect(url_for("verify.fail"))
 
     db.session.delete(user)
     db.session.commit()
@@ -52,19 +53,20 @@ def verify_drop():
 
 
 @bp.post("/pass")
-def verify_pass():
+def pass_():
     token = request.form.get("token", "")
     payload = parse_token(token=token)
 
     user: User = User.query.filter_by(
+        id=payload.user_id,
         email=payload.email
     ).first()
 
     if user is None:
-        return redirect(url_for("email.verify_none"))
+        return redirect(url_for("verify.none"))
 
     if user.email_verified:
-        return redirect(url_for("email.verify_fail"))
+        return redirect(url_for("verify.fail"))
 
     user.email_verified = True
     db.session.commit()
@@ -73,10 +75,10 @@ def verify_pass():
 
 
 @bp.get("/fail")
-def verify_fail():
+def fail():
     return "해당 인증 시도는 이미 통과되었습니다."
 
 
 @bp.get("/none")
-def verify_none():
+def none():
     return "해당 계정은 탈퇴된 계정입니다."

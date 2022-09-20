@@ -3,12 +3,12 @@
 <p>인증 요청은 <b>{{ date }}</b>에 만료됩니다.</p>
 <p>만약, 본인의 인증 시도가 아니라면 '취소'를 선택하거나, 무시하면 됩니다.</p>
 
-<form method="post" action="{{ url_for('email.verify_drop') }}">
+<form method="post" action="{{ url_for('verify.drop') }}">
     <input type="password" name="token" value="{{ token }}" hidden="hidden">
     <button>❌ 인증 취소</button>
 </form>
 
-<form method="post" action="{{ url_for('email.verify_pass') }}">
+<form method="post" action="{{ url_for('verify.pass_') }}">
     <input type="password" name="token" value="{{ token }}" hidden="hidden">
     <button>✔️ 인증 승인</button>
 </form>

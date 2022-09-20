@@ -1,6 +1,6 @@
 __all__ = [
-    "email",
     "sign-up",
+    "verify",
 ]
 
 from . import *

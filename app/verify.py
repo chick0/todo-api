@@ -9,16 +9,18 @@ from app.mail import send_mail
 from app.token import create_token as ct
 from app.token import parse_token as pt
 
-name = "etc:email-verify"
+name = "verify:email"
 
 
 class EmailVerifyToken(BaseModel):
+    user_id: int
     email: str
     exp: int
 
 
-def create_token(email: str) -> str:
+def create_token(user_id: int, email: str) -> str:
     payload = EmailVerifyToken(
+        user_id=user_id,
         email=email,
         exp=int((datetime.now() + timedelta(days=1)).timestamp())
     ).dict()
@@ -30,8 +32,8 @@ def parse_token(token: str) -> EmailVerifyToken:
     return EmailVerifyToken(**pt(token, name))
 
 
-def send_verify_request(email: str) -> bool:
-    token = create_token(email=email)
+def send_verify_request(user_id: int, email: str) -> bool:
+    token = create_token(user_id=user_id, email=email)
 
     send_mail(
         email=email,
@@ -41,7 +43,7 @@ def send_verify_request(email: str) -> bool:
             "<p>다음의 링크를 통해 인증할 수 있습니다.</p>",
             "<p>만약, 본인의 인증 시도가 아니라면 해당 링크로 들어가 '취소'를 선택하거나, 무시하면 됩니다.</p>",
             "<hr>",
-            "<p>" + environ['HOST'] + url_for("email.verify", token=token) + "</p>"
+            "<p>" + environ['HOST'] + url_for("verify.verify", token=token) + "</p>"
         ])
     )
 

@@ -47,26 +47,30 @@ def sign_up():
 
     del user
 
+    user = User()
+    user.email = ctx.email
+    user.password = ctx.password
+    user.created_at = datetime.now()
+    user.lastlogin = None
+    user.email_verified = False
+
+    db.session.add(user)
+    db.session.commit()
+
     result = send_verify_request(
+        user_id=user.id,
         email=ctx.email
     )
 
     if result is True:
-        user = User()
-        user.email = ctx.email
-        user.password = ctx.password
-        user.created_at = datetime.now()
-        user.lastlogin = None
-        user.email_verified = False
-
-        db.session.add(user)
-        db.session.commit()
-
         return SignUpResponse(
             status=True,
             message="가입이 완료되었습니다! 이메일 인증 이후 계정을 사용할 수 있습니다."
         ).dict(), 201
     else:
+        db.session.delete(user)
+        db.session.commit()
+
         return SignUpResponse(
             status=False,
             message="이메일 인증 요청 전송에 실패해, 가입이 취소되었습니다."
