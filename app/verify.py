@@ -2,27 +2,32 @@ from os import environ
 from datetime import datetime
 from datetime import timedelta
 
-from jwt import encode
-from jwt import decode
-from jwt.exceptions import DecodeError
 from flask import url_for
+from pydantic import BaseModel
 
 from app.mail import send_mail
-from app.secret import get_secret
-from app.error import VerifyFail
+from app.token import create_token as ct
+from app.token import parse_token as pt
 
-algorithms = ["HS256"]
+name = "etc:email-verify"
+
+
+class EmailVerifyToken(BaseModel):
+    email: str
+    exp: int
 
 
 def create_token(email: str) -> str:
-    return encode(
-        payload={
-            "email": email,
-            "exp": int((datetime.now() + timedelta(days=1)).timestamp())
-        },
-        key=get_secret("email_verify"),
-        algorithm=algorithms[0]
-    )
+    payload = EmailVerifyToken(
+        email=email,
+        exp=int((datetime.now() + timedelta(days=1)).timestamp())
+    ).dict()
+
+    return ct(payload, name)
+
+
+def parse_token(token: str) -> EmailVerifyToken:
+    return EmailVerifyToken(**pt(token, name))
 
 
 def send_verify_request(email: str) -> bool:
@@ -41,16 +46,3 @@ def send_verify_request(email: str) -> bool:
     )
 
     return True
-
-
-def decode_token(token: str) -> dict:
-    try:
-        return decode(
-            jwt=token,
-            key=get_secret("email_verify"),
-            algorithms=algorithms
-        )
-    except DecodeError as de:
-        raise VerifyFail(
-            reason="인증 토큰 검증 실패"
-        ) from de

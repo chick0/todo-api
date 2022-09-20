@@ -8,7 +8,7 @@ from flask import render_template
 
 from app import db
 from app.models import User
-from app.verify import decode_token
+from app.verify import parse_token
 
 bp = Blueprint("email", __name__, url_prefix="/api/email")
 
@@ -20,12 +20,12 @@ def verify():
     if len(token) == 0:
         return "인증 토큰이 없습니다."
 
-    payload = decode_token(token=token)
+    payload = parse_token(token=token)
 
     return render_template(
         "verify.html",
-        email=payload['email'],
-        date=datetime.fromtimestamp(payload['exp']).strftime("%Y-%m-%d %H:%M:%S"),
+        email=payload.email,
+        date=datetime.fromtimestamp(payload.exp).strftime("%Y-%m-%d %H:%M:%S"),
         token=token,
     )
 
@@ -33,10 +33,10 @@ def verify():
 @bp.post("/drop")
 def verify_drop():
     token = request.form.get("token", "")
-    payload = decode_token(token=token)
+    payload = parse_token(token=token)
 
     user: User = User.query.filter_by(
-        email=payload['email']
+        email=payload.email
     ).first()
 
     if user is None:
@@ -54,10 +54,10 @@ def verify_drop():
 @bp.post("/pass")
 def verify_pass():
     token = request.form.get("token", "")
-    payload = decode_token(token=token)
+    payload = parse_token(token=token)
 
     user: User = User.query.filter_by(
-        email=payload['email']
+        email=payload.email
     ).first()
 
     if user is None:
