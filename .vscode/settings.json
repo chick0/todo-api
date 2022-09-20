@@ -1,9 +1,11 @@
 {
     "files.exclude": {
-        ".git": true,
-        ".vscode": true,
-        ".yarn": true,
-        "dist": true,
-        "node_modules": true
+        ".git/": true,
+        ".vscode/": true,
+        ".yarn/": true,
+        "dist/": true,
+        "node_modules/": true,
+        "**/__pycache__/": true,
+        "venv/": true
     }
 }
