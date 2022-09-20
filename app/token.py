@@ -5,7 +5,7 @@ from jwt.exceptions import DecodeError
 from flask import current_app as app
 
 from app.secret import get_secret
-from app.error import VerifyFail
+from app.error import APIError
 
 
 def create_token(payload: dict, name: str) -> str:
@@ -23,10 +23,12 @@ def parse_token(token: str, name: str) -> dict:
             algorithms=app.config.algorithms
         )
     except ExpiredSignatureError as e:
-        raise VerifyFail(
-            reason="만료된 토큰입니다."
+        raise APIError(
+            code=401,
+            message="만료된 토큰입니다."
         ) from e
     except DecodeError as e:
-        raise VerifyFail(
-            reason="인증 토큰 검증 실패"
+        raise APIError(
+            code=401,
+            message="인증 토큰 검증 실패"
         ) from e

@@ -59,12 +59,12 @@ def create_app():
         app.register_blueprint(blueprint=route.bp)
 
     # error handler
-    from app.error import VerifyFail
-    from app.error import handle_error_with_reason
+    from app.error import APIError
+    from app.error import handle_api_error
 
     app.register_error_handler(
-        code_or_exception=VerifyFail,
-        f=handle_error_with_reason
+        code_or_exception=APIError,
+        f=handle_api_error
     )
 
     return app
