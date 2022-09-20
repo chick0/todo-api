@@ -5,6 +5,7 @@ node_modules/
 migrations/
 .env
 .env.example
+.jwt.json
 yarn.lock
 start.py
 requirements.in
