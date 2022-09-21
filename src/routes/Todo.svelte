@@ -9,6 +9,8 @@
     let newTodo = "새로운 To-Do를 여기에 입력해주세요!";
     let newTodoElement = undefined;
 
+    let isLoading = true;
+
     if (!is_login()) {
         push("/login");
     } else {
@@ -21,6 +23,7 @@
             .then((json) => {
                 if (json.result === true) {
                     todos = json.todos;
+                    isLoading = false;
                 } else {
                     alert(json.message);
                 }
@@ -31,6 +34,7 @@
             })
             .catch(() => {
                 alert("알 수 없는 오류가 발생했습니다.");
+                push("/");
             });
     }
 
@@ -57,124 +61,40 @@
     </div>
 
     <hr />
-
-    <div class="todo new">
-        <div
-            contenteditable="true"
-            bind:textContent="{newTodo}"
-            bind:this="{newTodoElement}"
-            on:blur="{() => {
-                newTodo = newTodo.trim().slice(0, 500);
-
-                if (confirm('저장하시겠습니까?')) {
-                    newTodoElement.setAttribute('contenteditable', 'false');
-                    fetch(TODO, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'x-auth': TOKEN,
-                        },
-                        body: JSON.stringify({
-                            text: newTodo,
-                        }),
-                    })
-                        .then((resp) => resp.json())
-                        .then((json) => {
-                            if (json.result == true) {
-                                newTodo = '';
-                                newTodoElement.setAttribute('contenteditable', 'true');
-
-                                todos.unshift(json.todo);
-                                todos = todos;
-                            } else {
-                                alert(json.message);
-                                newTodoElement.setAttribute('contenteditable', 'true');
-                            }
-
-                            if (json.logout_required == true) {
-                                push('/logout');
-                            }
-                        })
-                        .catch(() => {
-                            alert('알 수 없는 오류가 발생했습니다.');
-                            newTodoElement.setAttribute('contenteditable', 'true');
-                        });
-                }
-            }}">
-        </div>
-
-        <p>{newTodo.length}/500자</p>
-    </div>
-
-    {#each todos as todo}
-        <div class="todo {todo.checked == true ? 'ok' : 'no'}" bind:this="{todo.this}">
-            <input
-                type="checkbox"
-                bind:checked="{todo.checked}"
-                readonly="{todo.checked_pending != true}"
-                on:change="{() => {
-                    todo.checked_at = Date.now() / 1000;
-                    todo.checked_pending = true;
-
-                    fetch(TODO_CHECK, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'x-auth': TOKEN,
-                        },
-                        body: JSON.stringify({
-                            id: todo.id,
-                            checked: todo.checked,
-                        }),
-                    })
-                        .then((resp) => resp.json())
-                        .then((json) => {
-                            todo.checked_pending = false;
-                            if (json.result == true) {
-                                todo.checked = json.checked;
-                                todo.checked_at = json.checked_at;
-                            } else {
-                                alert(json.message);
-                            }
-
-                            if (json.logout_required == true) {
-                                push('/logout');
-                            }
-                        })
-                        .catch(() => {
-                            alert('알 수 없는 오류가 발생했습니다.');
-                            todo.checked_pending = false;
-                        });
-                }}" />
-
+    {#if isLoading == true}
+        <div class="spinner"></div>
+    {:else}
+        <div class="todo new">
             <div
-                class="content"
                 contenteditable="true"
-                bind:textContent="{todo.text}"
+                bind:textContent="{newTodo}"
+                bind:this="{newTodoElement}"
                 on:blur="{() => {
-                    todo.text = todo.text.trim().slice(0, 500);
+                    newTodo = newTodo.trim().slice(0, 500);
 
                     if (confirm('저장하시겠습니까?')) {
-                        todo.this.setAttribute('contenteditable', 'false');
+                        newTodoElement.setAttribute('contenteditable', 'false');
                         fetch(TODO, {
-                            method: 'PATCH',
+                            method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'x-auth': TOKEN,
                             },
                             body: JSON.stringify({
-                                id: todo.id,
-                                text: todo.text,
+                                text: newTodo,
                             }),
                         })
                             .then((resp) => resp.json())
                             .then((json) => {
                                 if (json.result == true) {
-                                    todo.text = json.text;
-                                    todo.this.setAttribute('contenteditable', 'true');
+                                    newTodo = '';
+                                    newTodoElement.setAttribute('contenteditable', 'true');
+
+                                    todos.unshift(json.todo);
+                                    todos = todos;
                                 } else {
                                     alert(json.message);
-                                    todo.this.setAttribute('contenteditable', 'true');
+                                    newTodoElement.setAttribute('contenteditable', 'true');
                                 }
 
                                 if (json.logout_required == true) {
@@ -183,38 +103,84 @@
                             })
                             .catch(() => {
                                 alert('알 수 없는 오류가 발생했습니다.');
-                                todo.this.setAttribute('contenteditable', 'true');
+                                newTodoElement.setAttribute('contenteditable', 'true');
                             });
                     }
                 }}">
             </div>
 
-            <p contenteditable="false">
-                {#if todo.checked}
-                    {ts2ds(todo.created_at)} ~ {ts2ds(todo.checked_at)}
-                {:else}
-                    {ts2ds(todo.created_at)}
-                {/if}
+            <p>{newTodo.length}/500자</p>
+        </div>
 
-                <b
-                    class="delete"
-                    on:click="{() => {
-                        if (confirm('삭제하시겠습니까?')) {
-                            todos = todos.filter((x) => x.id != todo.id);
+        {#each todos as todo}
+            <div class="todo {todo.checked == true ? 'ok' : 'no'}" bind:this="{todo.this}">
+                <input
+                    type="checkbox"
+                    bind:checked="{todo.checked}"
+                    readonly="{todo.checked_pending != true}"
+                    on:change="{() => {
+                        todo.checked_at = Date.now() / 1000;
+                        todo.checked_pending = true;
+
+                        fetch(TODO_CHECK, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'x-auth': TOKEN,
+                            },
+                            body: JSON.stringify({
+                                id: todo.id,
+                                checked: todo.checked,
+                            }),
+                        })
+                            .then((resp) => resp.json())
+                            .then((json) => {
+                                todo.checked_pending = false;
+                                if (json.result == true) {
+                                    todo.checked = json.checked;
+                                    todo.checked_at = json.checked_at;
+                                } else {
+                                    alert(json.message);
+                                }
+
+                                if (json.logout_required == true) {
+                                    push('/logout');
+                                }
+                            })
+                            .catch(() => {
+                                alert('알 수 없는 오류가 발생했습니다.');
+                                todo.checked_pending = false;
+                            });
+                    }}" />
+
+                <div
+                    class="content"
+                    contenteditable="true"
+                    bind:textContent="{todo.text}"
+                    on:blur="{() => {
+                        todo.text = todo.text.trim().slice(0, 500);
+
+                        if (confirm('저장하시겠습니까?')) {
+                            todo.this.setAttribute('contenteditable', 'false');
                             fetch(TODO, {
-                                method: 'DELETE',
+                                method: 'PATCH',
                                 headers: {
                                     'Content-Type': 'application/json',
                                     'x-auth': TOKEN,
                                 },
                                 body: JSON.stringify({
                                     id: todo.id,
+                                    text: todo.text,
                                 }),
                             })
                                 .then((resp) => resp.json())
                                 .then((json) => {
-                                    if (json.status == false) {
+                                    if (json.result == true) {
+                                        todo.text = json.text;
+                                        todo.this.setAttribute('contenteditable', 'true');
+                                    } else {
                                         alert(json.message);
+                                        todo.this.setAttribute('contenteditable', 'true');
                                     }
 
                                     if (json.logout_required == true) {
@@ -223,12 +189,53 @@
                                 })
                                 .catch(() => {
                                     alert('알 수 없는 오류가 발생했습니다.');
+                                    todo.this.setAttribute('contenteditable', 'true');
                                 });
                         }
-                    }}">삭제</b>
-            </p>
-        </div>
-    {/each}
+                    }}">
+                </div>
+
+                <p contenteditable="false">
+                    {#if todo.checked}
+                        {ts2ds(todo.created_at)} ~ {ts2ds(todo.checked_at)}
+                    {:else}
+                        {ts2ds(todo.created_at)}
+                    {/if}
+
+                    <b
+                        class="delete"
+                        on:click="{() => {
+                            if (confirm('삭제하시겠습니까?')) {
+                                todos = todos.filter((x) => x.id != todo.id);
+                                fetch(TODO, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'x-auth': TOKEN,
+                                    },
+                                    body: JSON.stringify({
+                                        id: todo.id,
+                                    }),
+                                })
+                                    .then((resp) => resp.json())
+                                    .then((json) => {
+                                        if (json.status == false) {
+                                            alert(json.message);
+                                        }
+
+                                        if (json.logout_required == true) {
+                                            push('/logout');
+                                        }
+                                    })
+                                    .catch(() => {
+                                        alert('알 수 없는 오류가 발생했습니다.');
+                                    });
+                            }
+                        }}">삭제</b>
+                </p>
+            </div>
+        {/each}
+    {/if}
 </div>
 
 <style>
