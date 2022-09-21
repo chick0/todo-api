@@ -52,10 +52,14 @@
         <div class="spinner"></div>
     {:else}
         <div class="todo new">
-            <div
-                contenteditable="true"
-                bind:textContent="{newTodo}"
+            <textarea
+                maxlength="500"
+                bind:value="{newTodo}"
                 bind:this="{newTodoElement}"
+                on:input="{() => {
+                    newTodoElement.style.height = '1px';
+                    newTodoElement.style.height = 12 + newTodoElement.scrollHeight + 'px';
+                }}"
                 on:blur="{() => {
                     newTodo = newTodo.trim().slice(0, 500);
 
@@ -93,18 +97,16 @@
                                 newTodoElement.setAttribute('contenteditable', 'true');
                             });
                     }
-                }}">
-            </div>
-
+                }}"></textarea>
             <p>{newTodo.length}/500자</p>
         </div>
 
         {#each todos as todo}
-            <div class="todo {todo.checked == true ? 'ok' : 'no'}" bind:this="{todo.this}">
+            <div class="todo {todo.checked == true ? 'ok' : 'no'}">
                 <input
                     type="checkbox"
-                    bind:checked="{todo.checked}"
                     readonly="{todo.checked_pending != true}"
+                    bind:checked="{todo.checked}"
                     on:change="{() => {
                         todo.checked_at = Date.now() / 1000;
                         todo.checked_pending = true;
@@ -140,15 +142,36 @@
                             });
                     }}" />
 
-                <div
-                    class="content"
-                    contenteditable="true"
-                    bind:textContent="{todo.text}"
+                <textarea
+                    maxlength="500"
+                    readonly="{todo.pending_text == true}"
+                    bind:this="{todo.textarea}"
+                    bind:value="{todo.text}"
+                    on:mousemove="{() => {
+                        if (todo.onetime != true) {
+                            todo.textarea.style.height = '1px';
+                            todo.textarea.style.height = 12 + todo.textarea.scrollHeight + 'px';
+                            todo.onetime = true;
+                        }
+                    }}"
+                    on:input="{() => {
+                        todo.textarea.style.height = '1px';
+                        todo.textarea.style.height = 12 + todo.textarea.scrollHeight + 'px';
+                    }}"
                     on:blur="{() => {
                         todo.text = todo.text.trim().slice(0, 500);
 
+                        if (todo.save_last_ask == undefined) {
+                            todo.save_last_ask = Date.now() - 10000;
+                        } else if (Date.now() - todo.save_last_ask < 2000) {
+                            console.warn('2초이내 수정시도 무시됨.', Date.now() - todo.save_last_ask + '초');
+                            return;
+                        }
+
+                        todo.save_last_ask = Date.now();
+
                         if (confirm('저장하시겠습니까?')) {
-                            todo.this.setAttribute('contenteditable', 'false');
+                            todo.pending_text = true;
                             fetch(TODO, {
                                 method: 'PATCH',
                                 headers: {
@@ -164,11 +187,11 @@
                                 .then((json) => {
                                     if (json.status == true) {
                                         todo.text = json.text;
-                                        todo.this.setAttribute('contenteditable', 'true');
                                     } else {
                                         alert(json.message);
-                                        todo.this.setAttribute('contenteditable', 'true');
                                     }
+
+                                    todo.pending_text = false;
 
                                     if (json.logout_required == true) {
                                         push('/logout');
@@ -176,13 +199,12 @@
                                 })
                                 .catch(() => {
                                     alert('알 수 없는 오류가 발생했습니다.');
-                                    todo.this.setAttribute('contenteditable', 'true');
+                                    todo.pending_text = false;
                                 });
                         }
-                    }}">
-                </div>
+                    }}"></textarea>
 
-                <p contenteditable="false">
+                <p>
                     {#if todo.checked}
                         {to_datestring(todo.created_at)} ~ {to_datestring(todo.checked_at)}
                     {:else}
@@ -226,6 +248,30 @@
 </div>
 
 <style>
+    textarea {
+        font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+        font-size: 20px;
+
+        display: block;
+        overflow: hidden;
+        overflow-wrap: break-word;
+        resize: none;
+
+        width: 100%;
+        min-height: 60px;
+
+        border: none;
+        background-color: var(--background);
+        color: var(--color);
+    }
+
+    .todo:not(.new) > textarea {
+        margin-top: -35px;
+        margin-left: 45px;
+        width: calc(100% - 45px);
+    }
+
+    /* Todo Element */
     .todo {
         padding: 15px;
         margin-top: 20px;
@@ -245,32 +291,25 @@
         --todo-shadow: blue;
     }
 
-    .todo > input {
+    /* Todo Checkbox */
+    .todo > input[type="checkbox"] {
         width: 30px;
         height: 30px;
     }
 
-    .todo > div {
-        display: block;
-        overflow-wrap: break-word;
-    }
-
-    .todo > div.content {
-        margin-top: -35px;
-        margin-left: 45px;
-        min-height: 45px;
-    }
-
+    /* Todo Datetext */
     .todo > p {
         margin-top: 10px;
         font-size: 18px;
         font-weight: 200;
     }
 
+    /* Delete button */
     .delete {
         cursor: pointer;
         font-weight: 600;
     }
+
     .delete:hover {
         color: crimson;
     }
