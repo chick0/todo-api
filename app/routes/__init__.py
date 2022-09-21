@@ -3,6 +3,7 @@ __all__ = [
     "logout",
     "sign-up",
     "todo",
+    "user",
     "verify",
 ]
 
