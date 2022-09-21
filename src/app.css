@@ -3,4 +3,5 @@
 @import "./styles/root.css";
 @import "./styles/container.css";
 @import "./styles/item.css";
+@import "./styles/spinner.css";
 @import "./styles/button.css";

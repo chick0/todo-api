@@ -44,18 +44,8 @@
     left: 0;
     right: 0;
     margin: auto;
-    border: 6px solid var(--button-text);
-    border-top-color: transparent;
+    border: 6px solid var(--spinner-a);
+    border-top-color: var(--spinner-b);
     border-radius: 50%;
     animation: spinner 0.8s linear infinite;
-}
-
-@keyframes spinner {
-    from {
-        transform: rotate(0turn);
-    }
-
-    to {
-        transform: rotate(1turn);
-    }
 }

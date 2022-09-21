@@ -8,6 +8,10 @@
     --button-background: #ffcc4d;
     --button-hover: #ffdb81;
     --button-text: #000;
+
+    /* spinner */
+    --spinner-a: #141414;
+    --spinner-b: #ffcc4d;
 }
 
 @media (prefers-color-scheme: light) {
