@@ -1,4 +1,5 @@
 from flask import request
+from user_agents import parse
 
 
 def get_ip() -> str:
@@ -10,3 +11,8 @@ def timestamp(stamp) -> int or None:
         return None
 
     return int(stamp.timestamp())
+
+
+def parse_user_agent(user_agent: str) -> str:
+    ua = parse(user_agent)
+    return f"{ua.get_device()} / {ua.get_os()}"
