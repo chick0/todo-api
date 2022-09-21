@@ -8,3 +8,5 @@ export const TODO = BASE_URL + "/todo";
 export const TODO_CHECK = TODO + "/check";
 
 export const USER = BASE_URL + "/user";
+
+export const SESSION_DELETE = (id) => BASE_URL + `/session/${id}`;
