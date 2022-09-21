@@ -9,7 +9,7 @@ from app.models import Todo
 from app.auth import AuthSession
 from app.auth import login_required
 from app.routes.todo import bp
-from app.todo import timestamp
+from app.utils import timestamp
 
 
 class CheckRequest(BaseModel):
