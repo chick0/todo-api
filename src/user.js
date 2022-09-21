@@ -37,7 +37,7 @@ export function get_payload() {
         return null;
     }
 
-    return Buffer.from(payload, "base64").toJSON();
+    return JSON.parse(Buffer.from(payload, "base64").toString());
 }
 
 /**
