@@ -105,3 +105,32 @@ class History(db.Model):
         db.String(128),
         nullable=False
     )
+
+
+class DBSession(db.Model):
+    __tablename__ = "td_session"
+
+    id = db.Column(
+        db.Integer,
+        unique=True,
+        primary_key=True,
+        nullable=False
+    )
+
+    owner = db.Column(
+        db.Integer,
+        db.ForeignKey("td_user.id"),
+        nullable=False
+    )
+
+    history = db.Column(
+        db.Integer,
+        db.ForeignKey("td_history.id"),
+        unique=True,
+        nullable=False
+    )
+
+    dropped_at = db.Column(
+        db.DateTime,
+        nullable=False,
+    )

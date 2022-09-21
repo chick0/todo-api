@@ -1,5 +1,6 @@
 from hashlib import sha512
 from datetime import datetime
+from datetime import timedelta
 
 from flask import Blueprint
 from flask import request
@@ -8,6 +9,7 @@ from pydantic import BaseModel
 from app import db
 from app.models import User
 from app.models import History
+from app.models import DBSession
 from app.utils import get_ip
 from app.auth import create_token
 
@@ -40,23 +42,38 @@ def email_and_password():
             status=False,
             message="등록된 계정이 아닙니다."
         ).dict(), 404
-    else:
-        now = datetime.now()
-        user.lastlogin = now
 
-        history = History()
-        history.owner = user.id,
-        history.created_at = now
-        history.ip = get_ip()
-        history.user_agent = request.user_agent
-
-        db.session.add(history)
-        db.session.commit()
-
+    if not user.email_verified:
         return LoginResponse(
-            status=True,
-            token=create_token(
-                history_id=history.id,
-                email=user.email
-            )
-        ).dict()
+            status=False,
+            message="이메일 인증이 완료되지 않은 계정은 사용 할 수 없습니다."
+        ).dict(), 400
+
+    now = datetime.now()
+    user.lastlogin = now
+
+    history = History()
+    history.owner = user.id,
+    history.created_at = now
+    history.ip = get_ip()
+    history.user_agent = request.user_agent
+
+    db.session.add(history)
+    db.session.commit()
+
+    dbs = DBSession()
+    dbs.owner = user.id
+    dbs.history = history.id
+    dbs.dropped_at = datetime.now() + timedelta(hours=3)
+
+    db.session.add(dbs)
+    db.session.commit()
+
+    return LoginResponse(
+        status=True,
+        token=create_token(
+            session_id=dbs.id,
+            email=user.email,
+            exp=dbs.dropped_at
+        )
+    ).dict()

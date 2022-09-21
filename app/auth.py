@@ -6,7 +6,7 @@ from flask import request
 from pydantic import BaseModel
 
 from app.models import User
-from app.models import History
+from app.models import DBSession
 from app.error import APIError
 from app.token import create_token as ct
 from app.token import parse_token as pt
@@ -15,22 +15,22 @@ name = "auth:token"
 
 
 class AuthToken(BaseModel):
-    hid: int
+    sid: int
     email: str
     exp: int
 
 
 class AuthSession(BaseModel):
-    hid: int
+    sid: int
     user_id: int
     email: str
 
 
-def create_token(history_id: int, email: str) -> str:
+def create_token(session_id: int, email: str, exp: datetime) -> str:
     payload = AuthToken(
-        hid=history_id,
+        sid=session_id,
         email=email,
-        exp=int((datetime.now() + timedelta(hours=3)).timestamp()),
+        exp=int(exp.timestamp()),
     ).dict()
 
     return ct(payload, name)
@@ -57,18 +57,20 @@ def login_required(f):
                 logout_required=True
             )
 
-        if History.query.filter_by(
-            id=payload.hid,
+        if DBSession.query.filter_by(
+            id=payload.sid,
             owner=user.id,
+        ).filter(
+            DBSession.dropped_at >= datetime.now()
         ).count() == 0:
             raise APIError(
                 code=401,
-                message="인증 토큰 검증 실패",
+                message="인증 세션이 만료되었습니다.",
                 logout_required=True
             )
 
         kwargs['session'] = AuthSession(
-            hid=payload.hid,
+            sid=payload.sid,
             user_id=user.id,
             email=payload.email,
         )

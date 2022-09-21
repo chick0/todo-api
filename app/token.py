@@ -25,12 +25,12 @@ def parse_token(token: str, name: str) -> dict:
     except ExpiredSignatureError as e:
         raise APIError(
             code=401,
-            message="만료된 토큰입니다.",
+            message="해당 인증 토큰은 만료되었습니다.",
             logout_required=True
         ) from e
     except DecodeError as e:
         raise APIError(
             code=401,
-            message="인증 토큰 검증 실패",
+            message="인증 토큰 검증에 실패했습니다.",
             logout_required=True
         ) from e
