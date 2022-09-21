@@ -18,7 +18,7 @@ class CreateRequest(BaseModel):
 
 
 class CreateResponse(BaseModel):
-    result: bool
+    status: bool
     message: str = ""
     todo: Optional[TodoResponse] = None
 
@@ -40,7 +40,7 @@ def create(session: AuthSession):
     db.session.commit()
 
     return CreateResponse(
-        result=True,
+        status=True,
         todo=TodoResponse(
             id=todo.id,
             checked=todo.checked,

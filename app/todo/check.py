@@ -18,7 +18,7 @@ class CheckRequest(BaseModel):
 
 
 class CheckResponse(BaseModel):
-    result: bool
+    status: bool
     message: str = ""
     checked: bool
     checked_at: Optional[int]
@@ -35,7 +35,7 @@ def check(session: AuthSession):
 
     if todo is None:
         return CheckResponse(
-            result=False,
+            status=False,
             message="등록된 투두가 아닙니다.",
         ).dict(), 404
 
@@ -49,7 +49,7 @@ def check(session: AuthSession):
     db.session.commit()
 
     return CheckResponse(
-        result=True,
+        status=True,
         checked=todo.checked,
         checked_at=timestamp(todo.checked_at)
     ).dict(), 201

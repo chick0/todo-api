@@ -14,7 +14,7 @@ class EditRequest(BaseModel):
 
 
 class EditResponse(BaseModel):
-    result: bool
+    status: bool
     message: str = ""
     text: str
 
@@ -30,7 +30,7 @@ def edit(session: AuthSession):
 
     if todo is None:
         return EditResponse(
-            result=False,
+            status=False,
             message="등록된 투두가 아닙니다.",
         ).dict(), 404
 
@@ -38,6 +38,6 @@ def edit(session: AuthSession):
     db.session.commit()
 
     return EditResponse(
-        result=True,
+        status=True,
         text=todo.text,
     ).dict(), 201

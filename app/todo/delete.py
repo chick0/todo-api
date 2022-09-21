@@ -13,7 +13,7 @@ class DeleteRequest(BaseModel):
 
 
 class DeleteResponse(BaseModel):
-    result: bool
+    status: bool
     message: str = ""
     id: int
 
@@ -29,7 +29,7 @@ def delete(session: AuthSession):
 
     if todo == 0:
         return DeleteResponse(
-            result=False,
+            status=False,
             message="등록된 투두가 아닙니다.",
             id=ctx.id
         ).dict(), 404
@@ -37,6 +37,6 @@ def delete(session: AuthSession):
     db.session.commit()
 
     return DeleteResponse(
-        result=True,
+        status=True,
         id=ctx.id
     ).dict()

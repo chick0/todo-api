@@ -22,7 +22,7 @@
         })
             .then((resp) => resp.json())
             .then((json) => {
-                if (json.result === true) {
+                if (json.status === true) {
                     todos = json.todos;
                     isLoading = false;
                 } else {
@@ -73,7 +73,7 @@
                         })
                             .then((resp) => resp.json())
                             .then((json) => {
-                                if (json.result == true) {
+                                if (json.status == true) {
                                     newTodo = '';
                                     newTodoElement.setAttribute('contenteditable', 'true');
 
@@ -123,7 +123,7 @@
                             .then((resp) => resp.json())
                             .then((json) => {
                                 todo.checked_pending = false;
-                                if (json.result == true) {
+                                if (json.status == true) {
                                     todo.checked = json.checked;
                                     todo.checked_at = json.checked_at;
                                 } else {
@@ -162,7 +162,7 @@
                             })
                                 .then((resp) => resp.json())
                                 .then((json) => {
-                                    if (json.result == true) {
+                                    if (json.status == true) {
                                         todo.text = json.text;
                                         todo.this.setAttribute('contenteditable', 'true');
                                     } else {

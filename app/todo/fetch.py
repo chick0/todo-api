@@ -10,7 +10,7 @@ from app.utils import timestamp
 
 
 class TodoListResponse(BaseModel):
-    result: bool
+    status: bool
     message: str = ""
     todos: list[TodoResponse]
 
@@ -27,7 +27,7 @@ def fetch(session: AuthSession):
     ).limit(100).all()
 
     return TodoListResponse(
-        result=True,
+        status=True,
         todos=[
             TodoResponse(
                 id=x.id,
