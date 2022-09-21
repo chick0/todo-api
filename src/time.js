@@ -25,3 +25,17 @@ export function to_timestring(timestamp) {
     }
     return new Date(timestamp * 1000).toLocaleTimeString();
 }
+
+/**
+ * Convert timestamp to locale string
+ *
+ * @param {number|null} timestamp not milliseconds timestamp
+ *
+ * @returns {string} locale string
+ */
+export function to_string(timestamp) {
+    if (timestamp == null) {
+        return "?";
+    }
+    return new Date(timestamp * 1000).toLocaleString();
+}

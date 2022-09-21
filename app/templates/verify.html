@@ -1,14 +1,10 @@
-<h1>이메일 인증 요청</h1>
+<noscript>
+    <p><span style="color: crimson;">오류</span> 자바스크립트를 활성화해야 이 사이트를 사용 할 수 있습니다.</p>
+</noscript>
 
-<p>인증 요청은 <b>{{ date }}</b>에 만료됩니다.</p>
-<p>만약, 본인의 인증 시도가 아니라면 '취소'를 선택하거나, 무시하면 됩니다.</p>
+<p>페이지 이동중입니다...</p>
 
-<form method="post" action="{{ url_for('verify.drop') }}">
-    <input type="password" name="token" value="{{ token }}" hidden="hidden">
-    <button>❌ 인증 취소</button>
-</form>
-
-<form method="post" action="{{ url_for('verify.pass_') }}">
-    <input type="password" name="token" value="{{ token }}" hidden="hidden">
-    <button>✔️ 인증 승인</button>
-</form>
+<script>
+    sessionStorage.setItem("to-do:verify_token", "{{ token }}");
+    location.replace("/#/verify");
+</script>

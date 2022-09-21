@@ -8,9 +8,11 @@ export const routes = {
     "/": About,
     "/login": Login,
     "/logout": Logout,
-
     "/sign-up": wrap({
         asyncComponent: () => import("./routes/SignUp.svelte"),
+    }),
+    "/verify": wrap({
+        asyncComponent: () => import("./routes/Verify.svelte"),
     }),
 
     "/todo": wrap({
