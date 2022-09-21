@@ -24,6 +24,10 @@
                 } else {
                     alert(json.message);
                 }
+
+                if (json.logout_required == true) {
+                    push("/logout");
+                }
             })
             .catch(() => {
                 alert("알 수 없는 오류가 발생했습니다.");
@@ -86,6 +90,10 @@
                                 alert(json.message);
                                 newTodoElement.setAttribute('contenteditable', 'true');
                             }
+
+                            if (json.logout_required == true) {
+                                push('/logout');
+                            }
                         })
                         .catch(() => {
                             alert('알 수 없는 오류가 발생했습니다.');
@@ -128,6 +136,10 @@
                             } else {
                                 alert(json.message);
                             }
+
+                            if (json.logout_required == true) {
+                                push('/logout');
+                            }
                         })
                         .catch(() => {
                             alert('알 수 없는 오류가 발생했습니다.');
@@ -164,6 +176,10 @@
                                     alert(json.message);
                                     todo.this.setAttribute('contenteditable', 'true');
                                 }
+
+                                if (json.logout_required == true) {
+                                    push('/logout');
+                                }
                             })
                             .catch(() => {
                                 alert('알 수 없는 오류가 발생했습니다.');
@@ -199,6 +215,10 @@
                                 .then((json) => {
                                     if (json.status == false) {
                                         alert(json.message);
+                                    }
+
+                                    if (json.logout_required == true) {
+                                        push('/logout');
                                     }
                                 })
                                 .catch(() => {

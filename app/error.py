@@ -2,17 +2,19 @@ from flask import request
 
 
 class APIError(Exception):
-    def __init__(self, code: int, message: str) -> None:
+    def __init__(self, code: int, message: str, logout_required: bool = False) -> None:
         super().__init__()
         self.code = code
         self.message = message
+        self.logout_required = logout_required
 
 
-def handle_api_error(error):
+def handle_api_error(error: APIError):
     if request.path.startswith("/api/verify"):
         return error.message, error.code
 
     return {
         "status": False,
-        "message": error.message
+        "message": error.message,
+        "logout_required": error.logout_required
     }, error.code
