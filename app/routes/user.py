@@ -54,7 +54,7 @@ def fetch(session: AuthSession):
             for history in History.query.filter_by(
                 owner=session.user_id
             ).order_by(
-                History.created_at.asc()
+                History.created_at.desc()
             ).limit(80).all()
         ],
         session_list=[
