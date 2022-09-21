@@ -17,6 +17,10 @@ export const routes = {
         asyncComponent: () => import("./routes/Todo.svelte"),
     }),
 
+    "/user": wrap({
+        asyncComponent: () => import("./routes/User.svelte"),
+    }),
+
     "*": wrap({
         asyncComponent: () => import("./NotFound.svelte"),
     }),
