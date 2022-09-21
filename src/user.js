@@ -48,5 +48,3 @@ export function is_login() {
 
     return payload != null;
 }
-
-export function save_token(token) {}
