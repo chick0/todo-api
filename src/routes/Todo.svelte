@@ -2,6 +2,7 @@
     import { push } from "svelte-spa-router";
     import { TODO, TODO_CHECK } from "../url.js";
     import { is_login, get_token } from "../user.js";
+    import { to_datestring } from "../time.js";
 
     const TOKEN = get_token();
 
@@ -36,20 +37,6 @@
                 alert("알 수 없는 오류가 발생했습니다.");
                 push("/");
             });
-    }
-
-    /**
-     * Convert timestamp to datesting
-     *
-     * @param {number|null} timestamp not milliseconds timestamp
-     *
-     * @returns {string} Locale date string
-     */
-    function ts2ds(timestamp) {
-        if (timestamp == null) {
-            return "?";
-        }
-        return new Date(timestamp * 1000).toLocaleDateString();
     }
 </script>
 
@@ -197,9 +184,9 @@
 
                 <p contenteditable="false">
                     {#if todo.checked}
-                        {ts2ds(todo.created_at)} ~ {ts2ds(todo.checked_at)}
+                        {to_datestring(todo.created_at)} ~ {to_datestring(todo.checked_at)}
                     {:else}
-                        {ts2ds(todo.created_at)}
+                        {to_datestring(todo.created_at)}
                     {/if}
 
                     <b
