@@ -57,17 +57,21 @@ def login_required(f):
                 logout_required=True
             )
 
-        if DBSession.query.filter_by(
+        dbs = DBSession.query.filter_by(
             id=payload.sid,
             owner=user.id,
         ).filter(
             DBSession.dropped_at >= datetime.now()
-        ).count() == 0:
+        ).first()
+
+        if dbs is None:
             raise APIError(
                 code=401,
                 message="인증 세션이 만료되었습니다.",
                 logout_required=True
             )
+
+        dbs.last_access = datetime.now()
 
         kwargs['session'] = AuthSession(
             sid=payload.sid,

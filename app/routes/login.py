@@ -65,6 +65,7 @@ def email_and_password():
     dbs.owner = user.id
     dbs.history = history.id
     dbs.dropped_at = datetime.now() + timedelta(hours=3)
+    dbs.last_access = datetime.now()
 
     db.session.add(dbs)
     db.session.commit()

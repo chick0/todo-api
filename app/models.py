@@ -134,3 +134,8 @@ class DBSession(db.Model):
         db.DateTime,
         nullable=False,
     )
+
+    last_access = db.Column(
+        db.DateTime,
+        nullable=True,
+    )
