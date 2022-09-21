@@ -234,15 +234,15 @@
     }
 
     .todo.ok {
-        --todo-shadow: lime;
+        --todo-shadow: green;
     }
 
     .todo.no {
-        --todo-shadow: crimson;
+        --todo-shadow: red;
     }
 
     .todo.new {
-        --todo-shadow: aqua;
+        --todo-shadow: blue;
     }
 
     .todo > input {
