@@ -10,12 +10,12 @@
             <a class="button" href="#/sign-up">회원가입</a>
         {:else}
             <a class="button" href="#/todo">할 일</a>
-            <a class="button" href="#/logout">로그아웃</a>
             <a class="button" href="#/user">계정 정보</a>
+            <a class="button" href="#/logout">로그아웃</a>
         {/if}
     </div>
 
     <hr />
 
-    <p><b>To-Do</b>는 웹에서 사용하는 간단한 투두 리스트 어플리케이션입니다.</p>
+    <p><b>To-Do</b>는 웹에서 사용하는 간단한 할 일 목록 어플리케이션입니다.</p>
 </div>

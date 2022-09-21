@@ -43,8 +43,8 @@
 <div class="section container">
     <h1>To-Do</h1>
     <div class="buttons">
-        <a class="button" href="#/logout">로그아웃</a>
         <a class="button" href="#/user">계정 정보</a>
+        <a class="button" href="#/logout">로그아웃</a>
     </div>
 
     <hr />
