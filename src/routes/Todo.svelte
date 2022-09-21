@@ -44,7 +44,7 @@
     <h1>To-Do</h1>
     <div class="buttons">
         <a class="button" href="#/logout">로그아웃</a>
-        <a class="button" href="#/quit">서비스 탈퇴</a>
+        <a class="button" href="#/user">계정 정보</a>
     </div>
 
     <hr />

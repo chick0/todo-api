@@ -11,7 +11,7 @@
         {:else}
             <a class="button" href="#/todo">할 일</a>
             <a class="button" href="#/logout">로그아웃</a>
-            <a class="button" href="#/quit">서비스 탈퇴</a>
+            <a class="button" href="#/user">계정 정보</a>
         {/if}
     </div>
 
