@@ -103,22 +103,24 @@
             <input
                 type="checkbox"
                 bind:checked="{todo.checked}"
-                readonly={todo.checked_pending != true}
+                readonly="{todo.checked_pending != true}"
                 on:change="{() => {
                     todo.checked_at = Date.now() / 1000;
                     todo.checked_pending = true;
 
                     fetch(TODO_CHECK, {
-                        method: "POST",
+                        method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'x-auth': TOKEN, 
+                            'x-auth': TOKEN,
                         },
                         body: JSON.stringify({
                             id: todo.id,
-                            checked: todo.checked
-                        })
-                    }).then((resp) => resp.json()).then((json) => {
+                            checked: todo.checked,
+                        }),
+                    })
+                        .then((resp) => resp.json())
+                        .then((json) => {
                             todo.checked_pending = false;
                             if (json.result == true) {
                                 todo.checked = json.checked;
@@ -156,7 +158,7 @@
                             .then((resp) => resp.json())
                             .then((json) => {
                                 if (json.result == true) {
-                                    todo.text = json.text
+                                    todo.text = json.text;
                                     todo.this.setAttribute('contenteditable', 'true');
                                 } else {
                                     alert(json.message);
