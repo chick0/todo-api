@@ -95,7 +95,7 @@ def fetch(session: AuthSession):
             ).filter(
                 DBSession.dropped_at >= datetime.now()
             ).order_by(
-                DBSession.dropped_at.asc()
+                DBSession.last_access.desc()
             ).all()
         ]
     ).dict()
