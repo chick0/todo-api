@@ -3,7 +3,6 @@ from datetime import datetime
 from flask import Blueprint
 from pydantic import BaseModel
 
-from app import db
 from app.models import Todo
 from app.models import History
 from app.models import DBSession
@@ -72,17 +71,4 @@ def fetch(session: AuthSession):
                 DBSession.dropped_at.asc()
             ).all()
         ]
-    ).dict()
-
-
-@bp.get("/count")
-@login_required
-def fetch_count_only(session: AuthSession):
-    return UserResponse(
-        status=True,
-        count=Todo.query.filter_by(
-            owner=session.user_id
-        ).count(),
-        history_list=[],
-        session_list=[]
     ).dict()
