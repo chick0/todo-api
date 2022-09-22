@@ -1,5 +1,6 @@
 <script>
     import { push } from "svelte-spa-router";
+    import { Renderer, setOptions, parse } from "marked";
     import { TODO, TODO_CHECK } from "../url.js";
     import { is_login, get_token } from "../user.js";
     import { to_datestring } from "../time.js";
@@ -7,8 +8,9 @@
     const TOKEN = get_token();
 
     let todos = [];
-    let newTodo = "새로운 To-Do를 여기에 입력해주세요!";
+    let newTodo = "";
     let newTodoElement = undefined;
+    let newTodoSave = undefined;
 
     let isLoading = true;
 
@@ -25,6 +27,13 @@
                 if (json.status === true) {
                     todos = json.todos;
                     isLoading = false;
+
+                    if (todos.length == 0) {
+                        newTodo = "새로운 To-Do를 여기에 입력해주세요!\n\n마크다운 문법을 사용 할 수 있습니다 :)";
+                        setTimeout(() => {
+                            newTodoElement.style.height = "100px";
+                        }, 100);
+                    }
                 } else {
                     alert(json.message);
                 }
@@ -38,6 +47,18 @@
                 push("/");
             });
     }
+
+    const renderer = new Renderer();
+
+    // @ts-ignore
+    renderer.link = (href, title, text) => {
+        return `<a target="_blank" rel="noreferrer" href="${href}">${text}</a>`;
+    };
+
+    setOptions({
+        gfm: true,
+        renderer: renderer,
+    });
 </script>
 
 <div class="section container">
@@ -59,50 +80,56 @@
                 on:input="{() => {
                     newTodoElement.style.height = '1px';
                     newTodoElement.style.height = 12 + newTodoElement.scrollHeight + 'px';
-                }}"
-                on:blur="{() => {
-                    newTodo = newTodo.trim().slice(0, 500);
-
-                    if (confirm('저장하시겠습니까?')) {
-                        newTodoElement.setAttribute('contenteditable', 'false');
-                        fetch(TODO, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'x-auth': TOKEN,
-                            },
-                            body: JSON.stringify({
-                                text: newTodo,
-                            }),
-                        })
-                            .then((resp) => resp.json())
-                            .then((json) => {
-                                if (json.status == true) {
-                                    newTodo = '';
-                                    newTodoElement.setAttribute('contenteditable', 'true');
-
-                                    todos.unshift(json.todo);
-                                    todos = todos;
-                                } else {
-                                    alert(json.message);
-                                    newTodoElement.setAttribute('contenteditable', 'true');
-                                }
-
-                                if (json.logout_required == true) {
-                                    push('/logout');
-                                }
-                            })
-                            .catch(() => {
-                                alert('알 수 없는 오류가 발생했습니다.');
-                                newTodoElement.setAttribute('contenteditable', 'true');
-                            });
-                    }
                 }}"></textarea>
             <p>{newTodo.length}/500자</p>
+            <br />
+            <button
+                class="button max"
+                bind:this="{newTodoSave}"
+                on:click="{() => {
+                    newTodoSave.classList.add('spin');
+                    fetch(TODO, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-auth': TOKEN,
+                        },
+                        body: JSON.stringify({
+                            text: newTodo,
+                        }),
+                    })
+                        .then((resp) => resp.json())
+                        .then((json) => {
+                            if (json.status == true) {
+                                newTodo = '';
+
+                                todos.unshift(json.todo);
+                                todos = todos;
+                            } else {
+                                alert(json.message);
+                            }
+
+                            newTodoSave.classList.remove('spin');
+
+                            if (json.logout_required == true) {
+                                push('/logout');
+                            }
+                        })
+                        .catch(() => {
+                            alert('알 수 없는 오류가 발생했습니다.');
+                            newTodoSave.classList.remove('spin');
+                        });
+                }}">새로운 할 일 저장</button>
         </div>
 
+        <hr />
+
+        {#if todos.length == 0}
+            <p>저장된 할 일이 없습니다!</p>
+        {/if}
+
         {#each todos as todo}
-            <div class="todo {todo.checked == true ? 'ok' : 'no'}">
+            <div class="todo">
                 <input
                     type="checkbox"
                     readonly="{todo.checked_pending != true}"
@@ -142,36 +169,26 @@
                             });
                     }}" />
 
-                <textarea
-                    maxlength="500"
-                    readonly="{todo.pending_text == true}"
-                    bind:this="{todo.textarea}"
-                    bind:value="{todo.text}"
-                    on:mousemove="{() => {
-                        if (todo.onetime != true) {
+                {#if todo.editmode == true}
+                    <textarea
+                        maxlength="500"
+                        bind:this="{todo.textarea}"
+                        bind:value="{todo.text}"
+                        on:input="{() => {
                             todo.textarea.style.height = '1px';
                             todo.textarea.style.height = 12 + todo.textarea.scrollHeight + 'px';
-                            todo.onetime = true;
-                        }
-                    }}"
-                    on:input="{() => {
-                        todo.textarea.style.height = '1px';
-                        todo.textarea.style.height = 12 + todo.textarea.scrollHeight + 'px';
-                    }}"
-                    on:blur="{() => {
-                        todo.text = todo.text.trim().slice(0, 500);
-
-                        if (todo.save_last_ask == undefined) {
-                            todo.save_last_ask = Date.now() - 10000;
-                        } else if (Date.now() - todo.save_last_ask < 2000) {
-                            console.warn('2초이내 수정시도 무시됨.', Date.now() - todo.save_last_ask + '초');
-                            return;
-                        }
-
-                        todo.save_last_ask = Date.now();
-
-                        if (confirm('저장하시겠습니까?')) {
-                            todo.pending_text = true;
+                        }}"
+                        on:focus="{() => {
+                            todo.textarea.style.height = '1px';
+                            todo.textarea.style.height = 12 + todo.textarea.scrollHeight + 'px';
+                        }}"></textarea>
+                    <p>{todo.text.length}/500자</p>
+                    <br />
+                    <button
+                        class="button max"
+                        bind:this="{todo.button}"
+                        on:click="{() => {
+                            todo.button.classList.add('spin');
                             fetch(TODO, {
                                 method: 'PATCH',
                                 headers: {
@@ -185,13 +202,14 @@
                             })
                                 .then((resp) => resp.json())
                                 .then((json) => {
+                                    todo.button.classList.remove('spin');
+
                                     if (json.status == true) {
                                         todo.text = json.text;
+                                        todo.editmode = false;
                                     } else {
                                         alert(json.message);
                                     }
-
-                                    todo.pending_text = false;
 
                                     if (json.logout_required == true) {
                                         push('/logout');
@@ -199,10 +217,20 @@
                                 })
                                 .catch(() => {
                                     alert('알 수 없는 오류가 발생했습니다.');
-                                    todo.pending_text = false;
+                                    todo.button.classList.remove('spin');
                                 });
-                        }
-                    }}"></textarea>
+                        }}">수정한 할 일 저장</button>
+                {:else}
+                    <div
+                        on:dblclick="{() => {
+                            todo.editmode = true;
+                            setTimeout(() => {
+                                todo.textarea.focus();
+                            }, 300);
+                        }}">
+                        {@html parse(todo.text)}
+                    </div>
+                {/if}
 
                 <p>
                     {#if todo.checked}
@@ -249,7 +277,7 @@
 
 <style>
     textarea {
-        font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+        font-family: Pretendard, "Noto Sans KR", "Malgun Gothic", sans-serif;
         font-size: 20px;
 
         display: block;
@@ -260,35 +288,29 @@
         width: 100%;
         min-height: 60px;
 
-        border: none;
+        padding: 10px;
+        border: 1px solid var(--color);
         background-color: var(--background);
         color: var(--color);
     }
 
-    .todo:not(.new) > textarea {
-        margin-top: -35px;
-        margin-left: 45px;
-        width: calc(100% - 45px);
-    }
-
     /* Todo Element */
     .todo {
-        padding: 15px;
         margin-top: 20px;
         margin-bottom: 20px;
         box-shadow: 0 0 10px var(--todo-shadow);
     }
 
-    .todo.ok {
-        --todo-shadow: green;
+    .todo:not(.new) > textarea,
+    .todo:not(.todo.new) > div {
+        margin-top: -35px;
+        margin-left: 45px;
+        width: calc(100% - 45px);
     }
 
-    .todo.no {
-        --todo-shadow: red;
-    }
-
-    .todo.new {
-        --todo-shadow: blue;
+    .todo:not(.new):not(:last-child) {
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--color);
     }
 
     /* Todo Checkbox */
