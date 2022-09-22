@@ -21,10 +21,16 @@ input:focus {
     border-color: crimson;
 }
 
-li, li > ul {
+li,
+li > ul {
     margin-left: 25px;
 }
 
 ul > li {
     margin-left: 0;
+}
+
+ul > li::before {
+    content: "-";
+    margin-right: 10px;
 }
