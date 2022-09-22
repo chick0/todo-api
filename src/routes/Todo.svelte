@@ -211,7 +211,7 @@
                                     } else {
                                         alert(json.message);
 
-                                        if(json.text == null){
+                                        if (json.text == null) {
                                             todos = todos.filter((x) => x.id != todo.id);
                                         }
                                     }
