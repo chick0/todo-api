@@ -6,4 +6,5 @@ waitress
 python-dotenv
 pydantic
 pyjwt
+redis
 user-agents

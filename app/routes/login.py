@@ -25,6 +25,7 @@ class LoginResponse(BaseModel):
     status: bool
     message: str = ""
     token: str = ""
+    email_verify_required: bool = False
 
 
 @bp.post("")
@@ -46,7 +47,8 @@ def email_and_password():
     if not user.email_verified:
         return LoginResponse(
             status=False,
-            message="이메일 인증이 완료되지 않은 계정은 사용 할 수 없습니다."
+            message="이메일 인증이 완료되지 않은 계정은 사용 할 수 없습니다.",
+            email_verify_required=True
         ).dict(), 400
 
     now = datetime.now()

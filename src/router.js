@@ -11,6 +11,7 @@ export const routes = {
     "/logout": Logout,
     "/sign-up": wrap({ asyncComponent: () => import("./routes/SignUp.svelte") }),
     "/verify": wrap({ asyncComponent: () => import("./routes/Verify.svelte") }),
+    "/retry": wrap({ asyncComponent: () => import("./routes/Retry.svelte") }),
 
     "/todo": wrap({ asyncComponent: () => import("./routes/Todo.svelte") }),
 

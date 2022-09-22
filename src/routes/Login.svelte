@@ -92,6 +92,12 @@
                             } else {
                                 alert(json.message);
                                 submit.classList.remove('spin');
+
+                                if (json.email_verify_required) {
+                                    if (confirm('이메일 인증을 다시 시도하시겠습니까?')) {
+                                        push('/retry');
+                                    }
+                                }
                             }
                         })
                         .catch(() => {

@@ -3,6 +3,7 @@ __all__ = [
     "logout",
     "pin",
     "quit",
+    "retry",
     "session",
     "sign-up",
     "todo",

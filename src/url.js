@@ -17,3 +17,5 @@ export const QUIT = BASE_URL + "/quit";
 
 export const PIN = BASE_URL + "/pin";
 export const PIN_LOGIN = PIN + "/login";
+
+export const RETRY = BASE_URL + "/retry";

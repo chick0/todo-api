@@ -10,6 +10,7 @@ from flask import Response
 from flask import send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from redis import Redis
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -34,6 +35,8 @@ def create_app():
     import_module("app.models")
     db.init_app(app=app)
     migrate.init_app(app=app, db=db)
+
+    app.redis = Redis.from_url(environ['REDIS_URL'])
 
     BASE_DIR = dirname(dirname(abspath(__file__)))
     DIST_DIR = join(BASE_DIR, "dist")
