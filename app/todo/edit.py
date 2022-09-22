@@ -1,3 +1,5 @@
+from typing import Optional
+
 from flask import request
 from pydantic import BaseModel
 
@@ -16,7 +18,7 @@ class EditRequest(BaseModel):
 class EditResponse(BaseModel):
     status: bool
     message: str = ""
-    text: str
+    text: Optional[str]
 
 
 @bp.patch("")
@@ -35,6 +37,13 @@ def edit(session: AuthSession):
         ).dict(), 404
 
     todo.text = ctx.text.strip()[:500]
+
+    if len(todo.text) == 0:
+        return EditResponse(
+            status=False,
+            message="할 일이 삭제되었습니다.",
+        ).dict()
+
     db.session.commit()
 
     return EditResponse(

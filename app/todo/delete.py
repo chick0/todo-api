@@ -1,3 +1,5 @@
+from typing import Optional
+
 from flask import request
 from pydantic import BaseModel
 
@@ -14,8 +16,7 @@ class DeleteRequest(BaseModel):
 
 class DeleteResponse(BaseModel):
     status: bool
-    message: str = ""
-    id: int
+    message: Optional[str] = None
 
 
 @bp.delete("")
@@ -30,13 +31,11 @@ def delete(session: AuthSession):
     if todo == 0:
         return DeleteResponse(
             status=False,
-            message="등록된 투두가 아닙니다.",
-            id=ctx.id
+            message="등록된 할 일이 아닙니다.",
         ).dict(), 404
 
     db.session.commit()
 
     return DeleteResponse(
         status=True,
-        id=ctx.id
     ).dict()

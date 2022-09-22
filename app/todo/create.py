@@ -33,6 +33,12 @@ def create(session: AuthSession):
     todo.checked = False
     todo.text = ctx.text.strip()[:500]
 
+    if len(todo.text) == 0:
+        return CreateResponse(
+            status=False,
+            message="공백은 저장 할 수 없습니다."
+        ).dict(), 400
+
     todo.created_at = datetime.now()
     todo.checked_at = None
 
