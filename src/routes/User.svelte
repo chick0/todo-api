@@ -52,7 +52,7 @@
     <div class="buttons">
         <a class="button" href="#/todo">할 일</a>
         <a class="button" href="#/logout">로그아웃</a>
-        <a class="button" href="#/quit">서비스 탈퇴</a>
+        <a class="button" href="#/user/quit">회원 탈퇴</a>
     </div>
 
     {#if is_loading == true}
@@ -171,12 +171,12 @@
             </thead>
             <tbody>
                 {#each history_list as history}
-                    <tr class="{history.id == colored_history ? 'colored' : ''}">
-                        <td
-                            class="clickable"
-                            on:click="{() => {
-                                colored_history = history.id;
-                            }}">{history.id}</td>
+                    <tr
+                        class="clickable {history.id == colored_history ? 'colored' : ''}"
+                        on:click="{() => {
+                            colored_history = history.id;
+                        }}">
+                        <td>{history.id}</td>
                         <td>{to_datestring(history.created_at)}</td>
                         <td>{to_timestring(history.created_at)}</td>
                         <td>{history.ip}</td>
