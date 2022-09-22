@@ -16,7 +16,7 @@
     <h1>회원가입</h1>
     <div class="buttons">
         <a class="button" href="#/login">로그인</a>
-        <a class="button" href="#/find">계정 찾기</a>
+        <a class="button" href="#/reset">비밀번호 재설정</a>
     </div>
 
     <div class="field">
