@@ -1,0 +1,11 @@
+[flake8]
+exclude =
+    .git,
+    .github,
+    __pycache__,
+    dist,
+    migrations,
+    public,
+    src,
+paths =
+    app
