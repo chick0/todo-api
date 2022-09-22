@@ -7,5 +7,4 @@ exclude =
     migrations,
     public,
     src,
-paths =
-    app
+max-line-length = 120
