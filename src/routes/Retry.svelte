@@ -4,9 +4,10 @@
     import { is_login } from "../user.js";
 
     let is_loading = true;
-    let email = "";
     let help_email = "-";
 
+    let email = "";
+    let email_input = undefined;
     let submit = undefined;
 
     if (is_login()) {
@@ -45,9 +46,11 @@
                 id="email-1"
                 placeholder="Email"
                 required
+                bind:this="{email_input}"
                 bind:value="{email}"
                 on:keydown="{(e) => {
                     if (e.key == 'Enter') {
+                        email_input.blur();
                         submit.click();
                     }
                 }}" />

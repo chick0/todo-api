@@ -8,6 +8,7 @@
     const pin_token = get_pin_token();
 
     let pin = "";
+    let pin_input = undefined;
     let pin_button = undefined;
 
     if (is_login()) {
@@ -36,9 +37,11 @@
                 type="tel"
                 minlength="6"
                 placeholder="PIN을 입력해주세요."
+                bind:this="{pin_input}"
                 bind:value="{pin}"
                 on:keydown="{(e) => {
                     if (e.key == 'Enter') {
+                        pin_input.blur();
                         pin_button.click();
                     }
                 }}" />

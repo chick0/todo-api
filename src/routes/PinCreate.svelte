@@ -50,6 +50,7 @@
                 bind:this="{pin_this}"
                 on:keydown="{(e) => {
                     if (e.key == 'Enter') {
+                        pin_this.blur();
                         pin_button.click();
                     }
                 }}" />

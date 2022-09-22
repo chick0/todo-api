@@ -22,6 +22,7 @@
 
     let email = "";
     let password = "";
+    let password_input = undefined;
     let submit = undefined;
 </script>
 
@@ -37,7 +38,17 @@
 
         <div class="field">
             <label for="email">이메일</label>
-            <input type="email" id="email" bind:value="{email}" placeholder="Email" required />
+            <input
+                type="email"
+                id="email"
+                placeholder="Email"
+                required
+                bind:value="{email}"
+                on:keydown="{(e) => {
+                    if (e.key == 'Enter') {
+                        password_input.focus();
+                    }
+                }}" />
         </div>
 
         <div class="field">
@@ -48,9 +59,11 @@
                 placeholder="Password"
                 required
                 minlength="8"
+                bind:this="{password_input}"
                 bind:value="{password}"
                 on:keydown="{(e) => {
                     if (e.key == 'Enter') {
+                        password_input.blur();
                         submit.click();
                     }
                 }}" />
