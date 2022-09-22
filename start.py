@@ -23,7 +23,7 @@ def get_app():
     except ImportError:
         app = create_app()
         logger.info("TransLogger is disabled")
-    
+
     return app
 
 

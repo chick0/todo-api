@@ -46,5 +46,5 @@ def check_quit_session(f):
             )
 
         return f(*args, **kwargs)
-    
+
     return decorator

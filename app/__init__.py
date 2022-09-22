@@ -43,7 +43,7 @@ def create_app():
 
     @app.get("/")
     @app.get("/<path:path>")
-    def frontend(path = None):
+    def frontend(path = None):  # noqa: E251
         if path is None:
             path = "index.html"
 

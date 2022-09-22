@@ -25,7 +25,7 @@ def set_secret(name: str) -> str:
     secret = _secret()
 
     new: str = token_bytes(48).hex()
-    secret[name] = new 
+    secret[name] = new
 
     dump(secret, fp=open(filename, mode="w", encoding="utf-8"))
     return new

@@ -43,7 +43,7 @@ def retry():
             status=False,
             message="등록된 계정이 아닙니다."
         ).dict(), 404
-    
+
     if user.email_verified is True:
         return RetryResponse(
             status=True,
@@ -72,4 +72,3 @@ def retry():
             status=False,
             message="이메일 인증 요청 전송에 실패했습니다."
         ).dict(), 500
-

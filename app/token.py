@@ -15,6 +15,7 @@ def create_token(payload: dict, name: str) -> str:
         algorithm=app.config.algorithms[0]
     )
 
+
 def parse_token(token: str, name: str) -> dict:
     try:
         return decode(
