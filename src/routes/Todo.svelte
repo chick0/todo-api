@@ -172,6 +172,7 @@
                 {#if todo.editmode == true}
                     <textarea
                         maxlength="500"
+                        readonly="{todo.button?.classList.contains('spin') === true}"
                         bind:this="{todo.textarea}"
                         bind:value="{todo.text}"
                         on:input="{() => {
