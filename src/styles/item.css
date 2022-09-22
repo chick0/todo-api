@@ -3,8 +3,21 @@ hr {
     border: none;
 }
 
+.field {
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    font-size: 30px;
+    font-weight: 500;
+}
+
 input[type="email"],
 input[type="text"],
+input[type="tel"],
 input[type="password"] {
     display: block;
     width: 100%;

@@ -14,3 +14,6 @@ export const VERIFY = BASE_URL + "/verify";
 export const VERIFY_SESSION = VERIFY + "/session";
 
 export const QUIT = BASE_URL + "/quit";
+
+export const PIN = BASE_URL + "/pin";
+export const PIN_LOGIN = PIN + "/login";

@@ -1,3 +1,4 @@
+from typing import Optional
 from datetime import datetime
 
 from flask import Blueprint
@@ -6,6 +7,7 @@ from pydantic import BaseModel
 from app.models import Todo
 from app.models import History
 from app.models import DBSession
+from app.models import Pin
 from app.auth import AuthSession
 from app.auth import login_required
 from app.utils import timestamp
@@ -28,9 +30,19 @@ class SessionResponse(BaseModel):
     last_access: int
 
 
+class PinResponse(BaseModel):
+    id: int
+    created_at: int
+    fail_count: int
+    ip: str
+    device: str
+    last_access: Optional[int]
+
+
 class UserResponse(BaseModel):
     status: bool
     count: int
+    pin_list: list[PinResponse]
     history_list: list[HistoryResponse]
     session_list: list[SessionResponse]
 
@@ -43,6 +55,21 @@ def fetch(session: AuthSession):
         count=Todo.query.filter_by(
             owner=session.user_id
         ).count(),
+        pin_list=[
+            PinResponse(
+                id=pin.id,
+                created_at=timestamp(pin.created_at),
+                fail_count=pin.fail_count,
+                ip=pin.ip,
+                device=parse_user_agent(pin.user_agent),
+                last_access=timestamp(pin.last_access)
+            )
+            for pin in Pin.query.filter_by(
+                owner=session.user_id
+            ).order_by(
+                Pin.last_access.desc()
+            ).all()
+        ],
         history_list=[
             HistoryResponse(
                 id=history.id,

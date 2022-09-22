@@ -2,8 +2,10 @@
     import { push } from "svelte-spa-router";
     import { LOGOUT } from "../url.js";
     import { get_token } from "../user.js";
+    import { get_pin_token, set_pin_token } from "../pin.js";
 
     const TOKEN = get_token();
+    const pin_token = get_pin_token();
 
     if (TOKEN != null) {
         fetch(LOGOUT, {
@@ -18,9 +20,12 @@
                  *
                  * 1. 요청이 성공한 경우, 로그아웃
                  * 2. 요청이 실패한 경우, 만료된 세션
+                 *
+                 * + PIN 토큰은 삭제하지 않음
                  */
                 sessionStorage.clear();
                 localStorage.clear();
+                set_pin_token(pin_token);
                 push("/");
             })
             .catch(() => {

@@ -26,7 +26,18 @@
 
     <div class="field">
         <label for="password">비밀번호</label>
-        <input type="password" id="password" bind:value="{password}" placeholder="Password" required minlength="8" />
+        <input
+            type="password"
+            id="password"
+            bind:value="{password}"
+            placeholder="Password"
+            required
+            minlength="8"
+            on:keydown="{(e) => {
+                if (e.key == 'Enter') {
+                    submit.click();
+                }
+            }}" />
     </div>
 
     <button
@@ -50,14 +61,12 @@
                 })
                     .then((resp) => resp.json())
                     .then((json) => {
+                        alert(json.message);
+
                         if (json.status === true) {
-                            alert(json.message);
                             push('/login');
-                        } else if (json.status === false) {
-                            alert(json.message);
-                            submit.classList.remove('spin');
                         } else {
-                            throw 'req_fail:sign-up';
+                            submit.classList.remove('spin');
                         }
                     })
                     .catch(() => {
@@ -69,15 +78,4 @@
 </div>
 
 <style>
-    .field {
-        display: block;
-        margin-top: 30px;
-        margin-bottom: 30px;
-    }
-
-    label {
-        display: block;
-        font-size: 40px;
-        font-weight: 500;
-    }
 </style>

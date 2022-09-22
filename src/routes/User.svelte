@@ -1,6 +1,6 @@
 <script>
     import { push } from "svelte-spa-router";
-    import { USER, SESSION_DELETE } from "../url.js";
+    import { USER, SESSION_DELETE, PIN } from "../url.js";
     import { is_login, get_token, get_payload } from "../user.js";
     import { to_datestring, to_timestring } from "../time.js";
 
@@ -8,6 +8,7 @@
     const payload = get_payload();
 
     let is_loading = true;
+    let pin_list = [];
     let history_list = [];
     let session_list = [];
     let count = "-";
@@ -26,6 +27,7 @@
             .then((resp) => resp.json())
             .then((json) => {
                 if (json.status === true) {
+                    pin_list = json.pin_list;
                     history_list = json.history_list;
                     session_list = json.session_list;
                     count = json.count;
@@ -61,6 +63,71 @@
         <hr />
 
         <p class="lead">이 계정의 이메일 주소는 <u>{email}</u>이며, 등록된 할 일은 총 <u>{count}개</u>가 있습니다.</p>
+
+        <hr />
+
+        <h2>PIN</h2>
+
+        {#if pin_list.length == 0}
+            <p>등록된 PIN이 없습니다.</p>
+        {:else}
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th colspan="2">생성 날짜</th>
+                        <th>실패 횟수</th>
+                        <th>IP 주소</th>
+                        <th>기기 정보</th>
+                        <th colspan="2">마지막 사용 날짜</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each pin_list as pin}
+                        <tr>
+                            <td
+                                class="clickable d"
+                                on:click="{() => {
+                                    if (confirm('해당 PIN을 삭제하시겠습니까?')) {
+                                        fetch(PIN, {
+                                            method: 'DELETE',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'x-auth': TOKEN,
+                                            },
+                                            body: JSON.stringify({
+                                                id: pin.id,
+                                            }),
+                                        })
+                                            .then((resp) => resp.json())
+                                            .then((json) => {
+                                                alert(json.message);
+
+                                                if (json.status) {
+                                                    pin_list = pin_list.filter((x) => x.id != pin.id);
+                                                }
+
+                                                if (json.logout_required == true) {
+                                                    push('/logout');
+                                                }
+                                            })
+                                            .catch(() => {
+                                                alert('알 수 없는 오류가 발생했습니다.');
+                                            });
+                                    }
+                                }}">삭제</td>
+                            <td>{to_datestring(pin.created_at)}</td>
+                            <td>{to_timestring(pin.created_at)}</td>
+                            <td>{pin.fail_count}/5</td>
+                            <td>{pin.ip}</td>
+                            <td>{pin.device}</td>
+                            <td>{to_datestring(pin.last_access)}</td>
+                            <td>{to_timestring(pin.last_access)}</td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+        {/if}
 
         <hr />
 
@@ -101,18 +168,18 @@
         <table>
             <thead>
                 <tr>
+                    <th></th>
                     <th>세션 ID</th>
                     <th>기록 ID</th>
-                    <th>만료 날짜</th>
-                    <th>만료 시간</th>
-                    <th>마지막 사용시간</th>
+                    <th colspan="2">만료 날짜</th>
+                    <th colspan="2">마지막 사용시간</th>
                 </tr>
             </thead>
             <tbody>
                 {#each session_list as session}
                     <tr class="{session.history_id == colored_history ? 'colored' : ''}">
                         <td
-                            class="clickable"
+                            class="clickable d"
                             on:click="{() => {
                                 if (
                                     confirm(
@@ -142,7 +209,10 @@
                                             alert('알 수 없는 오류가 발생했습니다.');
                                         });
                                 }
-                            }}">{session.id}</td>
+                            }}"
+                            >삭제
+                        </td>
+                        <td>{session.id}</td>
                         <td
                             class="clickable"
                             on:click="{() => {
@@ -150,6 +220,7 @@
                             }}">{session.history_id}</td>
                         <td>{to_datestring(session.dropped_at)}</td>
                         <td>{to_timestring(session.dropped_at)}</td>
+                        <td>{to_datestring(session.last_access)}</td>
                         <td>{to_timestring(session.last_access)}</td>
                     </tr>
                 {/each}
@@ -163,8 +234,7 @@
             <thead>
                 <tr>
                     <th>기록 ID</th>
-                    <th>로그인 날짜</th>
-                    <th>로그인 시간</th>
+                    <th colspan="2">로그인 날짜</th>
                     <th>기기 IP</th>
                     <th>기기 정보</th>
                 </tr>
@@ -230,5 +300,9 @@
 
     .clickable {
         cursor: pointer;
+    }
+
+    .d:hover {
+        color: crimson;
     }
 </style>

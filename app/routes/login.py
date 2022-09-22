@@ -56,7 +56,7 @@ def email_and_password():
     history.owner = user.id,
     history.created_at = now
     history.ip = get_ip()
-    history.user_agent = request.user_agent
+    history.user_agent = str(request.user_agent).strip()[:500]
 
     db.session.add(history)
     db.session.commit()

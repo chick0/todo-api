@@ -102,7 +102,7 @@ class History(db.Model):
     )
 
     user_agent = db.Column(
-        db.String(128),
+        db.String(500),
         nullable=False
     )
 
@@ -138,4 +138,56 @@ class DBSession(db.Model):
     last_access = db.Column(
         db.DateTime,
         nullable=True,
+    )
+
+
+class Pin(db.Model):
+    __tablename__ = "td_pin"
+
+    id = db.Column(
+        db.Integer,
+        unique=True,
+        primary_key=True,
+        nullable=False
+    )
+
+    owner = db.Column(
+        db.Integer,
+        db.ForeignKey("td_user.id"),
+        nullable=False
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+    )
+
+    fail_count = db.Column(
+        db.Integer,
+        nullable=False
+    )
+
+    ip = db.Column(
+        db.String(120),
+        nullable=False
+    )
+
+    user_agent = db.Column(
+        db.String(500),
+        nullable=False
+    )
+
+    last_access = db.Column(
+        db.DateTime,
+        nullable=True,
+    )
+
+    code = db.Column(
+        db.String(128),
+        nullable=False
+    )
+
+    signature = db.Column(
+        db.String(128),
+        nullable=True
     )

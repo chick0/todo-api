@@ -116,17 +116,3 @@
             }}">다음</button>
     {/if}
 </div>
-
-<style>
-    .field {
-        display: block;
-        margin-top: 30px;
-        margin-bottom: 30px;
-    }
-
-    label {
-        display: block;
-        font-size: 40px;
-        font-weight: 500;
-    }
-</style>
