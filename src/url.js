@@ -12,3 +12,5 @@ export const SESSION_DELETE = (id) => BASE_URL + `/session/${id}`;
 
 export const VERIFY = BASE_URL + "/verify";
 export const VERIFY_SESSION = VERIFY + "/session";
+
+export const QUIT = BASE_URL + "/quit";
