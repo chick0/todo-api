@@ -12,3 +12,11 @@ def handle_api_error(error: APIError):
         "message": error.message,
         "logout_required": error.logout_required
     }, error.code
+
+
+def validation_error(error):
+    del error
+    return {
+        "status": False,
+        "message": "요청이 올바르지 않습니다.",
+    }, 400

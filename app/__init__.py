@@ -11,6 +11,7 @@ from flask import send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from redis import Redis
+from pydantic.error_wrappers import ValidationError
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -64,10 +65,16 @@ def create_app():
     # error handler
     from app.error import APIError
     from app.error import handle_api_error
+    from app.error import validation_error
 
     app.register_error_handler(
         code_or_exception=APIError,
         f=handle_api_error
+    )
+
+    app.register_error_handler(
+        code_or_exception=ValidationError,
+        f=validation_error
     )
 
     return app
