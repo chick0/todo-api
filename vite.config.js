@@ -8,5 +8,5 @@ export default defineConfig({
     define: {
         BUILD_DATE: JSON.stringify(Date.now()),
         GIT_HASH: JSON.stringify(execSync("git rev-parse --short HEAD").toString().trim()),
-    }
+    },
 });
