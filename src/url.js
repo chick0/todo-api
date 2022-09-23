@@ -19,3 +19,7 @@ export const PIN = BASE_URL + "/pin";
 export const PIN_LOGIN = PIN + "/login";
 
 export const RETRY = BASE_URL + "/retry";
+
+export const RESET = BASE_URL + "/reset";
+export const RESET_STEP_1 = RESET + "/step1";
+export const RESET_STEP_2 = RESET + "/step2";

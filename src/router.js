@@ -12,6 +12,7 @@ export const routes = {
     "/sign-up": wrap({ asyncComponent: () => import("./routes/SignUp.svelte") }),
     "/verify": wrap({ asyncComponent: () => import("./routes/Verify.svelte") }),
     "/retry": wrap({ asyncComponent: () => import("./routes/Retry.svelte") }),
+    "/reset": wrap({ asyncComponent: () => import("./routes/Reset.svelte") }),
 
     "/todo": wrap({ asyncComponent: () => import("./routes/Todo.svelte") }),
 

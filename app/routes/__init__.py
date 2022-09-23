@@ -4,6 +4,7 @@ __all__ = [
     "logout",
     "pin",
     "quit",
+    "reset",
     "retry",
     "session",
     "sign-up",
