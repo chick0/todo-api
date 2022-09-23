@@ -21,7 +21,7 @@
 <Router routes="{routes}" />
 
 <div class="section container">
-    <p class="build">{hash} {date.toLocaleString()}</p>
+    <p class="build">{hash} / {date.toLocaleString()}</p>
 </div>
 
 <style>
