@@ -21,8 +21,7 @@ def fetch(session: AuthSession):
     todos = Todo.query.filter_by(
         owner=session.user_id
     ).order_by(
-        Todo.checked.desc()
-    ).order_by(
+        Todo.checked.asc(),
         Todo.created_at.desc()
     ).limit(100).all()
 
