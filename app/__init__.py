@@ -66,6 +66,7 @@ def create_app():
     from app.error import APIError
     from app.error import handle_api_error
     from app.error import validation_error
+    from app.error import not_found_error
 
     app.register_error_handler(
         code_or_exception=APIError,
@@ -75,6 +76,11 @@ def create_app():
     app.register_error_handler(
         code_or_exception=ValidationError,
         f=validation_error
+    )
+
+    app.register_error_handler(
+        code_or_exception=404,
+        f=not_found_error
     )
 
     return app
