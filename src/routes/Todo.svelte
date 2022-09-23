@@ -284,7 +284,7 @@
 
 <style>
     textarea {
-        font-family: "Malgun Gothic", sans-serif;
+        font-family: Pretendard, sans-serif;
         font-size: 20px;
 
         display: block;

@@ -24,7 +24,7 @@
 }
 
 html {
-    font-family: Pretendard, "Noto Sans KR", "Malgun Gothic", sans-serif;
+    font-family: Pretendard, -apple-system, system-ui, Roboto, sans-serif;
     font-size: 22px;
     font-weight: 400;
     color: var(--color);
