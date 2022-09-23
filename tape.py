@@ -1,5 +1,4 @@
 from glob import glob
-from json import load
 from zipfile import ZipFile
 from zipfile import ZIP_DEFLATED
 from subprocess import run
