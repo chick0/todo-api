@@ -10,6 +10,7 @@ from app.models import User
 from app.models import Todo
 from app.models import History
 from app.models import DBSession
+from app.models import Pin
 from app.auth import AuthSession
 from app.auth import login_required
 from app.quit import create_token
@@ -68,6 +69,10 @@ def quit(session: AuthSession):
     ).delete()
 
     Todo.query.filter_by(
+        owner=session.user_id
+    ).delete()
+
+    Pin.query.filter_by(
         owner=session.user_id
     ).delete()
 

@@ -43,7 +43,8 @@ def login():
     if user is None:
         raise APIError(
             code=404,
-            message="등록된 계정이 아닙니다."
+            message="등록된 계정이 아닙니다.",
+            logout_required=True
         )
 
     pin: Pin = Pin.query.filter_by(
