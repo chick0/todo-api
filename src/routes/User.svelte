@@ -264,7 +264,6 @@
         font-weight: 300;
     }
 
-
     .colored {
         background-color: var(--color);
         color: var(--background);

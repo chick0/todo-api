@@ -5,7 +5,7 @@
 
 <div class="section container">
     <h1>빌드 정보</h1>
-    <hr>
+    <hr />
     <table>
         <thead>
             <tr>
