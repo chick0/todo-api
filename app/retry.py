@@ -1,19 +1,12 @@
-from app.utils import get_redis
+from app.flag import set_flag as sf
+from app.flag import check_flag as cf
 
-prefix = "chick0/to-do:retry:"
+prefix = "chick0/to-do:retry:{email}"
 
 
-def set_flag(email: str):
-    redis = get_redis()
-    return redis.set(
-        name=prefix + email,
-        value=b"true",
-        ex=5 * 60
-    )
+def set_flag(email: str) -> None:
+    sf(prefix.format(email=email))
 
 
 def check_flag(email: str) -> bool:
-    redis = get_redis()
-    return redis.get(
-        name=prefix + email
-    ) == b"true"
+    return cf(prefix.format(email=email))
