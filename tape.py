@@ -1,3 +1,4 @@
+from sys import argv
 from glob import glob
 from zipfile import ZipFile
 from zipfile import ZIP_DEFLATED
@@ -11,7 +12,18 @@ def get_files() -> list:
 
 
 def tape():
-    hash = run("git rev-parse --short HEAD", capture_output=True).stdout.decode().strip()
+    try:
+        hash = argv[1]
+        hash = hash[:7]
+    except IndexError:
+        hash = None
+
+    if hash is None:
+        try:
+            hash = run("git rev-parse --short HEAD", capture_output=True).stdout.decode().strip()
+        except:  # noqa: E722
+            hash = "undefined"
+
     files = get_files()
 
     print("total files:", len(files))

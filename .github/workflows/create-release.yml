@@ -19,7 +19,7 @@ jobs:
           yarn build
 
       - name: Taping dist
-        run: python tape.py
+        run: python tape.py ${{ github.sha }}
 
       - name: Upload build output
         uses: actions/upload-artifact@v3
