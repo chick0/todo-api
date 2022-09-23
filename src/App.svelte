@@ -6,7 +6,10 @@
     function update_theme_color() {
         document
             .querySelector("meta[name=theme-color]")
-            .setAttribute("content", getComputedStyle(document.documentElement).getPropertyValue("--background"));
+            .setAttribute(
+                "content",
+                getComputedStyle(document.documentElement).getPropertyValue("--background").trim()
+            );
     }
 
     onMount(() => {
