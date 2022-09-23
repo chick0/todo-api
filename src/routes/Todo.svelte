@@ -9,6 +9,7 @@
 
     let todos = [];
     let newTodo = "";
+    let newTodoOpen = false;
     let newTodoElement = undefined;
     let newTodoSave = undefined;
 
@@ -29,10 +30,8 @@
                     isLoading = false;
 
                     if (todos.length == 0) {
-                        newTodo = "새로운 To-Do를 여기에 입력해주세요!\n\n마크다운 문법을 사용 할 수 있습니다 :)";
-                        setTimeout(() => {
-                            newTodoElement.style.height = "100px";
-                        }, 100);
+                        newTodoOpen = true;
+                        newTodo = "- 이 곳에 할 일을 적어주세요!\n- 마크다운 문법을 사용 할 수 있습니다.";
                     }
                 } else {
                     alert(json.message);
@@ -72,55 +71,72 @@
     {#if isLoading == true}
         <div class="spinner"></div>
     {:else}
-        <div class="todo new">
-            <textarea
-                maxlength="500"
-                bind:value="{newTodo}"
-                bind:this="{newTodoElement}"
-                on:input="{() => {
-                    newTodoElement.style.height = '1px';
-                    newTodoElement.style.height = 12 + newTodoElement.scrollHeight + 'px';
-                }}"></textarea>
-            <p>{newTodo.length}/500자</p>
-            <br />
-            <button
-                class="button max"
-                bind:this="{newTodoSave}"
+        {#if newTodoOpen == false}
+            <p
+                class="clickable"
                 on:click="{() => {
-                    newTodoSave.classList.add('spin');
-                    fetch(TODO, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'x-auth': TOKEN,
-                        },
-                        body: JSON.stringify({
-                            text: newTodo,
-                        }),
-                    })
-                        .then((resp) => resp.json())
-                        .then((json) => {
-                            if (json.status == true) {
-                                newTodo = '';
-
-                                todos.unshift(json.todo);
-                                todos = todos;
-                            } else {
-                                alert(json.message);
-                            }
-
-                            newTodoSave.classList.remove('spin');
-
-                            if (json.logout_required == true) {
-                                push('/logout');
-                            }
+                    newTodoOpen = true;
+                }}">
+                [<b>+</b>] 펼치기
+            </p>
+        {:else}
+            <p
+                class="clickable"
+                on:click="{() => {
+                    newTodoOpen = false;
+                }}">
+                [<b>-</b>] 접기
+            </p>
+            <div class="todo new">
+                <textarea
+                    maxlength="500"
+                    bind:value="{newTodo}"
+                    bind:this="{newTodoElement}"
+                    on:input="{() => {
+                        newTodoElement.style.height = '1px';
+                        newTodoElement.style.height = 12 + newTodoElement.scrollHeight + 'px';
+                    }}"></textarea>
+                <p>{newTodo.length}/500자</p>
+                <br />
+                <button
+                    class="button max"
+                    bind:this="{newTodoSave}"
+                    on:click="{() => {
+                        newTodoSave.classList.add('spin');
+                        fetch(TODO, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'x-auth': TOKEN,
+                            },
+                            body: JSON.stringify({
+                                text: newTodo,
+                            }),
                         })
-                        .catch(() => {
-                            alert('알 수 없는 오류가 발생했습니다.');
-                            newTodoSave.classList.remove('spin');
-                        });
-                }}">새로운 할 일 저장</button>
-        </div>
+                            .then((resp) => resp.json())
+                            .then((json) => {
+                                if (json.status == true) {
+                                    newTodo = '';
+
+                                    todos.unshift(json.todo);
+                                    todos = todos;
+                                } else {
+                                    alert(json.message);
+                                }
+
+                                newTodoSave.classList.remove('spin');
+
+                                if (json.logout_required == true) {
+                                    push('/logout');
+                                }
+                            })
+                            .catch(() => {
+                                alert('알 수 없는 오류가 발생했습니다.');
+                                newTodoSave.classList.remove('spin');
+                            });
+                    }}">새로운 할 일 저장</button>
+            </div>
+        {/if}
 
         <hr />
 
@@ -283,6 +299,12 @@
 </div>
 
 <style>
+    p.clickable > b {
+        display: inline-block;
+        width: 15px;
+        text-align: center;
+    }
+
     textarea {
         font-family: Pretendard, sans-serif;
         font-size: 20px;

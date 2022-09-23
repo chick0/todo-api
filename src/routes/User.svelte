@@ -269,10 +269,6 @@
         color: var(--background);
     }
 
-    .clickable {
-        cursor: pointer;
-    }
-
     .d:hover {
         color: crimson;
     }
