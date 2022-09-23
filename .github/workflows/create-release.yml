@@ -1,0 +1,35 @@
+name: Create release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependency and build
+        run: |
+          yarn install
+          yarn build
+
+      - name: Taping dist
+        run: python tape.py
+
+      - name: Upload build output
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            dist-*.zip
