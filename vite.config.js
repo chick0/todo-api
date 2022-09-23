@@ -43,9 +43,7 @@ export default defineConfig({
                 background_color: "#141414",
                 theme_color: "#FFCC4D",
             },
-            includeAssets: [
-                "Pretendard/*.woff2"
-            ]
+            includeAssets: ["Pretendard/*.woff2"],
         }),
     ],
     define: {
