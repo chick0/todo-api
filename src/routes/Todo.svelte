@@ -129,7 +129,7 @@
         {/if}
 
         {#each todos as todo}
-            <div class="todo">
+            <div class="todo {todo.checked == true ? 'checked' : ''}">
                 <input
                     type="checkbox"
                     readonly="{todo.checked_pending != true}"
@@ -228,10 +228,12 @@
                 {:else}
                     <div
                         on:dblclick="{() => {
-                            todo.editmode = true;
-                            setTimeout(() => {
-                                todo.textarea.focus();
-                            }, 300);
+                            if (todo.checked == false) {
+                                todo.editmode = true;
+                                setTimeout(() => {
+                                    todo.textarea.focus();
+                                }, 300);
+                            }
                         }}">
                         {@html parse(todo.text)}
                     </div>
@@ -316,6 +318,10 @@
     .todo:not(.new):not(:last-child) {
         padding-bottom: 20px;
         border-bottom: 1px solid var(--color);
+    }
+
+    .todo.checked > div {
+        color: #a8a8a8;
     }
 
     /* Todo Checkbox */
