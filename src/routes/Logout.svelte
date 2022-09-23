@@ -26,7 +26,7 @@
                 sessionStorage.clear();
                 localStorage.clear();
 
-                if(pin_token != null) {
+                if (pin_token != null) {
                     set_pin_token(pin_token);
                 }
 
