@@ -25,7 +25,11 @@
                  */
                 sessionStorage.clear();
                 localStorage.clear();
-                set_pin_token(pin_token);
+
+                if(pin_token != null) {
+                    set_pin_token(pin_token);
+                }
+
                 push("/");
             })
             .catch(() => {

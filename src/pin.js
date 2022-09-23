@@ -14,8 +14,14 @@ export function set_pin_token(token) {
  *
  * @returns {string|null} token pin token
  */
-export function get_pin_token(token) {
-    return localStorage.getItem(TOKEN_KEY);
+export function get_pin_token() {
+    const token = localStorage.getItem(TOKEN_KEY);
+
+    if (token == "null") {
+        return null;
+    }
+
+    return token;
 }
 
 /**
