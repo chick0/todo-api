@@ -26,7 +26,8 @@
 
 <style>
     .build {
-        font-size: 12px;
+        font-weight: 200;
+        font-size: 16px;
         color: #949494;
     }
 </style>
