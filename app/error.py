@@ -28,5 +28,5 @@ def validation_error(error):
 
 def not_found_error(error):
     return redirect(
-        "/#" + request.path 
+        "/#" + request.path
     )
