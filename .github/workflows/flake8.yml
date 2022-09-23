@@ -2,8 +2,7 @@ name: Code style guide with flake8
 
 on:
   push:
-    paths:
-      - '*.py'
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
