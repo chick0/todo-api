@@ -17,5 +17,6 @@ export const routes = {
     "/pin": wrap({ asyncComponent: () => import("./routes/Pin.svelte") }),
     "/pin/create": wrap({ asyncComponent: () => import("./routes/PinCreate.svelte") }),
 
+    "/build": wrap({ asyncComponent: () => import("./routes/Build.svelte") }),
     "*": wrap({ asyncComponent: () => import("./NotFound.svelte") }),
 };

@@ -264,34 +264,6 @@
         font-weight: 300;
     }
 
-    table {
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    thead {
-        border-bottom: 1px solid var(--color);
-    }
-
-    th {
-        font-size: 25px;
-        font-weight: 600;
-    }
-
-    th,
-    td {
-        padding: 10px;
-    }
-
-    th:not(:last-child),
-    td:not(:last-child) {
-        border-right: 1px solid var(--color);
-    }
-
-    tbody > tr:hover {
-        box-shadow: 0 0 1px var(--color);
-    }
 
     .colored {
         background-color: var(--color);

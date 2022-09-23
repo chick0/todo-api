@@ -3,9 +3,6 @@
     import { onMount } from "svelte";
     import { routes } from "./router.js";
 
-    let hash = GIT_HASH;
-    let date = new Date(BUILD_DATE);
-
     function update_theme_color() {
         document
             .querySelector("meta[name=theme-color]")
@@ -19,15 +16,3 @@
 </script>
 
 <Router routes="{routes}" />
-
-<div class="section container">
-    <p class="build">{hash} / {date.toLocaleString()}</p>
-</div>
-
-<style>
-    .build {
-        font-weight: 200;
-        font-size: 16px;
-        color: #949494;
-    }
-</style>
