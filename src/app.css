@@ -185,7 +185,8 @@ tbody > tr:hover {
     color: var(--button-text);
     background-color: var(--button-background);
 
-    font-size: 20px;
+    font: inherit;
+    font-size: 20px !important;
 
     padding: 10px;
     border: 1px solid var(--button-background);
