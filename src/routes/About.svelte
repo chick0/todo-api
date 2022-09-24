@@ -1,9 +1,15 @@
 <script>
     import { is_login } from "../user.js";
+    let show_hidden_button = false;
 </script>
 
 <div class="section container">
-    <h1>To-Do</h1>
+    <h1
+        on:dblclick="{() => {
+            show_hidden_button = !show_hidden_button;
+        }}">
+        To-Do
+    </h1>
     <div class="buttons">
         {#if !is_login()}
             <a class="button" href="#/login">로그인</a>
@@ -12,6 +18,9 @@
             <a class="button" href="#/todo">할 일</a>
             <a class="button" href="#/user">계정 정보</a>
             <a class="button" href="#/logout">로그아웃</a>
+        {/if}
+        {#if show_hidden_button}
+            <a class="button" href="#/build">빌드 정보</a>
         {/if}
     </div>
 

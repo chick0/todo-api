@@ -5,6 +5,9 @@
 
 <div class="section container">
     <h1>빌드 정보</h1>
+    <div class="buttons">
+        <a class="button" href="/#/">메인 화면으로 이동</a>
+    </div>
     <hr />
     <table>
         <thead>
