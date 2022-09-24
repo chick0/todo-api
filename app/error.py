@@ -1,7 +1,3 @@
-from flask import request
-from flask import redirect
-
-
 class APIError(Exception):
     def __init__(self, code: int, message: str, logout_required: bool = False) -> None:
         super().__init__()
@@ -24,9 +20,3 @@ def validation_error(error):
         "status": False,
         "message": "요청이 올바르지 않습니다.",
     }, 400
-
-
-def not_found_error(error):
-    return redirect(
-        "/#" + request.path
-    )

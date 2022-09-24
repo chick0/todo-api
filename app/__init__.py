@@ -42,6 +42,12 @@ def create_app():
     BASE_DIR = dirname(dirname(abspath(__file__)))
     DIST_DIR = join(BASE_DIR, "dist")
 
+    def not_found_error(error):
+        return send_from_directory(
+            directory=DIST_DIR,
+            path="404.html"
+        ), 404
+
     @app.get("/")
     @app.get("/<path:path>")
     def frontend(path = None):  # noqa: E251
@@ -66,7 +72,6 @@ def create_app():
     from app.error import APIError
     from app.error import handle_api_error
     from app.error import validation_error
-    from app.error import not_found_error
 
     app.register_error_handler(
         code_or_exception=APIError,
