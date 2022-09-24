@@ -1,4 +1,4 @@
-const PRECACHE = "precache";
+const PRECACHE = "precache-v1";
 const PRECACHE_URLS = [
     "icons/192.png",
     "Pretendard/ExtraLight.woff2",
