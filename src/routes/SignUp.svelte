@@ -89,6 +89,3 @@
             }
         }}">회원가입</button>
 </div>
-
-<style>
-</style>
