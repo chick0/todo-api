@@ -43,7 +43,8 @@
         <div class="field">
             <input
                 id="pin"
-                type="tel"
+                type="password"
+                inputmode="numeric"
                 minlength="6"
                 placeholder="6자리 이상으로 입력해주세요."
                 bind:value="{pin}"

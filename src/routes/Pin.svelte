@@ -34,7 +34,8 @@
         <div class="field">
             <input
                 id="pin"
-                type="tel"
+                type="password"
+                inputmode="numeric"
                 minlength="6"
                 placeholder="PIN을 입력해주세요."
                 bind:this="{pin_input}"

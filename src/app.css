@@ -86,7 +86,6 @@ label {
 
 input[type="email"],
 input[type="text"],
-input[type="tel"],
 input[type="password"] {
     display: block;
     width: 100%;
