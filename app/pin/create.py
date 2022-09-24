@@ -1,3 +1,4 @@
+from re import findall
 from typing import Optional
 from hashlib import sha512
 from datetime import datetime
@@ -33,6 +34,12 @@ def create(session: AuthSession):
         return PinCreateResponse(
             status=False,
             message="6자리 이상으로 설정해야 합니다."
+        ).dict(), 400
+
+    if len(ctx.code) != len(findall(r"\d", ctx.code)):
+        return PinCreateResponse(
+            status=False,
+            message="PIN은 숫자로 입력해야 합니다."
         ).dict(), 400
 
     ctx.code = sha512(ctx.code.encode()).hexdigest()
