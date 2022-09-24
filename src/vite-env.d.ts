@@ -2,4 +2,4 @@
 /// <reference types="vite/client" />
 
 declare const BUILD_DATE: number;
-declare const GIT_HASH: string;
+declare const COMMIT_HASH: string;

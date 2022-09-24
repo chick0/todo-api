@@ -1,5 +1,5 @@
 <script>
-    let hash = GIT_HASH;
+    let hash = COMMIT_HASH;
     let date = new Date(BUILD_DATE);
 </script>
 
