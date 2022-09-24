@@ -16,10 +16,18 @@
         <link rel="apple-touch-icon" sizes="192x192" href="/icons/192.png" />
         <link rel="apple-touch-icon" sizes="256x256" href="/icons/256.png" />
         <link rel="apple-touch-icon" sizes="512x512" href="/icons/512.png" />
+        <link rel="manifest" href="/manifest.json" />
         <title>To-do</title>
     </head>
     <body>
         <div id="app"></div>
         <script type="module" src="/src/main.js"></script>
+        <script>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker.register("/sw.js", { scope: "/" });
+                });
+            }
+        </script>
     </body>
 </html>
