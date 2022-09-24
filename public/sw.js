@@ -1,12 +1,13 @@
-const RUNTIME = "runtime-v1";
 const PRECACHE = "precache";
 const PRECACHE_URLS = [
     "icons/192.png",
     "Pretendard/ExtraLight.woff2",
     "Pretendard/Light.woff2",
     "Pretendard/Regular.woff2",
-    "Pretendard/SemiBold.woff2,",
+    "Pretendard/SemiBold.woff2",
 ];
+
+const RUNTIME = "runtime-v2";
 
 self.addEventListener("install", (event) => {
     event.waitUntil(
@@ -37,11 +38,9 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-    if (event.request.url.startsWith(self.location.origin) && !event.request.url.includes("api")) {
+    if (event.request.url.startsWith(self.location.origin) && event.request.url.includes("assets")) {
         event.respondWith(
             caches.match(event.request).then((cachedResponse) => {
-                console.log(event.request.url);
-
                 if (cachedResponse) {
                     return cachedResponse;
                 }
