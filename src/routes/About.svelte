@@ -21,6 +21,7 @@
         {/if}
         {#if show_hidden_button}
             <a class="button" href="#/build">빌드 정보</a>
+            <a class="button" href="/cache.html">캐시 관리자</a>
         {/if}
     </div>
 

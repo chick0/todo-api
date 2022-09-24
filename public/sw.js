@@ -5,6 +5,7 @@ const PRECACHE_URLS = [
     "Pretendard/Light.woff2",
     "Pretendard/Regular.woff2",
     "Pretendard/SemiBold.woff2",
+    "cache.html"
 ];
 
 const RUNTIME = "runtime-v2";

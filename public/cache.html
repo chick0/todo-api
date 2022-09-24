@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="robots" content="noindex,nofollow" />
+        <meta name="author" content="chick_0" />
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, shrink-to-fit=no" />
+        <title>캐시 관리자</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css" />
+        <style>
+            :root {
+                --background: #141414;
+                --color: #fff;
+                --button-background: #ffcc4d;
+                --button-hover: #ffdb81;
+                --button-text: #000;
+            }
+
+            @media (prefers-color-scheme: light) {
+                :root {
+                    --background: #fff;
+                    --color: #000;
+                }
+            }
+
+            html {
+                font-family: Pretendard, -apple-system, system-ui, Roboto, sans-serif;
+                font-size: 22px;
+                font-weight: 400;
+                color: var(--color);
+                background-color: var(--background);
+            }
+
+            .section {
+                padding-top: 60px;
+                padding-bottom: 60px;
+            }
+
+            .container {
+                text-align: left;
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+
+            @media (min-width: 700px) {
+                .container {
+                    margin-left: 20%;
+                    margin-right: 20%;
+                }
+            }
+
+            h1 {
+                font-size: 60px;
+                font-weight: 600;
+            }
+
+            .button {
+                display: inline-block;
+                text-decoration: none;
+                cursor: pointer;
+
+                color: var(--button-text);
+                background-color: var(--button-background);
+
+                font: inherit;
+                font-size: 20px !important;
+
+                padding: 10px;
+                border: 1px solid var(--button-background);
+                border-radius: 0.25rem;
+            }
+
+            .button:hover {
+                background-color: var(--button-hover);
+                border: 1px solid var(--button-hover);
+            }
+
+            li,
+            li > ul {
+                margin-left: 25px;
+            }
+
+            ul > li {
+                margin-left: 0;
+            }
+
+            ul > li::before {
+                content: "-";
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="section container">
+            <h1>캐시 관리자</h1>
+            <div class="buttons">
+                <a class="button" href="/#/">메인 화면으로 이동</a>
+            </div>
+
+            <ul id="list" class="section"></ul>
+
+            <div class="buttons">
+                <button class="button" id="delete">런타임 캐시 삭제하기</button>
+                <button class="button" id="refresh">새로고침</button>
+            </div>
+        </div>
+
+        <script>
+            const list = document.getElementById("list");
+            function render() {
+                list.innerHTML = "";
+                caches.keys().then((keys) => {
+                    keys.forEach((key) => {
+                        let li = document.createElement("li");
+                        li.innerText = key;
+
+                        let itmes_display = document.createElement("ul");
+
+                        caches.open(key).then((cahce) => {
+                            cahce.keys().then((items) => {
+                                items.forEach((item) => {
+                                    let item_display = document.createElement("li");
+                                    item_display.innerText = item.url.replace(location.origin, "");
+                                    itmes_display.appendChild(item_display);
+                                });
+                            });
+                        });
+
+                        li.appendChild(itmes_display);
+                        list.appendChild(li);
+                    });
+                });
+            }
+
+            render();
+
+            document.getElementById("delete").addEventListener("click", () => {
+                caches
+                    .keys()
+                    .then((keys) => {
+                        return Promise.all(
+                            keys.map((key) => {
+                                if (key.startsWith("runtime")) {
+                                    return caches.delete(key);
+                                }
+                            })
+                        );
+                    })
+                    .then(() => {
+                        render();
+                    });
+            });
+            document.getElementById("refresh").addEventListener("click", () => {
+                render();
+            });
+        </script>
+    </body>
+</html>
