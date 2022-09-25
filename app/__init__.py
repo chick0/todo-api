@@ -3,6 +3,7 @@ from os.path import join
 from os.path import abspath
 from os.path import dirname
 from logging import getLogger
+from datetime import datetime
 from importlib import import_module
 
 from flask import Flask
@@ -88,4 +89,11 @@ def create_app():
         f=not_found_error
     )
 
+    try:
+        commit_hash = open(join(".git", open(join(".git", "HEAD"), mode="r").read()[5:].strip()), mode="r").read()[:7]
+    except (FileNotFoundError, Exception):
+        commit_hash = "-------"
+
+    app.commit_hash = commit_hash
+    app.started_at = datetime.now()
     return app

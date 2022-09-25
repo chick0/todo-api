@@ -20,7 +20,7 @@
             <a class="button" href="#/logout">로그아웃</a>
         {/if}
         {#if show_hidden_button}
-            <a class="button" href="#/build">빌드 정보</a>
+            <a class="button" href="#/version">버전 정보</a>
             <a class="button" href="/cache.html">캐시 관리자</a>
         {/if}
     </div>

@@ -11,6 +11,7 @@ __all__ = [
     "todo",
     "user",
     "verify",
+    "version"
 ]
 
 from . import *

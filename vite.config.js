@@ -6,7 +6,7 @@ import { svelte } from "@sveltejs/vite-plugin-svelte";
 export default defineConfig({
     plugins: [svelte()],
     define: {
+        TAG: JSON.stringify(execSync("git describe --tags").toString().trim()),
         BUILD_DATE: JSON.stringify(Date.now()),
-        COMMIT_HASH: JSON.stringify(execSync("git rev-parse --short HEAD").toString().trim()),
     },
 });
