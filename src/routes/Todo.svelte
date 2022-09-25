@@ -95,6 +95,16 @@
                     on:input="{() => {
                         newTodoElement.style.height = '1px';
                         newTodoElement.style.height = 12 + newTodoElement.scrollHeight + 'px';
+                    }}"
+                    on:keydown="{(e) => {
+                        if (e.key == "Escape"){
+                            newTodoElement.blur();
+                        }
+                    }}"
+                    on:blur="{() => {
+                        if(newTodo.length == 0) {
+                            newTodoOpen = false;
+                        }
                     }}"></textarea>
                 <p>{newTodo.length}/500자</p>
                 <br />
@@ -148,7 +158,7 @@
             <div class="todo {todo.checked == true ? 'checked' : ''}">
                 <input
                     type="checkbox"
-                    readonly="{todo.checked_pending != true}"
+                    disabled="{todo.checked_pending == true}"
                     bind:checked="{todo.checked}"
                     on:change="{() => {
                         todo.checked_at = Date.now() / 1000;
@@ -198,6 +208,11 @@
                         on:focus="{() => {
                             todo.textarea.style.height = '1px';
                             todo.textarea.style.height = 12 + todo.textarea.scrollHeight + 'px';
+                        }}"
+                        on:keydown="{(e) => {
+                            if (e.key == "Escape"){
+                                todo.textarea.blur();
+                            }
                         }}"></textarea>
                     <p>{todo.text.length}/500자</p>
                     <br />
