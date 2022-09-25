@@ -97,12 +97,12 @@
                         newTodoElement.style.height = 12 + newTodoElement.scrollHeight + 'px';
                     }}"
                     on:keydown="{(e) => {
-                        if (e.key == "Escape"){
+                        if (e.key == 'Escape') {
                             newTodoElement.blur();
                         }
                     }}"
                     on:blur="{() => {
-                        if(newTodo.length == 0) {
+                        if (newTodo.length == 0) {
                             newTodoOpen = false;
                         }
                     }}"></textarea>
@@ -210,7 +210,7 @@
                             todo.textarea.style.height = 12 + todo.textarea.scrollHeight + 'px';
                         }}"
                         on:keydown="{(e) => {
-                            if (e.key == "Escape"){
+                            if (e.key == 'Escape') {
                                 todo.textarea.blur();
                             }
                         }}"></textarea>
