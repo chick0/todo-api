@@ -74,11 +74,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th></th>
+                        <th class="w-70"></th>
                         <th colspan="2">생성 날짜</th>
                         <th>실패 횟수</th>
-                        <th>IP 주소</th>
-                        <th>기기 정보</th>
+                        <th>설정된 기기</th>
                         <th colspan="2">마지막 사용 날짜</th>
                     </tr>
                 </thead>
@@ -86,7 +85,7 @@
                     {#each pin_list as pin}
                         <tr>
                             <td
-                                class="clickable d"
+                                class="clickable"
                                 on:click="{() => {
                                     if (confirm('해당 PIN을 삭제하시겠습니까?')) {
                                         fetch(PIN, {
@@ -118,8 +117,9 @@
                                 }}">삭제</td>
                             <td>{to_datestring(pin.created_at)}</td>
                             <td>{to_timestring(pin.created_at)}</td>
-                            <td>{pin.fail_count}/5</td>
-                            <td>{pin.ip}</td>
+                            <td class="{pin.fail_count == 0 ? 'green' : pin.fail_count > 5 ? 'red' : ''}">
+                                {pin.fail_count}회
+                            </td>
                             <td>{pin.device}</td>
                             <td>{to_datestring(pin.last_access)}</td>
                             <td>{to_timestring(pin.last_access)}</td>
@@ -168,9 +168,8 @@
         <table>
             <thead>
                 <tr>
-                    <th></th>
-                    <th>세션 ID</th>
-                    <th>기록 ID</th>
+                    <th class="w-70"></th>
+                    <th colspan="2">생성 날짜</th>
                     <th colspan="2">만료 날짜</th>
                     <th colspan="2">마지막 사용시간</th>
                 </tr>
@@ -179,7 +178,7 @@
                 {#each session_list as session}
                     <tr class="{session.history_id == colored_history ? 'colored' : ''}">
                         <td
-                            class="clickable d"
+                            class="clickable"
                             on:click="{() => {
                                 if (
                                     confirm(
@@ -212,12 +211,8 @@
                             }}"
                             >삭제
                         </td>
-                        <td>{session.id}</td>
-                        <td
-                            class="clickable"
-                            on:click="{() => {
-                                colored_history = session.history_id;
-                            }}">{session.history_id}</td>
+                        <td>{to_datestring(session.created_at)}</td>
+                        <td>{to_timestring(session.created_at)}</td>
                         <td>{to_datestring(session.dropped_at)}</td>
                         <td>{to_timestring(session.dropped_at)}</td>
                         <td>{to_datestring(session.last_access)}</td>
@@ -230,10 +225,10 @@
         <hr />
 
         <h2>로그인 기록</h2>
+        <p>최근 한 달 동안의 기록만 확인할 수 있습니다.</p>
         <table>
             <thead>
                 <tr>
-                    <th>기록 ID</th>
                     <th colspan="2">로그인 날짜</th>
                     <th>기기 IP</th>
                     <th>기기 정보</th>
@@ -241,12 +236,7 @@
             </thead>
             <tbody>
                 {#each history_list as history}
-                    <tr
-                        class="clickable {history.id == colored_history ? 'colored' : ''}"
-                        on:click="{() => {
-                            colored_history = history.id;
-                        }}">
-                        <td>{history.id}</td>
+                    <tr class="{history.id == colored_history ? 'colored' : ''}">
                         <td>{to_datestring(history.created_at)}</td>
                         <td>{to_timestring(history.created_at)}</td>
                         <td>{history.ip}</td>
@@ -259,6 +249,10 @@
 </div>
 
 <style>
+    .w-70 {
+        width: 70px;
+    }
+
     .lead {
         font-size: 28px;
         font-weight: 300;
@@ -269,7 +263,15 @@
         color: var(--background);
     }
 
-    .d:hover {
+    .clickable:hover {
         color: crimson;
+    }
+
+    .red {
+        color: crimson;
+    }
+
+    .green {
+        color: green;
     }
 </style>
