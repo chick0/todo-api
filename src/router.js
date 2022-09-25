@@ -4,8 +4,10 @@ export const routes = {
     "/": wrap({ asyncComponent: () => import("./routes/About.svelte") }),
     "/login": wrap({ asyncComponent: () => import("./routes/Login.svelte") }),
     "/logout": wrap({ asyncComponent: () => import("./routes/Logout.svelte") }),
+
     "/sign-up": wrap({ asyncComponent: () => import("./routes/SignUp.svelte") }),
     "/verify": wrap({ asyncComponent: () => import("./routes/Verify.svelte") }),
+
     "/retry": wrap({ asyncComponent: () => import("./routes/Retry.svelte") }),
     "/reset": wrap({ asyncComponent: () => import("./routes/Reset.svelte") }),
 
