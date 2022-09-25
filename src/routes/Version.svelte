@@ -42,7 +42,7 @@
             </tr>
         </tbody>
     </table>
-    <br>
+    <br />
     <ul>
         <li>서버 버전: {server_id}</li>
         <li>서버 시작 날짜: {to_string(started_at)}</li>
