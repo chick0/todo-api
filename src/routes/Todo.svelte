@@ -3,7 +3,7 @@
     import { Renderer, setOptions, parse } from "marked";
     import { TODO, TODO_CHECK } from "../url.js";
     import { is_login, get_token } from "../user.js";
-    import { to_datestring } from "../time.js";
+    import { to_datestring, to_timestring } from "../time.js";
 
     const TOKEN = get_token();
 
@@ -58,6 +58,15 @@
         gfm: true,
         renderer: renderer,
     });
+
+    function get_function(timestamp) {
+        let now = Date.now() / 1000;
+        if (now - timestamp > 3600) {
+            return to_datestring(timestamp);
+        } else {
+            return to_timestring(timestamp);
+        }
+    }
 </script>
 
 <div class="section container">
@@ -272,9 +281,13 @@
 
                 <p>
                     {#if todo.checked}
-                        {to_datestring(todo.created_at)} ~ {to_datestring(todo.checked_at)}
+                        <span title="완료일">
+                            {get_function(todo.checked_at)}
+                        </span>
                     {:else}
-                        {to_datestring(todo.created_at)}
+                        <span title="생성일">
+                            {get_function(todo.created_at)}
+                        </span>
                     {/if}
 
                     <b
