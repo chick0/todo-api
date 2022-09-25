@@ -25,6 +25,7 @@ html {
     font-weight: 400;
     color: var(--color);
     background-color: var(--background);
+    word-break: keep-all;
 }
 
 *:focus {
