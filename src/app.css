@@ -117,6 +117,14 @@ table {
     width: 100%;
     text-align: center;
     margin-top: 10px;
+    display: block;
+    overflow-x: scroll;
+}
+
+@media (min-width: 700px) {
+    table {
+        display: table;
+    }
 }
 
 thead {
