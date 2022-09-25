@@ -2,7 +2,6 @@
  * Convert timestamp to locale datesting
  *
  * @param {number|null} timestamp not milliseconds timestamp
- *
  * @returns {string} locale date
  */
 export function to_datestring(timestamp) {
@@ -16,7 +15,6 @@ export function to_datestring(timestamp) {
  * Convert timestamp to locale timestring
  *
  * @param {number|null} timestamp not milliseconds timestamp
- *
  * @returns {string} locale time
  */
 export function to_timestring(timestamp) {
@@ -30,7 +28,6 @@ export function to_timestring(timestamp) {
  * Convert timestamp to locale string
  *
  * @param {number|null} timestamp not milliseconds timestamp
- *
  * @returns {string} locale string
  */
 export function to_string(timestamp) {

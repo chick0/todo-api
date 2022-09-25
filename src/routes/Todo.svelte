@@ -61,9 +61,10 @@
 
     /**
      * Timestamp to string
+     *
      * @param {number} timestamp timestamp from python api
      * @returns {string} date or time string
-    */
+     */
     function get_function(timestamp) {
         let now = Date.now() / 1000;
         if (now - timestamp > 3600) {
