@@ -18,6 +18,10 @@ jobs:
           yarn install
           yarn build
 
+      - name: Set runtime cache version
+        run: |
+          python -c "sw=open('dist/sw.js',mode='r',encoding='utf-8').read();open('dist/sw.js',mode='w',encoding='utf-8').write(sw.replace('{tag}', '${{ github.ref_name }}'))"
+
       - name: Taping dist
         run: python tape.py ${{ github.sha }}
 

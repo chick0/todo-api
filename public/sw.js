@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
     "cache.html",
 ];
 
-const RUNTIME = "runtime-v2";
+const RUNTIME = "runtime-{tag}";
 
 self.addEventListener("install", (event) => {
     event.waitUntil(
