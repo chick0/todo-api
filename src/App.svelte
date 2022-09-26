@@ -15,6 +15,10 @@
     onMount(() => {
         update_theme_color();
         window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => update_theme_color());
+        window.onunhandledrejection = () => {
+            alert("치명적인 오류가 발생해 재시작합니다.");
+            location.reload();
+        };
     });
 </script>
 
