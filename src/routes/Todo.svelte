@@ -27,7 +27,11 @@
             .then((resp) => resp.json())
             .then((json) => {
                 if (json.status === true) {
-                    todos = json.todos;
+                    todos = json.todos.map((todo) => {
+                        todo.reset = todo.text;
+                        return todo;
+                    });
+
                     isLoading = false;
 
                     if (todos.length == 0) {
@@ -239,7 +243,17 @@
                                 todo.textarea.blur();
                             }
                         }}"></textarea>
-                    <p>{todo.text.length}/500자</p>
+                    <p>
+                        {todo.text.length}/500자
+                        <b
+                            class="delete"
+                            on:click="{() => {
+                                if (confirm('취소하시겠습니까?')) {
+                                    todo.editmode = false;
+                                    todo.text = todo.reset;
+                                }
+                            }}">취소</b>
+                    </p>
                     <br />
                     <button
                         class="button max"
@@ -263,6 +277,7 @@
 
                                     if (json.status == true) {
                                         todo.text = json.text;
+                                        todo.reset = json.text;
                                         todo.editmode = false;
                                     } else {
                                         alert(json.message);
