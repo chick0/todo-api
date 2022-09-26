@@ -30,7 +30,7 @@ class SessionResponse(BaseModel):
     history_id: int
     created_at: int
     dropped_at: int
-    last_access: int
+    last_access: Optional[int]
 
 
 class PinResponse(BaseModel):
