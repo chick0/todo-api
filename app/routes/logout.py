@@ -10,7 +10,7 @@ bp = Blueprint("logout", __name__, url_prefix="/api/logout")
 
 
 class LogoutResponse(BaseModel):
-    status: bool
+    status: bool = True
 
 
 @bp.delete("")
@@ -24,6 +24,4 @@ def logout(session: AuthSession):
     if dbs != 0:
         db.session.commit()
 
-    return LogoutResponse(
-        status=True
-    ).dict()
+    return LogoutResponse().dict()

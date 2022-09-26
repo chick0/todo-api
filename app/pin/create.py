@@ -4,15 +4,16 @@ from hashlib import sha512
 from datetime import datetime
 
 from flask import request
+from app.routes.pin import bp
 from pydantic import BaseModel
 
-from app.routes.pin import bp
 from app import db
 from app.models import Pin
 from app.auth import AuthSession
 from app.auth import login_required
 from app.pin import create_token
 from app.utils import get_ip
+from app.error import APIError
 
 
 class PinCreateRequest(BaseModel):
@@ -20,7 +21,7 @@ class PinCreateRequest(BaseModel):
 
 
 class PinCreateResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str
     token: Optional[str]
 
@@ -31,16 +32,16 @@ def create(session: AuthSession):
     ctx = PinCreateRequest(**request.json)
 
     if len(ctx.code) < 6:
-        return PinCreateResponse(
-            status=False,
+        raise APIError(
+            code=400,
             message="6자리 이상으로 설정해야 합니다."
-        ).dict(), 400
+        )
 
     if len(ctx.code) != len(findall(r"\d", ctx.code)):
-        return PinCreateResponse(
-            status=False,
+        raise APIError(
+            code=400,
             message="PIN은 숫자로 입력해야 합니다."
-        ).dict(), 400
+        )
 
     ctx.code = sha512(ctx.code.encode()).hexdigest()
 
@@ -65,7 +66,6 @@ def create(session: AuthSession):
     db.session.commit()
 
     return PinCreateResponse(
-        status=True,
         message="PIN이 설정되었습니다. 설정된 PIN은 '계정 정보'에서 관리 할 수 있습니다.",
         token=token
     ).dict(), 201

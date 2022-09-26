@@ -1,7 +1,7 @@
 from flask import request
+from app.routes.pin import bp
 from pydantic import BaseModel
 
-from app.routes.pin import bp
 from app import db
 from app.models import Pin
 from app.auth import AuthSession
@@ -14,7 +14,7 @@ class DeleteRequest(BaseModel):
 
 
 class DeleteResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str
 
 
@@ -38,6 +38,5 @@ def delete(session: AuthSession):
     db.session.commit()
 
     return DeleteResponse(
-        status=True,
         message="해당 PIN이 삭제되었습니다."
     ).dict(), 200

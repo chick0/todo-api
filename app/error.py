@@ -1,9 +1,10 @@
 class APIError(Exception):
-    def __init__(self, code: int, message: str, logout_required: bool = False) -> None:
+    def __init__(self, code: int, message: str, logout_required: bool = False, **kwargs) -> None:
         super().__init__()
         self.code = code
         self.message = message
         self.logout_required = logout_required
+        self.kwargs = kwargs
 
 
 def handle_api_error(error: APIError):
@@ -16,7 +17,7 @@ def handle_api_error(error: APIError):
 
 def validation_error(error):
     del error
-    return {
-        "status": False,
-        "message": "요청이 올바르지 않습니다.",
-    }, 400
+    return handle_api_error(APIError(
+        code=400,
+        message="요청이 올바르지 않습니다."
+    ))

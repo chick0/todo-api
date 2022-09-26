@@ -1,13 +1,14 @@
 from typing import Optional
 
 from flask import request
+from app.routes.todo import bp
 from pydantic import BaseModel
 
 from app import db
 from app.models import Todo
 from app.auth import AuthSession
 from app.auth import login_required
-from app.routes.todo import bp
+from app.error import APIError
 
 
 class EditRequest(BaseModel):
@@ -16,7 +17,7 @@ class EditRequest(BaseModel):
 
 
 class EditResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str = ""
     text: Optional[str]
 
@@ -31,10 +32,10 @@ def edit(session: AuthSession):
     ).first()
 
     if todo is None:
-        return EditResponse(
-            status=False,
-            message="등록된 투두가 아닙니다.",
-        ).dict(), 404
+        raise APIError(
+            code=404,
+            message="등록된 투두가 아닙니다."
+        )
 
     todo.text = ctx.text.strip()[:500]
 
@@ -47,6 +48,5 @@ def edit(session: AuthSession):
     db.session.commit()
 
     return EditResponse(
-        status=True,
         text=todo.text,
     ).dict(), 201

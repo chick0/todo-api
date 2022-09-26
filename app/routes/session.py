@@ -14,7 +14,7 @@ class DeleteRequest(BaseModel):
 
 
 class DeleteResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str = ""
 
 
@@ -27,9 +27,7 @@ def delete_all(session: AuthSession):
 
     db.session.commit()
 
-    return DeleteResponse(
-        status=True
-    ).dict()
+    return DeleteResponse().dict()
 
 
 @bp.delete("/<int:session_id>")
@@ -42,6 +40,4 @@ def delete_one(session_id: int, session: AuthSession):
 
     db.session.commit()
 
-    return DeleteResponse(
-        status=True
-    ).dict()
+    return DeleteResponse().dict()

@@ -1,9 +1,9 @@
 from hashlib import sha512
 
 from flask import request
+from app.routes.pin import bp
 from pydantic import BaseModel
 
-from app.routes.pin import bp
 from app import db
 from app.models import User
 from app.models import Pin
@@ -17,7 +17,7 @@ class PinLoginRequest(BaseModel):
 
 
 class PinLoginResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str = ""
     token: str
 
@@ -82,6 +82,5 @@ def login():
         )
 
     return PinLoginResponse(
-        status=True,
         token=create_auth_token(user=user, pin=pin)
-    ).dict()
+    ).dict(), 201

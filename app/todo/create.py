@@ -2,15 +2,16 @@ from typing import Optional
 from datetime import datetime
 
 from flask import request
+from app.routes.todo import bp
 from pydantic import BaseModel
 
 from app import db
 from app.models import Todo
 from app.auth import AuthSession
 from app.auth import login_required
-from app.routes.todo import bp
 from app.todo import TodoResponse
 from app.utils import timestamp
+from app.error import APIError
 
 
 class CreateRequest(BaseModel):
@@ -18,7 +19,7 @@ class CreateRequest(BaseModel):
 
 
 class CreateResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str = ""
     todo: Optional[TodoResponse] = None
 
@@ -33,10 +34,10 @@ def create(session: AuthSession):
     if Todo.query.filter_by(
         owner=session.user_id
     ).count() >= MAX_TODO:
-        return CreateResponse(
-            status=False,
+        raise APIError(
+            code=400,
             message=f"{MAX_TODO}개보다 많은 할 일을 등록할 수 없습니다."
-        ).dict(), 400
+        )
 
     todo = Todo()
     todo.owner = session.user_id
@@ -44,10 +45,10 @@ def create(session: AuthSession):
     todo.text = ctx.text.strip()[:500]
 
     if len(todo.text) == 0:
-        return CreateResponse(
-            status=False,
+        raise APIError(
+            code=400,
             message="공백은 저장 할 수 없습니다."
-        ).dict(), 400
+        )
 
     todo.created_at = datetime.now()
     todo.checked_at = None
@@ -56,7 +57,6 @@ def create(session: AuthSession):
     db.session.commit()
 
     return CreateResponse(
-        status=True,
         todo=TodoResponse(
             id=todo.id,
             checked=todo.checked,

@@ -2,14 +2,15 @@ from typing import Optional
 from datetime import datetime
 
 from flask import request
+from app.routes.todo import bp
 from pydantic import BaseModel
 
 from app import db
 from app.models import Todo
 from app.auth import AuthSession
 from app.auth import login_required
-from app.routes.todo import bp
 from app.utils import timestamp
+from app.error import APIError
 
 
 class CheckRequest(BaseModel):
@@ -18,7 +19,7 @@ class CheckRequest(BaseModel):
 
 
 class CheckResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str = ""
     checked: bool
     checked_at: Optional[int]
@@ -34,10 +35,10 @@ def check(session: AuthSession):
     ).first()
 
     if todo is None:
-        return CheckResponse(
-            status=False,
-            message="등록된 투두가 아닙니다.",
-        ).dict(), 404
+        raise APIError(
+            code=404,
+            message="등록된 투두가 아닙니다."
+        )
 
     todo.checked = ctx.checked
 
@@ -49,7 +50,6 @@ def check(session: AuthSession):
     db.session.commit()
 
     return CheckResponse(
-        status=True,
         checked=todo.checked,
         checked_at=timestamp(todo.checked_at)
     ).dict(), 201

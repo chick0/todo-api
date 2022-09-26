@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 from app.models import User
 from app.auth import create_auth_token
+from app.error import APIError
 
 bp = Blueprint("login", __name__, url_prefix="/api/login")
 
@@ -16,7 +17,7 @@ class LoginRequest(BaseModel):
 
 
 class LoginResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str = ""
     token: str = ""
     email_verify_required: bool = False
@@ -33,10 +34,10 @@ def email_and_password():
     ).first()
 
     if user is None:
-        return LoginResponse(
-            status=False,
+        raise APIError(
+            code=404,
             message="등록된 계정이 아닙니다."
-        ).dict(), 404
+        )
 
     if not user.email_verified:
         return LoginResponse(
@@ -46,6 +47,5 @@ def email_and_password():
         ).dict(), 400
 
     return LoginResponse(
-        status=True,
         token=create_auth_token(user=user)
-    ).dict()
+    ).dict(), 201

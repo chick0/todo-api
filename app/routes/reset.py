@@ -13,6 +13,7 @@ from app.reset import set_flag
 from app.reset import ResetToken
 from app.reset import parse_token
 from app.utils import get_help_mail
+from app.error import APIError
 
 bp = Blueprint("reset", __name__, url_prefix="/api/reset")
 
@@ -26,7 +27,7 @@ class ResetRequest(BaseModel):
 
 
 class ResetResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str = ""
 
 
@@ -51,22 +52,22 @@ def create_reset_request():
     ).first()
 
     if user is None:
-        return ResetResponse(
-            status=False,
+        raise APIError(
+            code=404,
             message="등록된 계정이 아닙니다."
-        ).dict(), 404
+        )
 
     if user.email_verified is False:
-        return ResetResponse(
-            status=False,
+        raise APIError(
+            code=400,
             message="이메일 인증이 완료되지 않은 계정은 사용 할 수 없습니다."
-        ).dict(), 400
+        )
 
     if check_flag(email=ctx.email):
-        return ResetResponse(
-            status=False,
+        raise APIError(
+            code=400,
             message="5분마다 한 번씩 시도할 수 있습니다."
-        ).dict(), 400
+        )
 
     result = send_reset_request(
         user_id=user.id,
@@ -76,15 +77,15 @@ def create_reset_request():
     if result is True:
         set_flag(email=ctx.email)
         return ResetResponse(
-            status=True,
             message="해당 이메일 주소로 비밀번호 재설정 링크를 전송했습니다."
         ).dict(), 201
     else:
-        return ResetResponse(
-            status=False,
+        raise APIError(
+            code=500,
             message="비밀번호 재설정 요청 전송에 실패했습니다. "
-                    f"반복해서 실패하거나 해당 이메일 주소를 사용 할 수 없다면, {get_help_mail()}로 메일을 보내주세요."
-        ).dict(), 500
+                    "반복해서 실패하거나 해당 이메일 주소를 사용 할 수 없다면, "
+                    f"{get_help_mail()}로 메일을 보내주세요."
+        )
 
 
 @bp.post("/step2")
@@ -99,10 +100,10 @@ def reset_request():
     ).first()
 
     if user is None:
-        return ResetResponse(
-            status=False,
+        raise APIError(
+            code=404,
             message="등록된 계정이 아닙니다."
-        ).dict(), 404
+        )
 
     ctx = ResetRequest(**request.json)
     ctx.password = sha512(ctx.password.encode()).hexdigest()
@@ -111,6 +112,5 @@ def reset_request():
     db.session.commit()
 
     return ResetResponse(
-        status=True,
         message="비밀번호가 재설정되었습니다."
     ).dict()

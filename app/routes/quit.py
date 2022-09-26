@@ -15,6 +15,7 @@ from app.auth import AuthSession
 from app.auth import login_required
 from app.quit import create_token
 from app.quit import check_quit_session
+from app.error import APIError
 
 bp = Blueprint("quit", __name__, url_prefix="/api/quit")
 
@@ -24,7 +25,7 @@ class CheckPasswordRequest(BaseModel):
 
 
 class QuitResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str
     token: Optional[str]
 
@@ -42,13 +43,12 @@ def check_password(session: AuthSession):
     ).first()
 
     if user is None:
-        return QuitResponse(
-            status=False,
+        raise APIError(
+            code=400,
             message="비밀번호가 일치하지 않습니다."
-        ).dict(), 400
+        )
 
     return QuitResponse(
-        status=True,
         message="비밀번호가 일치합니다.",
         token=create_token(
             user_id=session.user_id
@@ -83,6 +83,5 @@ def quit(session: AuthSession):
     db.session.commit()
 
     return QuitResponse(
-        status=True,
         message="계정이 삭제되었습니다."
     ).dict()

@@ -1,13 +1,12 @@
-from typing import Optional
-
 from flask import request
+from app.routes.todo import bp
 from pydantic import BaseModel
 
 from app import db
 from app.models import Todo
 from app.auth import AuthSession
 from app.auth import login_required
-from app.routes.todo import bp
+from app.error import APIError
 
 
 class DeleteRequest(BaseModel):
@@ -15,8 +14,8 @@ class DeleteRequest(BaseModel):
 
 
 class DeleteResponse(BaseModel):
-    status: bool
-    message: Optional[str] = None
+    status: bool = True
+    message: str = ""
 
 
 @bp.delete("")
@@ -29,13 +28,11 @@ def delete(session: AuthSession):
     ).delete()
 
     if todo == 0:
-        return DeleteResponse(
-            status=False,
-            message="등록된 할 일이 아닙니다.",
-        ).dict(), 404
+        raise APIError(
+            code=404,
+            message="등록된 할 일이 아닙니다."
+        )
 
     db.session.commit()
 
-    return DeleteResponse(
-        status=True,
-    ).dict()
+    return DeleteResponse().dict()

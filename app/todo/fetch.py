@@ -1,16 +1,15 @@
+from app.routes.todo import bp
 from pydantic import BaseModel
 
 from app.models import Todo
-
 from app.auth import AuthSession
 from app.auth import login_required
-from app.routes.todo import bp
 from app.todo import TodoResponse
 from app.utils import timestamp
 
 
 class TodoListResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str = ""
     todos: list[TodoResponse]
 
@@ -26,7 +25,6 @@ def fetch(session: AuthSession):
     ).limit(100).all()
 
     return TodoListResponse(
-        status=True,
         todos=[
             TodoResponse(
                 id=x.id,

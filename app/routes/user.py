@@ -42,7 +42,7 @@ class PinResponse(BaseModel):
 
 
 class UserResponse(BaseModel):
-    status: bool
+    status: bool = True
     count: int
     pin_list: list[PinResponse]
     session_list: list[SessionResponse]
@@ -56,7 +56,6 @@ def fetch(session: AuthSession):
         return dbs.dropped_at - token_ttl
 
     return UserResponse(
-        status=True,
         count=Todo.query.filter_by(
             owner=session.user_id
         ).count(),

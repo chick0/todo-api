@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from app import db
 from app.models import User
 from app.verify import send_verify_request
+from app.error import APIError
 
 bp = Blueprint("sign-up", __name__, url_prefix="/api/sign-up")
 
@@ -18,7 +19,7 @@ class SignUpRequest(BaseModel):
 
 
 class SignUpResponse(BaseModel):
-    status: bool
+    status: bool = True
     message: str
 
 
@@ -27,10 +28,10 @@ def sign_up():
     ctx = SignUpRequest(**request.json)
 
     if len(ctx.password) < 8:
-        return SignUpResponse(
-            status=False,
+        raise APIError(
+            code=400,
             message="비밀번호를 8자리 이상으로 설정해야합니다."
-        ).dict(), 400
+        )
 
     ctx.password = sha512(ctx.password.encode("utf-8")).hexdigest()
 
@@ -41,9 +42,8 @@ def sign_up():
 
     if user is not None:
         return SignUpResponse(
-            status=True,
             message="이미 가입한 이메일입니다! 비밀번호를 잊은 경우 '계정 찾기'를 통해 비밀번호를 재설정해야합니다."
-        ).dict(), 200
+        ).dict()
 
     del user
 
@@ -64,14 +64,13 @@ def sign_up():
 
     if result is True:
         return SignUpResponse(
-            status=True,
             message="가입이 완료되었습니다! 이메일 인증 이후 계정을 사용할 수 있습니다."
         ).dict(), 201
     else:
         db.session.delete(user)
         db.session.commit()
 
-        return SignUpResponse(
-            status=False,
+        raise APIError(
+            code=500,
             message="이메일 인증 요청 전송에 실패해, 가입이 취소되었습니다."
-        ).dict(), 500
+        )

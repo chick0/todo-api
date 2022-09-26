@@ -80,6 +80,18 @@ def login_required(f):
 
 
 def create_auth_token(user: User, pin: Pin = None) -> str:
+    MAX_DB_SESSION = 5
+
+    if DBSession.query.filter_by(
+        owner=user.id
+    ).filter(
+        DBSession.dropped_at >= datetime.now()
+    ).count() >= MAX_DB_SESSION:
+        raise APIError(
+            code=400,
+            message=f"{MAX_DB_SESSION}개보다 많은 기기에서 동시에 로그인 할 수 없습니다."
+        )
+
     now = datetime.now()
     user.lastlogin = now
 
