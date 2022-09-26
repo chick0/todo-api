@@ -1,4 +1,5 @@
 from os import environ
+from datetime import datetime
 
 from flask import request
 from flask import current_app as app
@@ -10,7 +11,7 @@ def get_ip() -> str:
     return request.headers.get("X-Forwarded-For", request.remote_addr)
 
 
-def timestamp(stamp) -> int or None:
+def timestamp(stamp: datetime) -> int or None:
     if stamp is None:
         return None
 

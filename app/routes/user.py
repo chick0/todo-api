@@ -9,6 +9,7 @@ from app.models import Todo
 from app.models import History
 from app.models import DBSession
 from app.models import Pin
+from app.auth import token_ttl
 from app.auth import AuthSession
 from app.auth import login_required
 from app.utils import timestamp
@@ -51,37 +52,8 @@ class UserResponse(BaseModel):
 @bp.get("")
 @login_required
 def fetch(session: AuthSession):
-    def search(dbs: DBSession) -> int:
-        return [
-            history
-            for history in history_list
-            if history.id == dbs.history
-        ][0].created_at
-
-    pin_list: list[Pin] = Pin.query.filter_by(
-        owner=session.user_id
-    ).order_by(
-        Pin.last_access.desc()
-    ).all()
-
-    history_list: list[History] = History.query.filter_by(
-        owner=session.user_id
-    ).filter(
-        History.created_at.between(
-            datetime.now() - timedelta(days=31),
-            datetime.now()
-        )
-    ).order_by(
-        History.created_at.desc()
-    ).all()
-
-    session_list: list[DBSession] = DBSession.query.filter_by(
-        owner=session.user_id
-    ).filter(
-        DBSession.dropped_at >= datetime.now()
-    ).order_by(
-        DBSession.last_access.desc()
-    ).all()
+    def calc_created_at(dbs: DBSession) -> datetime:
+        return dbs.dropped_at - token_ttl
 
     return UserResponse(
         status=True,
@@ -96,7 +68,11 @@ def fetch(session: AuthSession):
                 device=parse_user_agent(pin.user_agent),
                 last_access=timestamp(pin.last_access)
             )
-            for pin in pin_list
+            for pin in Pin.query.filter_by(
+                owner=session.user_id
+            ).order_by(
+                Pin.last_access.desc()
+            ).all()
         ],
         history_list=[
             HistoryResponse(
@@ -105,16 +81,31 @@ def fetch(session: AuthSession):
                 ip=history.ip,
                 device=parse_user_agent(history.user_agent)
             )
-            for history in history_list
+            for history in History.query.filter_by(
+                owner=session.user_id
+            ).filter(
+                History.created_at.between(
+                    datetime.now() - timedelta(days=31),
+                    datetime.now()
+                )
+            ).order_by(
+                History.created_at.desc()
+            ).all()
         ],
         session_list=[
             SessionResponse(
                 id=dbs.id,
                 history_id=dbs.history,
-                created_at=timestamp(search(dbs)),
+                created_at=timestamp(calc_created_at(dbs)),
                 dropped_at=timestamp(dbs.dropped_at),
                 last_access=timestamp(dbs.last_access)
             )
-            for dbs in session_list
+            for dbs in DBSession.query.filter_by(
+                owner=session.user_id
+            ).filter(
+                DBSession.dropped_at >= datetime.now()
+            ).order_by(
+                DBSession.last_access.desc()
+            ).all()
         ]
     ).dict()
