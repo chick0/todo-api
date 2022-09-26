@@ -7,6 +7,7 @@
 
     const TOKEN = get_token();
 
+    let show_hidden_button = false;
     let todos = [];
     let newTodo = "";
     let newTodoOpen = false;
@@ -76,10 +77,19 @@
 </script>
 
 <div class="section container">
-    <h1>To-Do</h1>
+    <h1
+        on:dblclick="{() => {
+            show_hidden_button = !show_hidden_button;
+        }}">
+        To-Do
+    </h1>
     <div class="buttons">
         <a class="button" href="#/user">계정 정보</a>
         <a class="button" href="#/logout">로그아웃</a>
+        {#if show_hidden_button}
+            <a class="button" href="#/version">버전 정보</a>
+            <a class="button" href="/cache.html">캐시 관리자</a>
+        {/if}
     </div>
 
     <hr />
