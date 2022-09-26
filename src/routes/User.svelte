@@ -28,8 +28,8 @@
                 if (json.status === true) {
                     count = json.count;
                     pin_list = json.pin_list;
-                    history_list = json.history_list;
                     session_list = json.session_list;
+                    history_list = json.history_list;
 
                     is_loading = false;
                 } else {

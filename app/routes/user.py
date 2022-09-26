@@ -45,8 +45,8 @@ class UserResponse(BaseModel):
     status: bool
     count: int
     pin_list: list[PinResponse]
-    history_list: list[HistoryResponse]
     session_list: list[SessionResponse]
+    history_list: list[HistoryResponse]
 
 
 @bp.get("")
@@ -74,6 +74,22 @@ def fetch(session: AuthSession):
                 Pin.last_access.desc()
             ).all()
         ],
+        session_list=[
+            SessionResponse(
+                id=dbs.id,
+                history_id=dbs.history,
+                created_at=timestamp(calc_created_at(dbs)),
+                dropped_at=timestamp(dbs.dropped_at),
+                last_access=timestamp(dbs.last_access)
+            )
+            for dbs in DBSession.query.filter_by(
+                owner=session.user_id
+            ).filter(
+                DBSession.dropped_at >= datetime.now()
+            ).order_by(
+                DBSession.last_access.desc()
+            ).all()
+        ],
         history_list=[
             HistoryResponse(
                 id=history.id,
@@ -90,22 +106,6 @@ def fetch(session: AuthSession):
                 )
             ).order_by(
                 History.created_at.desc()
-            ).all()
-        ],
-        session_list=[
-            SessionResponse(
-                id=dbs.id,
-                history_id=dbs.history,
-                created_at=timestamp(calc_created_at(dbs)),
-                dropped_at=timestamp(dbs.dropped_at),
-                last_access=timestamp(dbs.last_access)
-            )
-            for dbs in DBSession.query.filter_by(
-                owner=session.user_id
-            ).filter(
-                DBSession.dropped_at >= datetime.now()
-            ).order_by(
-                DBSession.last_access.desc()
             ).all()
         ]
     ).dict()
