@@ -32,7 +32,13 @@ html {
     outline: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+/* Heading */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 600;
 }
 
@@ -44,6 +50,7 @@ h2 {
     font-size: 50px;
 }
 
+/* Layout */
 .section {
     padding-top: 60px;
     padding-bottom: 60px;
@@ -62,15 +69,18 @@ h2 {
     }
 }
 
+/* Breakpoint */
 hr {
     margin-top: 60px;
     border: none;
 }
 
+/* For text button */
 .clickable {
     cursor: pointer;
 }
 
+/* Input field */
 .field {
     display: block;
     margin-top: 30px;
@@ -101,6 +111,7 @@ input:focus {
     border-color: crimson;
 }
 
+/* Ordered Lists & Unordered Lists */
 li,
 li > ul {
     margin-left: 25px;
@@ -115,6 +126,7 @@ ul > li::before {
     margin-right: 10px;
 }
 
+/* Table */
 table {
     width: 100%;
     text-align: center;
@@ -152,6 +164,7 @@ tbody > tr:hover {
     box-shadow: 0 0 1px var(--color);
 }
 
+/* Loading spinner */
 .spinner {
     position: absolute;
     top: calc(50% - 60px);
@@ -174,6 +187,7 @@ tbody > tr:hover {
     }
 }
 
+/* Button display */
 .buttons {
     display: flex;
     flex-wrap: wrap;
@@ -187,6 +201,7 @@ tbody > tr:hover {
     margin-bottom: 3px;
 }
 
+/* Button */
 .button {
     display: inline-block;
     text-decoration: none;
@@ -208,10 +223,12 @@ tbody > tr:hover {
     border: 1px solid var(--button-hover);
 }
 
+/* Fullwidth button */
 .button.max {
     width: 100%;
 }
 
+/* Button with spinner */
 .button.spin {
     pointer-events: none;
     color: transparent !important;
@@ -232,7 +249,7 @@ tbody > tr:hover {
 }
 
 /* Heading in todo content */
-div.todo > div > h1, div.todo > div > h2 {
-    font-weight: 600;
+div.todo > div > h1,
+div.todo > div > h2 {
     font-size: 24px;
 }
