@@ -28,6 +28,16 @@ class CreateResponse(BaseModel):
 def create(session: AuthSession):
     ctx = CreateRequest(**request.json)
 
+    MAX_TODO_COUNT = 100
+
+    if Todo.query.filter_by(
+        owner=session.user_id
+    ).count() >= MAX_TODO_COUNT:
+        return CreateResponse(
+            status=False,
+            message=f"{MAX_TODO_COUNT}개보다 많은 할 일을 등록할 수 없습니다."
+        ).dict(), 400
+
     todo = Todo()
     todo.owner = session.user_id
     todo.checked = False
