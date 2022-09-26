@@ -258,7 +258,7 @@
 
     p.summary {
         font-size: 28px;
-        font-weight: 300;
+        font-weight: 400;
     }
 
     .clickable:hover {

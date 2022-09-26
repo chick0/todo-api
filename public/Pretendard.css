@@ -20,17 +20,3 @@ http://scripts.sil.org/OFL
     font-display: swap;
     src: local("Pretendard Regular"), url("/Pretendard/Regular.woff2") format("woff2");
 }
-
-@font-face {
-    font-family: "Pretendard";
-    font-weight: 300;
-    font-display: swap;
-    src: local("Pretendard Light"), url("/Pretendard/Light.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "Pretendard";
-    font-weight: 200;
-    font-display: swap;
-    src: local("Pretendard ExtraLight"), url("/Pretendard/ExtraLight.woff2") format("woff2");
-}

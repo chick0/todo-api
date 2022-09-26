@@ -429,7 +429,7 @@
     .todo > p {
         margin-top: 10px;
         font-size: 18px;
-        font-weight: 200;
+        font-weight: 400;
     }
 
     /* Delete button */

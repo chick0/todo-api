@@ -1,10 +1,8 @@
-const PRECACHE = "precache-v2";
+const PRECACHE = "precache-v3";
 const PRECACHE_URLS = [
     "icons/192.png",
     "minireset.min.css",
     "Pretendard.css",
-    "Pretendard/ExtraLight.woff2",
-    "Pretendard/Light.woff2",
     "Pretendard/Regular.woff2",
     "Pretendard/SemiBold.woff2",
     "cache.html",
