@@ -32,14 +32,16 @@ html {
     outline: none;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+}
+
 h1 {
     font-size: 60px;
-    font-weight: 600;
 }
 
 h2 {
     font-size: 50px;
-    font-weight: 600;
 }
 
 .section {
@@ -227,4 +229,10 @@ tbody > tr:hover {
     border-top-color: var(--spinner-b);
     border-radius: 50%;
     animation: spinner 0.8s linear infinite;
+}
+
+/* Heading in todo content */
+div.todo > div > h1, div.todo > div > h2 {
+    font-weight: 600;
+    font-size: 24px;
 }
