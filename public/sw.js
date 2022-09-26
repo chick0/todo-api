@@ -1,16 +1,17 @@
 const PRECACHE = "precache-v3";
 const PRECACHE_URLS = [
-    "icons/192.png",
-    "minireset.min.css",
-    "Pretendard.css",
-    "Pretendard/Regular.woff2",
-    "Pretendard/SemiBold.woff2",
-    "cache.html",
+    "/icons/192.png",
+    "/minireset.min.css",
+    "/Pretendard.css",
+    "/Pretendard/Regular.woff2",
+    "/Pretendard/SemiBold.woff2",
+    "/cache.html",
 ];
 
 const RUNTIME = "runtime-{tag}";
 
 self.addEventListener("install", (event) => {
+    console.log("install");
     event.waitUntil(
         caches
             .open(PRECACHE)
@@ -20,6 +21,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
+    console.log("activate");
     const currentCaches = [PRECACHE, RUNTIME];
     event.waitUntil(
         caches
@@ -39,21 +41,32 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-    if (event.request.url.startsWith(self.location.origin) && event.request.url.includes("assets")) {
+    if (event.request.url.startsWith(self.location.origin)) {
         event.respondWith(
             caches.match(event.request).then((cachedResponse) => {
                 if (cachedResponse) {
+                    console.log("@", event.request.url);
                     return cachedResponse;
+                } else {
+                    console.log(" ", event.request.url);
                 }
 
-                return caches.open(RUNTIME).then((cache) => {
-                    return fetch(event.request).then((response) => {
-                        return cache.put(event.request, response.clone()).then(() => {
-                            return response;
+                if (event.request.url.includes("assets")) {
+                    return caches.open(RUNTIME).then((cache) => {
+                        return fetch(event.request).then((response) => {
+                            return cache.put(event.request, response.clone()).then(() => {
+                                return response;
+                            });
                         });
+                    });    
+                } else {
+                    return fetch(event.request).then((response) => {
+                        return response;
                     });
-                });
+                }
             })
         );
+    } else {
+        console.log("C", event.request.url);
     }
 });
