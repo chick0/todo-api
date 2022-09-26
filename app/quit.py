@@ -5,7 +5,7 @@ from functools import wraps
 from flask import request
 from pydantic import BaseModel
 
-from app.auth import APIError
+from app.error import APIError
 from app.token import create_token as ct
 from app.token import parse_token as pt
 
