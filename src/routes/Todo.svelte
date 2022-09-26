@@ -5,20 +5,10 @@
     import { is_login, get_token } from "../user.js";
     import { to_datestring, to_timestring } from "../time.js";
 
-    const TOKEN = get_token();
-
-    let show_hidden_button = false;
-    let todos = [];
-    let newTodo = "";
-    let newTodoOpen = false;
-    let newTodoElement = undefined;
-    let newTodoSave = undefined;
-
-    let isLoading = true;
-
-    if (!is_login()) {
-        push("/login");
-    } else {
+    /**
+     * Fetch todo list from api server
+     */
+    function fetch_todos() {
         fetch(TODO, {
             headers: {
                 "x-auth": TOKEN,
@@ -32,7 +22,7 @@
                         return todo;
                     });
 
-                    isLoading = false;
+                    is_loading = false;
 
                     if (todos.length == 0) {
                         newTodoOpen = true;
@@ -52,18 +42,6 @@
             });
     }
 
-    const renderer = new Renderer();
-
-    // @ts-ignore
-    renderer.link = (href, title, text) => {
-        return `<a target="_blank" rel="noreferrer" href="${href}">${text}</a>`;
-    };
-
-    setOptions({
-        gfm: true,
-        renderer: renderer,
-    });
-
     /**
      * Timestamp to string
      *
@@ -78,6 +56,35 @@
             return to_timestring(timestamp);
         }
     }
+
+    const TOKEN = get_token();
+
+    let show_hidden_button = false;
+    let todos = [];
+    let newTodo = "";
+    let newTodoOpen = false;
+    let newTodoElement = undefined;
+    let newTodoSave = undefined;
+
+    let is_loading = true;
+
+    if (!is_login()) {
+        push("/login");
+    } else {
+        fetch_todos();
+    }
+
+    const renderer = new Renderer();
+
+    // @ts-ignore
+    renderer.link = (href, title, text) => {
+        return `<a target="_blank" rel="noreferrer" href="${href}">${text}</a>`;
+    };
+
+    setOptions({
+        gfm: true,
+        renderer: renderer,
+    });
 </script>
 
 <div class="section container">
@@ -90,6 +97,13 @@
     <div class="buttons">
         <a class="button" href="#/user">계정 정보</a>
         <a class="button" href="#/logout">로그아웃</a>
+        <button
+            class="button"
+            on:click="{() => {
+                is_loading = true;
+                todos = [];
+                fetch_todos();
+            }}">새로고침</button>
         {#if show_hidden_button}
             <a class="button" href="#/version">버전 정보</a>
             <a class="button" href="/cache.html">캐시 관리자</a>
@@ -97,7 +111,7 @@
     </div>
 
     <hr />
-    {#if isLoading == true}
+    {#if is_loading == true}
         <div class="spinner"></div>
     {:else}
         {#if newTodoOpen == false}
