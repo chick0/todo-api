@@ -58,7 +58,7 @@ self.addEventListener("fetch", (event) => {
                                 return response;
                             });
                         });
-                    });    
+                    });
                 } else {
                     return fetch(event.request).then((response) => {
                         return response;
