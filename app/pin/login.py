@@ -1,6 +1,4 @@
 from hashlib import sha512
-from datetime import datetime
-from datetime import timedelta
 
 from flask import request
 from pydantic import BaseModel
@@ -8,13 +6,10 @@ from pydantic import BaseModel
 from app.routes.pin import bp
 from app import db
 from app.models import User
-from app.models import History
-from app.models import DBSession
 from app.models import Pin
 from app.error import APIError
 from app.pin import parse_token
-from app.auth import create_token
-from app.utils import get_ip
+from app.auth import create_auth_token
 
 
 class PinLoginRequest(BaseModel):
@@ -86,35 +81,7 @@ def login():
             message=f"토큰 시그니쳐가 올바르지 않습니다. (실패 횟수:{pin.fail_count}/5)"
         )
 
-    now = datetime.now()
-    user.lastlogin = now
-
-    pin.ip = get_ip()
-    pin.last_access = now
-
-    history = History()
-    history.owner = user.id,
-    history.created_at = now
-    history.ip = get_ip()
-    history.user_agent = str(request.user_agent).strip()[:500]
-
-    db.session.add(history)
-    db.session.commit()
-
-    dbs = DBSession()
-    dbs.owner = user.id
-    dbs.history = history.id
-    dbs.dropped_at = datetime.now() + timedelta(hours=3)
-    dbs.last_access = datetime.now()
-
-    db.session.add(dbs)
-    db.session.commit()
-
     return PinLoginResponse(
         status=True,
-        token=create_token(
-            session_id=dbs.id,
-            email=user.email,
-            exp=dbs.dropped_at
-        )
+        token=create_auth_token(user=user, pin=pin)
     ).dict()

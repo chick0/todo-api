@@ -1,17 +1,11 @@
 from hashlib import sha512
-from datetime import datetime
-from datetime import timedelta
 
 from flask import Blueprint
 from flask import request
 from pydantic import BaseModel
 
-from app import db
 from app.models import User
-from app.models import History
-from app.models import DBSession
-from app.utils import get_ip
-from app.auth import create_token
+from app.auth import create_auth_token
 
 bp = Blueprint("login", __name__, url_prefix="/api/login")
 
@@ -51,32 +45,7 @@ def email_and_password():
             email_verify_required=True
         ).dict(), 400
 
-    now = datetime.now()
-    user.lastlogin = now
-
-    history = History()
-    history.owner = user.id,
-    history.created_at = now
-    history.ip = get_ip()
-    history.user_agent = str(request.user_agent).strip()[:500]
-
-    db.session.add(history)
-    db.session.commit()
-
-    dbs = DBSession()
-    dbs.owner = user.id
-    dbs.history = history.id
-    dbs.dropped_at = datetime.now() + timedelta(hours=3)
-    dbs.last_access = datetime.now()
-
-    db.session.add(dbs)
-    db.session.commit()
-
     return LoginResponse(
         status=True,
-        token=create_token(
-            session_id=dbs.id,
-            email=user.email,
-            exp=dbs.dropped_at
-        )
+        token=create_auth_token(user=user)
     ).dict()

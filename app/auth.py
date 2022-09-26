@@ -1,16 +1,22 @@
-from datetime import datetime
 from functools import wraps
+from datetime import datetime
+from datetime import timedelta
 
 from flask import request
 from pydantic import BaseModel
 
+from app import db
 from app.models import User
+from app.models import History
 from app.models import DBSession
+from app.models import Pin
 from app.error import APIError
 from app.token import create_token as ct
 from app.token import parse_token as pt
+from app.utils import get_ip
 
 name = "auth:token"
+token_ttl = timedelta(hours=3)
 
 
 class AuthToken(BaseModel):
@@ -23,16 +29,6 @@ class AuthSession(BaseModel):
     sid: int
     user_id: int
     email: str
-
-
-def create_token(session_id: int, email: str, exp: datetime) -> str:
-    payload = AuthToken(
-        sid=session_id,
-        email=email,
-        exp=int(exp.timestamp()),
-    ).dict()
-
-    return ct(payload, name)
 
 
 def parse_token(token: str) -> AuthToken:
@@ -81,3 +77,38 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return decorator
+
+
+def create_auth_token(user: User, pin: Pin = None) -> str:
+    now = datetime.now()
+    user.lastlogin = now
+
+    if pin is not None:
+        pin.ip = get_ip()
+        pin.last_access = now
+
+    history = History()
+    history.owner = user.id,
+    history.created_at = now
+    history.ip = get_ip()
+    history.user_agent = str(request.user_agent).strip()[:500]
+
+    db.session.add(history)
+    db.session.commit()
+
+    dbs = DBSession()
+    dbs.owner = user.id
+    dbs.history = history.id
+    dbs.dropped_at = now + token_ttl
+    dbs.last_access = None
+
+    db.session.add(dbs)
+    db.session.commit()
+
+    payload = AuthToken(
+        sid=dbs.id,
+        email=user.email,
+        exp=int(dbs.dropped_at.timestamp()),
+    ).dict()
+
+    return ct(payload, name)
