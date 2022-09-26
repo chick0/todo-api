@@ -125,6 +125,10 @@
                                     item_display.innerText = item.url.replace(location.origin, "");
                                     itmes_display.appendChild(item_display);
                                 });
+
+                                if (items.length == 0) {
+                                    caches.delete(key);
+                                }
                             });
                         });
 
