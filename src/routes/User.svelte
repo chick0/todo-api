@@ -8,13 +8,12 @@
     const payload = get_payload();
 
     let is_loading = true;
+
+    let count = "-";
+    let email = payload?.email;
     let pin_list = [];
     let history_list = [];
     let session_list = [];
-    let count = "-";
-
-    let colored_history = undefined;
-    let email = "?";
 
     if (!is_login()) {
         push("/todo");
@@ -27,14 +26,12 @@
             .then((resp) => resp.json())
             .then((json) => {
                 if (json.status === true) {
+                    count = json.count;
                     pin_list = json.pin_list;
                     history_list = json.history_list;
                     session_list = json.session_list;
-                    count = json.count;
-                    is_loading = false;
 
-                    colored_history = session_list.filter((x) => x.id == payload.sid)[0].history_id;
-                    email = payload.email;
+                    is_loading = false;
                 } else {
                     alert(json.message);
                 }
@@ -62,7 +59,9 @@
     {:else}
         <hr />
 
-        <p class="lead">이 계정의 이메일 주소는 <u>{email}</u>이며, 등록된 할 일은 총 <u>{count}개</u>가 있습니다.</p>
+        <p class="summary">
+            이 계정의 이메일 주소는 <u>{email}</u>이며, 등록된 할 일은 총 <u>{count}개</u>가 있습니다.
+        </p>
 
         <hr />
 
@@ -176,7 +175,7 @@
             </thead>
             <tbody>
                 {#each session_list as session}
-                    <tr class="{session.history_id == colored_history ? 'colored' : ''}">
+                    <tr>
                         <td
                             class="clickable"
                             on:click="{() => {
@@ -196,6 +195,10 @@
                                             if (json.status) {
                                                 alert('해당 세션이 삭제되었습니다.');
                                                 session_list = session_list.filter((x) => x.id != session.id);
+
+                                                if (session_list.length == 0) {
+                                                    json.logout_required = true;
+                                                }
                                             } else {
                                                 alert(json.message);
                                             }
@@ -236,7 +239,7 @@
             </thead>
             <tbody>
                 {#each history_list as history}
-                    <tr class="{history.id == colored_history ? 'colored' : ''}">
+                    <tr>
                         <td>{to_datestring(history.created_at)}</td>
                         <td>{to_timestring(history.created_at)}</td>
                         <td>{history.ip}</td>
@@ -253,14 +256,9 @@
         width: 70px;
     }
 
-    .lead {
+    p.summary {
         font-size: 28px;
         font-weight: 300;
-    }
-
-    .colored {
-        background-color: var(--color);
-        color: var(--background);
     }
 
     .clickable:hover {

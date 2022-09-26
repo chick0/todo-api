@@ -23,7 +23,7 @@ export function set_token(token) {
 /**
  * Get payload from auth token
  *
- * @returns {Object} token payload
+ * @returns {Object|null} token payload
  */
 export function get_payload() {
     const token = get_token();
