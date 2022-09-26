@@ -23,9 +23,10 @@
             "src": "/icons/752.png",
             "sizes": "752x752",
             "type": "image/png",
-            "purpose": "any maskable"
+            "purpose": "maskable"
         }
     ],
+    "id": "/#/pin",
     "start_url": "/#/pin",
     "display": "standalone",
     "background_color": "#141414",
