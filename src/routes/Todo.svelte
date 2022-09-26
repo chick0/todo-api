@@ -171,6 +171,7 @@
                                 if (json.status == true) {
                                     newTodo = '';
 
+                                    json.todo.reset = json.todo.text;
                                     todos.unshift(json.todo);
                                     todos = todos;
                                 } else {
