@@ -2,12 +2,14 @@
     import { push } from "svelte-spa-router";
     import { USER, SESSION_DELETE, PIN } from "../url.js";
     import { is_login, get_token, get_payload } from "../user.js";
+    import { get_pin_token } from "../pin.js";
     import { to_datestring, to_timestring } from "../time.js";
 
     const TOKEN = get_token();
     const payload = get_payload();
 
     let is_loading = true;
+    let has_pin_token = get_pin_token() != null;
 
     let count = "-";
     let email = payload?.email;
@@ -66,6 +68,11 @@
         <hr />
 
         <h2>PIN</h2>
+        {#if has_pin_token == false || pin_list.length == 0}
+            <div class="buttons">
+                <a class="button" href="#/pin/create">PIN 생성하기</a>
+            </div>
+        {/if}
 
         {#if pin_list.length == 0}
             <p>등록된 PIN이 없습니다.</p>
@@ -120,8 +127,12 @@
                                 {pin.fail_count}회
                             </td>
                             <td>{pin.device}</td>
-                            <td>{to_datestring(pin.last_access)}</td>
-                            <td>{to_timestring(pin.last_access)}</td>
+                            {#if pin.last_access == null}
+                                <td colspan="2">기록 없음</td>
+                            {:else}
+                                <td>{to_datestring(pin.last_access)}</td>
+                                <td>{to_timestring(pin.last_access)}</td>
+                            {/if}
                         </tr>
                     {/each}
                 </tbody>
