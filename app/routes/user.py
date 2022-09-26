@@ -106,6 +106,6 @@ def fetch(session: AuthSession):
                 )
             ).order_by(
                 History.created_at.desc()
-            ).all()
+            ).limit(15).all()
         ]
     ).dict()
