@@ -314,6 +314,7 @@
                         }}">수정한 할 일 저장</button>
                 {:else}
                     <div
+                        class="todo-content"
                         on:dblclick="{() => {
                             if (todo.checked == false) {
                                 todo.editmode = true;
@@ -425,6 +426,11 @@
     .todo > input[type="checkbox"] {
         width: 30px;
         height: 30px;
+    }
+
+    /* Todo content */
+    .todo-content {
+        min-height: 25px;
     }
 
     /* Todo Datetext */
