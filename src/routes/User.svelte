@@ -229,8 +229,12 @@
                         <td>{to_timestring(session.created_at)}</td>
                         <td>{to_datestring(session.dropped_at)}</td>
                         <td>{to_timestring(session.dropped_at)}</td>
-                        <td>{to_datestring(session.last_access)}</td>
-                        <td>{to_timestring(session.last_access)}</td>
+                        {#if session.last_access == null}
+                            <td colspan="2">기록 없음</td>
+                        {:else}
+                            <td>{to_datestring(session.last_access)}</td>
+                            <td>{to_timestring(session.last_access)}</td>
+                        {/if}
                     </tr>
                 {/each}
             </tbody>
