@@ -1,20 +1,20 @@
 :root {
     --background: #141414;
-    --color: #FFF;
+    --color: #fff;
 
     /* button */
-    --button-background: #FFCC4D;
-    --button-hover: #FFDB81;
+    --button-background: #ffcc4d;
+    --button-hover: #ffdb81;
     --button-text: #000;
 
     /* spinner */
     --spinner-a: #141414;
-    --spinner-b: #FFCC4D;
+    --spinner-b: #ffcc4d;
 }
 
 @media (prefers-color-scheme: light) {
     :root {
-        --background: #FFF;
+        --background: #fff;
         --color: #000;
     }
 }
@@ -189,8 +189,8 @@ tbody > tr:hover {
 
 /* Link */
 a {
-    color: #0F72C8;
-    text-decoration: underline 2px #0F72C8;
+    color: #0f72c8;
+    text-decoration: underline 2px #0f72c8;
 }
 
 a:hover {
