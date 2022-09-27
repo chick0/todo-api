@@ -67,6 +67,7 @@
 
                         alert(json.message);
                         is_loading = false;
+                        password = '';
 
                         if (json.logout_required == true) {
                             push('/logout');

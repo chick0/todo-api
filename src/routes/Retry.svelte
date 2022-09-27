@@ -73,6 +73,7 @@
                 })
                     .then((resp) => resp.json())
                     .then((json) => {
+                        email = '';
                         is_loading = false;
                         alert(json.message);
 
