@@ -1,20 +1,20 @@
 :root {
     --background: #141414;
-    --color: #fff;
+    --color: #FFF;
 
     /* button */
-    --button-background: #ffcc4d;
-    --button-hover: #ffdb81;
+    --button-background: #FFCC4D;
+    --button-hover: #FFDB81;
     --button-text: #000;
 
     /* spinner */
     --spinner-a: #141414;
-    --spinner-b: #ffcc4d;
+    --spinner-b: #FFCC4D;
 }
 
 @media (prefers-color-scheme: light) {
     :root {
-        --background: #fff;
+        --background: #FFF;
         --color: #000;
     }
 }
@@ -185,6 +185,16 @@ tbody > tr:hover {
     to {
         transform: rotate(1turn);
     }
+}
+
+/* Link */
+a {
+    color: #0F72C8;
+    text-decoration: underline 2px #0F72C8;
+}
+
+a:hover {
+    text-decoration: none;
 }
 
 /* Button display */
