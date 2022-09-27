@@ -286,6 +286,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dompurify@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "dompurify@npm:2.4.0"
+  checksum: c93ea73cf8e3ba044588450198563e56ce6902e36d0e16e3699df2fa59e82c4fdd11d4ad04ef5024569ce96a35b46f29d0bbea522516add33cd39a7f56a8a675
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^8.0.0":
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
@@ -1362,6 +1369,7 @@ __metadata:
   dependencies:
     "@sveltejs/vite-plugin-svelte": ^1.0.2
     buffer: ^6.0.3
+    dompurify: ^2.4.0
     marked: ^4.1.0
     prettier: ^2.7.1
     prettier-plugin-svelte: ^2.7.0

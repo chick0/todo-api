@@ -1,6 +1,7 @@
 <script>
     import { push } from "svelte-spa-router";
-    import { Renderer, setOptions, parse } from "marked";
+    import { marked } from "marked";
+    import DOMPurify from "dompurify";
     import { TODO, TODO_CHECK } from "../url.js";
     import { is_login, get_token } from "../user.js";
     import { to_datestring, to_timestring } from "../time.js";
@@ -74,16 +75,16 @@
         fetch_todos();
     }
 
-    const renderer = new Renderer();
+    const renderer = new marked.Renderer();
 
     // @ts-ignore
     renderer.link = (href, title, text) => {
         return `<a target="_blank" rel="noreferrer" href="${href}">${text}</a>`;
     };
 
-    setOptions({
-        gfm: true,
+    marked.setOptions({
         renderer: renderer,
+        headerIds: false,
     });
 </script>
 
@@ -321,7 +322,7 @@
                                 }, 300);
                             }
                         }}">
-                        {@html parse(todo.text)}
+                        {@html DOMPurify.sanitize(marked.parse(todo.text))}
                     </div>
                 {/if}
 
