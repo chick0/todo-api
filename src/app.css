@@ -263,3 +263,10 @@ div.todo > div > h1,
 div.todo > div > h2 {
     font-size: 24px;
 }
+
+/* Line breaking in todo content */
+.todo-content > hr {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-bottom: 1px dashed var(--color);
+}
