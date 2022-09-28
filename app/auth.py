@@ -67,6 +67,7 @@ def login_required(f):
             )
 
         dbs.last_access = datetime.now()
+        db.session.commit()
 
         kwargs['session'] = AuthSession(
             sid=payload.sid,
