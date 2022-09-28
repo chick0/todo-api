@@ -32,6 +32,27 @@ html {
     outline: none;
 }
 
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #fff #000;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 7px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #000;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 0px;
+    border: 0px solid #fff;
+}
+
 /* Heading */
 h1,
 h2,
