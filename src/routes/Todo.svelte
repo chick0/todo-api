@@ -58,6 +58,16 @@
         }
     }
 
+    /**
+     * Auto-resizing textarea
+     *
+     * @param {HTMLElement} textarea textarea element
+     */
+    function autosize(textarea) {
+        textarea.style.height = "1px";
+        textarea.style.height = 12 + textarea.scrollHeight + "px";
+    }
+
     const TOKEN = get_token();
 
     let show_hidden_button = false;
@@ -136,14 +146,11 @@
                     maxlength="500"
                     bind:value="{newTodo}"
                     bind:this="{newTodoElement}"
-                    on:input="{() => {
-                        newTodoElement.style.height = '1px';
-                        newTodoElement.style.height = 12 + newTodoElement.scrollHeight + 'px';
-                    }}"
+                    on:input="{() => autosize(newTodoElement)}"
                     on:keydown="{(e) => {
                         if (e.key == 'Escape') {
                             newTodoElement.blur();
-                        } else if (e.ctrlKey == true && e.key == "Enter") {
+                        } else if (e.ctrlKey == true && e.key == 'Enter') {
                             if (newTodo.length != 0) {
                                 newTodoElement.blur();
                                 newTodoSave.click();
@@ -176,6 +183,12 @@
                             .then((json) => {
                                 if (json.status == true) {
                                     newTodo = '';
+
+                                    setTimeout(() => {
+                                        if (newTodoOpen == true) {
+                                            autosize(newTodoElement);
+                                        }
+                                    }, 100);
 
                                     json.todo.reset = json.todo.text;
                                     todos.unshift(json.todo);
@@ -251,22 +264,14 @@
                         readonly="{todo.button?.classList.contains('spin') === true}"
                         bind:this="{todo.textarea}"
                         bind:value="{todo.text}"
-                        on:input="{() => {
-                            todo.textarea.style.height = '1px';
-                            todo.textarea.style.height = 12 + todo.textarea.scrollHeight + 'px';
-                        }}"
-                        on:focus="{() => {
-                            todo.textarea.style.height = '1px';
-                            todo.textarea.style.height = 12 + todo.textarea.scrollHeight + 'px';
-                        }}"
+                        on:input="{() => autosize(todo.textarea)}"
+                        on:focus="{() => autosize(todo.textarea)}"
                         on:keydown="{(e) => {
                             if (e.key == 'Escape') {
                                 todo.textarea.blur();
-                            } else if (e.ctrlKey == true && e.key == "Enter") {
-                                if (todo.text.length != 0) {
-                                    todo.textarea.blur();
-                                    todo.button.click();
-                                }
+                            } else if (e.ctrlKey == true && e.key == 'Enter') {
+                                todo.textarea.blur();
+                                todo.button.click();
                             }
                         }}"></textarea>
                     <p>
