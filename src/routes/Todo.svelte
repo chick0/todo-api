@@ -431,6 +431,7 @@
     /* Todo content */
     .todo-content {
         min-height: 25px;
+        overflow-x: scroll !important;
     }
 
     /* Todo Datetext */
