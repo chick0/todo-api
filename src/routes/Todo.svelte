@@ -396,7 +396,6 @@
         font-size: 20px;
 
         display: block;
-        overflow: hidden;
         overflow-wrap: break-word;
         resize: none;
 
@@ -441,7 +440,7 @@
     /* Todo content */
     .todo-content {
         min-height: 25px;
-        overflow-x: scroll !important;
+        overflow-x: auto;
     }
 
     /* Todo Datetext */

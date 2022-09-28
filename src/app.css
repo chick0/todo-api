@@ -153,7 +153,7 @@ table {
     text-align: center;
     margin-top: 10px;
     display: block;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
 @media (min-width: 700px) {
