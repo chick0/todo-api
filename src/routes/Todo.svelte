@@ -143,6 +143,11 @@
                     on:keydown="{(e) => {
                         if (e.key == 'Escape') {
                             newTodoElement.blur();
+                        } else if (e.ctrlKey == true && e.key == "Enter") {
+                            if (newTodo.length != 0) {
+                                newTodoElement.blur();
+                                newTodoSave.click();
+                            }
                         }
                     }}"
                     on:blur="{() => {
@@ -257,6 +262,11 @@
                         on:keydown="{(e) => {
                             if (e.key == 'Escape') {
                                 todo.textarea.blur();
+                            } else if (e.ctrlKey == true && e.key == "Enter") {
+                                if (todo.text.length != 0) {
+                                    todo.textarea.blur();
+                                    todo.button.click();
+                                }
                             }
                         }}"></textarea>
                     <p>
