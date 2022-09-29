@@ -2,12 +2,19 @@
     --background: #141414;
     --color: #fff;
 
-    /* button */
+    --red: #e94747;
+    --green: #49cd2e;
+    --blue: #0087ff;
+
+    /* Checked todo content */
+    --checked: #808080;
+
+    /* Button */
     --button-background: #ffcc4d;
     --button-hover: #ffdb81;
     --button-text: #000;
 
-    /* spinner */
+    /* Spinner */
     --spinner-a: #141414;
     --spinner-b: #ffcc4d;
 }
@@ -16,6 +23,10 @@
     :root {
         --background: #fff;
         --color: #000;
+
+        --red: #dc0000;
+        --green: #00891c;
+        --blue: #0087ff;
     }
 }
 
@@ -35,7 +46,7 @@ html {
 /* Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #fff #000;
+    scrollbar-color: var(--color) var(--background);
 }
 
 /* Chrome, Edge, and Safari */
@@ -45,13 +56,13 @@ html {
 }
 
 *::-webkit-scrollbar-track {
-    background: #000;
+    background: var(--background);
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: #fff;
+    background-color: var(--color);
     border-radius: 0px;
-    border: 0px solid #fff;
+    border: 0px solid var(--color);
 }
 
 /* Heading */
@@ -130,7 +141,7 @@ input[type="password"] {
 }
 
 input:focus {
-    border-color: crimson;
+    border-color: var(--red);
 }
 
 /* Ordered Lists & Unordered Lists */
@@ -211,12 +222,12 @@ tbody > tr:hover {
 
 /* Link */
 a {
-    color: #0f72c8;
-    text-decoration: underline 2px #0f72c8;
+    color: var(--blue);
+    text-decoration: underline 2px var(--blue);
 }
 
-a:hover {
-    text-decoration: none;
+a:hover:not(.button) {
+    text-shadow: 0 0 3px var(--blue);
 }
 
 /* Button display */

@@ -276,15 +276,19 @@
         font-weight: 400;
     }
 
+    .clickable {
+        color: var(--red);
+    }
+
     .clickable:hover {
-        color: crimson;
+        text-shadow: 0 0 3px var(--red);
     }
 
     .red {
-        color: crimson;
+        color: var(--red);
     }
 
     .green {
-        color: green;
+        color: var(--green);
     }
 </style>

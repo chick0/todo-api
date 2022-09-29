@@ -433,7 +433,7 @@
     }
 
     .todo.checked > div {
-        color: #a8a8a8;
+        color: var(--checked);
     }
 
     /* Todo Checkbox */
@@ -457,11 +457,13 @@
 
     /* Delete button */
     .delete {
-        cursor: pointer;
         font-weight: 600;
+        color: var(--red);
+
     }
 
     .delete:hover {
-        color: crimson;
+        cursor: pointer;
+        text-shadow: 0 0 3px var(--red);
     }
 </style>
