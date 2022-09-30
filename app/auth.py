@@ -88,10 +88,16 @@ def create_auth_token(user: User, pin: Pin = None) -> str:
     ).filter(
         DBSession.dropped_at >= datetime.now()
     ).count() >= MAX_DB_SESSION:
-        raise APIError(
-            code=400,
-            message=f"{MAX_DB_SESSION}개보다 많은 기기에서 동시에 로그인 할 수 없습니다."
-        )
+        last_accessed_session = DBSession.query.filter_by(
+            owner=user.id
+        ).filter(
+            DBSession.dropped_at >= datetime.now()
+        ).order_by(
+            DBSession.last_access.asc()
+        ).first()
+
+        db.session.delete(last_accessed_session)
+        db.session.commit()
 
     now = datetime.now()
     user.lastlogin = now
