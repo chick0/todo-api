@@ -179,9 +179,10 @@
             <thead>
                 <tr>
                     <th class="w-70"></th>
-                    <th colspan="2">생성 날짜</th>
-                    <th colspan="2">만료 날짜</th>
-                    <th colspan="2">마지막 사용시간</th>
+                    <th>로그인 시간</th>
+                    <th>세션 만료 시간</th>
+                    <th>마지막 사용시간</th>
+                    <th>기기 정보</th>
                 </tr>
             </thead>
             <tbody>
@@ -225,16 +226,14 @@
                             }}"
                             >삭제
                         </td>
-                        <td>{to_datestring(session.created_at)}</td>
                         <td>{to_timestring(session.created_at)}</td>
-                        <td>{to_datestring(session.dropped_at)}</td>
                         <td>{to_timestring(session.dropped_at)}</td>
                         {#if session.last_access == null}
                             <td colspan="2">기록 없음</td>
                         {:else}
-                            <td>{to_datestring(session.last_access)}</td>
                             <td>{to_timestring(session.last_access)}</td>
                         {/if}
+                        <td>{session.device}</td>
                     </tr>
                 {/each}
             </tbody>

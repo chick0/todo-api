@@ -31,6 +31,7 @@ class SessionResponse(BaseModel):
     created_at: int
     dropped_at: int
     last_access: Optional[int]
+    device: str
 
 
 class PinResponse(BaseModel):
@@ -54,6 +55,30 @@ class UserResponse(BaseModel):
 def fetch(session: AuthSession):
     def calc_created_at(dbs: DBSession) -> datetime:
         return dbs.dropped_at - token_ttl
+
+    def get_device(history_id: int) -> str:
+        local = [x for x in history_list if x.id == history_id]
+
+        if len(local) == 1:
+            return parse_user_agent(local.user_agent)
+        
+        return parse_user_agent(
+            History.query.filter_by(
+                id=history_id,
+                owner=session.user_id
+            ).first().user_agent
+        )
+
+    history_list = History.query.filter_by(
+        owner=session.user_id
+    ).filter(
+        History.created_at.between(
+            datetime.now() - timedelta(days=31),
+            datetime.now()
+        )
+    ).order_by(
+        History.created_at.desc()
+    ).limit(15).all()
 
     return UserResponse(
         count=Todo.query.filter_by(
@@ -79,7 +104,8 @@ def fetch(session: AuthSession):
                 history_id=dbs.history,
                 created_at=timestamp(calc_created_at(dbs)),
                 dropped_at=timestamp(dbs.dropped_at),
-                last_access=timestamp(dbs.last_access)
+                last_access=timestamp(dbs.last_access),
+                device=get_device(history_id=dbs.history)
             )
             for dbs in DBSession.query.filter_by(
                 owner=session.user_id
@@ -96,15 +122,6 @@ def fetch(session: AuthSession):
                 ip=history.ip,
                 device=parse_user_agent(history.user_agent)
             )
-            for history in History.query.filter_by(
-                owner=session.user_id
-            ).filter(
-                History.created_at.between(
-                    datetime.now() - timedelta(days=31),
-                    datetime.now()
-                )
-            ).order_by(
-                History.created_at.desc()
-            ).limit(15).all()
+            for history in history_list
         ]
     ).dict()
