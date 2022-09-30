@@ -187,6 +187,7 @@
                                     setTimeout(() => {
                                         if (newTodoOpen == true) {
                                             autosize(newTodoElement);
+                                            newTodoElement.focus();
                                         }
                                     }, 100);
 
