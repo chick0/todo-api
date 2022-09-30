@@ -28,20 +28,23 @@
         <a class="button" href="/#/">메인 화면으로 이동</a>
     </div>
     <br />
-    <table>
-        <thead>
-            <tr>
-                <th style="width: 50%;">클라이언트 버전</th>
-                <th>빌드 날짜</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{tag}</td>
-                <td>{build_date.toLocaleString()}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-wrapped">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50%;">클라이언트 버전</th>
+                    <th>빌드 날짜</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{tag}</td>
+                    <td>{build_date.toLocaleString()}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
     <br />
     <ul>
         <li>서버 버전: {server_id}</li>

@@ -160,18 +160,14 @@ ul > li::before {
 }
 
 /* Table */
+.table-wrapped {
+    overflow-x: auto;
+}
+
 table {
     width: 100%;
     text-align: center;
     margin-top: 10px;
-    display: block;
-    overflow-x: auto;
-}
-
-@media (min-width: 700px) {
-    table {
-        display: table;
-    }
 }
 
 thead {
@@ -186,6 +182,7 @@ th {
 th,
 td {
     padding: 10px;
+    white-space: nowrap;
 }
 
 th:not(:last-child),

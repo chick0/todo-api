@@ -459,7 +459,6 @@
     .delete {
         font-weight: 600;
         color: var(--red);
-
     }
 
     .delete:hover {
