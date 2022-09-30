@@ -5,6 +5,7 @@
     import { TODO, TODO_CHECK } from "../url.js";
     import { is_login, get_token } from "../user.js";
     import { to_datestring, to_timestring } from "../time.js";
+    import About from "./About.svelte";
 
     /**
      * Fetch todo list from api server
@@ -391,6 +392,7 @@
 </div>
 
 <style>
+    /* New todo UI Open/Close button */
     p.clickable > b {
         display: inline-block;
         width: 15px;
@@ -433,30 +435,25 @@
         border-bottom: 1px solid var(--color);
     }
 
+    /* Change checked todo color */
     .todo.checked > div {
         color: var(--checked);
     }
 
-    /* Todo Checkbox */
+    /* Todo checkbox */
     .todo > input[type="checkbox"] {
         width: 30px;
         height: 30px;
     }
 
-    /* Todo content */
-    .todo-content {
-        min-height: 25px;
-        overflow-x: auto;
-    }
-
-    /* Todo Datetext */
+    /* Todo date/time text */
     .todo > p {
         margin-top: 10px;
         font-size: 18px;
         font-weight: 400;
     }
 
-    /* Delete button */
+    /* Todo delete button */
     .delete {
         font-weight: 600;
         color: var(--red);

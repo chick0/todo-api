@@ -288,15 +288,24 @@ a:hover:not(.button) {
     animation: spinner 0.8s linear infinite;
 }
 
-/* Heading in todo content */
-div.todo > div > h1,
-div.todo > div > h2 {
+/* Todo-Content */
+.todo-content {
+    min-height: 25px;
+    overflow-x: auto;
+}
+
+.todo-content > h1,
+.todo-content > h2 {
     font-size: 24px;
 }
 
-/* Line breaking in todo content */
 .todo-content > hr {
     margin-top: 10px;
     margin-bottom: 5px;
     border-bottom: 1px dashed var(--color);
+}
+
+.todo-content > blockquote {
+    padding: 5px;
+    border: 2px dashed var(--color);
 }
