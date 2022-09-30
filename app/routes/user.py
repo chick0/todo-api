@@ -60,8 +60,8 @@ def fetch(session: AuthSession):
         local = [x for x in history_list if x.id == history_id]
 
         if len(local) == 1:
-            return parse_user_agent(local.user_agent)
-        
+            return parse_user_agent(local[0].user_agent)
+
         return parse_user_agent(
             History.query.filter_by(
                 id=history_id,
