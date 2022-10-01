@@ -1,6 +1,6 @@
 <script>
     import { push } from "svelte-spa-router";
-    import { USER, SESSION_DELETE, PIN } from "../url.js";
+    import { USER, SESSION_DELETE, PIN, MORE_HISTORY } from "../url.js";
     import { is_login, get_token, get_payload } from "../user.js";
     import { get_pin_token } from "../pin.js";
     import { to_datestring, to_timestring } from "../time.js";
@@ -16,6 +16,10 @@
     let pin_list = [];
     let history_list = [];
     let session_list = [];
+
+    let more_history_button = undefined;
+    let history_cursor = null;
+    $: history_cursor = history_list[history_list.length - 1]?.id;
 
     if (!is_login()) {
         push("/todo");
@@ -246,7 +250,6 @@
         <hr />
 
         <h2>로그인 기록</h2>
-        <p>최근 한 달 동안의 15개의 기록을 조회할 수 있습니다.</p>
         <div class="table-wrapped">
             <table>
                 <thead>
@@ -268,6 +271,45 @@
                 </tbody>
             </table>
         </div>
+        <br />
+        <button
+            class="button max"
+            bind:this="{more_history_button}"
+            on:click="{() => {
+                if (more_history_button.classList.contains('spin')) {
+                    alert('이전 기록들을 가져오고 있습니다. 잠시만 기다려주세요.');
+                    return;
+                }
+
+                more_history_button.classList.add('spin');
+                fetch(MORE_HISTORY(history_cursor), {
+                    headers: {
+                        'x-auth': TOKEN,
+                    },
+                })
+                    .then((resp) => resp.json())
+                    .then((json) => {
+                        if (json.status) {
+                            json.history_list.forEach((history) => {
+                                history_list.push(history);
+                            });
+
+                            history_list = history_list;
+                        } else {
+                            alert(json.message);
+                        }
+
+                        if (json.logout_required == true) {
+                            push('/logout');
+                        }
+
+                        more_history_button.classList.remove('spin');
+                    })
+                    .catch(() => {
+                        alert('알 수 없는 오류가 발생했습니다.');
+                        more_history_button.classList.remove('spin');
+                    });
+            }}">기록 더 불러오기</button>
     {/if}
 </div>
 

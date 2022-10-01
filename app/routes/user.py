@@ -3,6 +3,7 @@ from datetime import datetime
 from datetime import timedelta
 
 from flask import Blueprint
+from flask import request
 from pydantic import BaseModel
 
 from app.models import Todo
@@ -12,6 +13,7 @@ from app.models import Pin
 from app.auth import token_ttl
 from app.auth import AuthSession
 from app.auth import login_required
+from app.error import APIError
 from app.utils import timestamp
 from app.utils import parse_user_agent
 
@@ -44,9 +46,16 @@ class PinResponse(BaseModel):
 
 class UserResponse(BaseModel):
     status: bool = True
+    message: str = ""
     count: int
     pin_list: list[PinResponse]
     session_list: list[SessionResponse]
+    history_list: list[HistoryResponse]
+
+
+class HistoryMoreResponse(BaseModel):
+    status: bool = True
+    message: str = ""
     history_list: list[HistoryResponse]
 
 
@@ -71,11 +80,6 @@ def fetch(session: AuthSession):
 
     history_list = History.query.filter_by(
         owner=session.user_id
-    ).filter(
-        History.created_at.between(
-            datetime.now() - timedelta(days=31),
-            datetime.now()
-        )
     ).order_by(
         History.created_at.desc()
     ).limit(15).all()
@@ -115,6 +119,38 @@ def fetch(session: AuthSession):
                 DBSession.last_access.desc()
             ).all()
         ],
+        history_list=[
+            HistoryResponse(
+                id=history.id,
+                created_at=timestamp(history.created_at),
+                ip=history.ip,
+                device=parse_user_agent(history.user_agent)
+            )
+            for history in history_list
+        ]
+    ).dict()
+
+
+@bp.get("/more")
+@login_required
+def more(session: AuthSession):
+    try:
+        cursor = int(request.args.get("cursor", "-"))
+    except (ValueError, TypeError):
+        raise APIError(
+            code=400,
+            message="커서가 올바르지 않습니다."
+        )
+
+    history_list = History.query.filter_by(
+        owner=session.user_id
+    ).filter(
+        History.id < cursor
+    ).order_by(
+        History.created_at.desc()
+    ).limit(15).all()
+
+    return HistoryMoreResponse(
         history_list=[
             HistoryResponse(
                 id=history.id,
