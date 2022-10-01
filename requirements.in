@@ -7,4 +7,5 @@ python-dotenv
 pydantic
 pyjwt
 redis
+geoip2
 user-agents

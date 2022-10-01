@@ -1,5 +1,6 @@
 # flake8: noqa
 __all__ = [
+    "country",
     "login",
     "logout",
     "pin",

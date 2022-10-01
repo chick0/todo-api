@@ -16,6 +16,8 @@ export const routes = {
     "/user": wrap({ asyncComponent: () => import("./routes/User.svelte") }),
     "/user/quit": wrap({ asyncComponent: () => import("./routes/Quit.svelte") }),
 
+    "/security/country": wrap({ asyncComponent: () => import("./routes/security/Country.svelte") }),
+
     "/pin": wrap({ asyncComponent: () => import("./routes/Pin.svelte") }),
     "/pin/create": wrap({ asyncComponent: () => import("./routes/PinCreate.svelte") }),
 

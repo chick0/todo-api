@@ -4,10 +4,24 @@
 #
 #    pip-compile
 #
+aiohttp==3.8.3
+    # via geoip2
+aiosignal==1.2.0
+    # via aiohttp
 alembic==1.8.1
     # via flask-migrate
 async-timeout==4.0.2
-    # via redis
+    # via
+    #   aiohttp
+    #   redis
+attrs==22.1.0
+    # via aiohttp
+certifi==2022.9.24
+    # via requests
+charset-normalizer==2.1.1
+    # via
+    #   aiohttp
+    #   requests
 click==8.1.3
     # via flask
 colorama==0.4.5
@@ -25,8 +39,18 @@ flask-sqlalchemy==2.5.1
     # via
     #   -r requirements.in
     #   flask-migrate
+frozenlist==1.3.1
+    # via
+    #   aiohttp
+    #   aiosignal
+geoip2==4.6.0
+    # via -r requirements.in
 greenlet==1.1.3
     # via sqlalchemy
+idna==3.4
+    # via
+    #   requests
+    #   yarl
 itsdangerous==2.1.2
     # via flask
 jinja2==3.1.2
@@ -38,6 +62,12 @@ markupsafe==2.1.1
     #   jinja2
     #   mako
     #   werkzeug
+maxminddb==2.2.0
+    # via geoip2
+multidict==6.0.2
+    # via
+    #   aiohttp
+    #   yarl
 mysqlclient==2.1.1
     # via -r requirements.in
 packaging==21.3
@@ -52,6 +82,8 @@ python-dotenv==0.21.0
     # via -r requirements.in
 redis==4.3.4
     # via -r requirements.in
+requests==2.28.1
+    # via geoip2
 sqlalchemy==1.4.41
     # via
     #   alembic
@@ -60,6 +92,10 @@ typing-extensions==4.3.0
     # via pydantic
 ua-parser==0.16.1
     # via user-agents
+urllib3==1.26.12
+    # via
+    #   geoip2
+    #   requests
 user-agents==2.2.0
     # via -r requirements.in
 waitress==2.1.2
@@ -68,3 +104,5 @@ werkzeug==2.2.2
     # via flask
 wrapt==1.14.1
     # via deprecated
+yarl==1.8.1
+    # via aiohttp

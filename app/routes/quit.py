@@ -11,6 +11,7 @@ from app.models import Todo
 from app.models import History
 from app.models import DBSession
 from app.models import Pin
+from app.models import Country
 from app.auth import AuthSession
 from app.auth import login_required
 from app.quit import create_token
@@ -60,22 +61,38 @@ def check_password(session: AuthSession):
 @login_required
 @check_quit_session
 def quit(session: AuthSession):
+    # 로그인 세선 삭제
+    # - 계정
+    # - 로그인 기록
     DBSession.query.filter_by(
         owner=session.user_id
     ).delete()
 
+    # 로그인 기록 삭제
+    # - 계정
     History.query.filter_by(
         owner=session.user_id
     ).delete()
 
+    # 할 일 삭제
+    # - 계정
     Todo.query.filter_by(
         owner=session.user_id
     ).delete()
 
+    # PIN 삭제
+    # - 계정
     Pin.query.filter_by(
         owner=session.user_id
     ).delete()
 
+    # 로그인 허용 국가 삭제
+    # - 계정
+    Country.query.filter_by(
+        owner=session.user_id
+    ).delete()
+
+    # 계정 삭제
     User.query.filter_by(
         id=session.user_id
     ).delete()
