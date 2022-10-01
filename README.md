@@ -107,7 +107,7 @@ API 서버는 Flask 프레임워크로 개발되었습니다.
 
 # 저작권
 
-@chick0이 작성한 API와 클라이언트는 모두 [MIT License](https://github.com/chick0/to-do/blob/master/LICENSE)를 따르고 있습니다.
+[@chick0](https://github.com/chick0) 이 작성한 API와 클라이언트는 모두 [MIT License](https://github.com/chick0/to-do/blob/master/LICENSE)를 따르고 있습니다.
 
 단 사용된 Pretendard 폰트의 경우에는 [OFL-1.1](https://github.com/orioncactus/pretendard/blob/main/LICENSE)를 따르고 있습니다.
 
