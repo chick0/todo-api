@@ -1,6 +1,5 @@
 from typing import Optional
 from datetime import datetime
-from datetime import timedelta
 
 from flask import Blueprint
 from flask import request
