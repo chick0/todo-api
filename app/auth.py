@@ -10,13 +10,10 @@ from app.models import User
 from app.models import History
 from app.models import DBSession
 from app.models import Pin
-from app.models import Country
 from app.error import APIError
 from app.token import create_token as ct
 from app.token import parse_token as pt
 from app.utils import get_ip
-from app.utils import get_help_mail
-from geoip import search
 
 name = "auth:token"
 token_ttl = timedelta(hours=3)
@@ -84,24 +81,6 @@ def login_required(f):
 
 
 def create_auth_token(user: User, pin: Pin = None) -> str:
-    allowed_country_code_list = [
-        x.code
-        for x in Country.query.filter_by(
-            owner=user.id
-        ).with_entities(
-            Country.code
-        ).all()
-    ]
-
-    if len(allowed_country_code_list) != 0:
-        code = search(ip=get_ip()).code
-        if code not in allowed_country_code_list:
-            raise APIError(
-                code=403,
-                message="해당 국가에서는 로그인 할 수 없습니다.\n"
-                f"(로그인 허용 국가 설정이 잘못되었다면 {get_help_mail()!r}로 메일을 보내주세요.)"
-            )
-
     MAX_DB_SESSION = 5
 
     if DBSession.query.filter_by(

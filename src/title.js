@@ -14,8 +14,6 @@ export const titles = {
     "/user": "계정 정보",
     "/user/quit": "회원 탈퇴",
 
-    "/security/country": "로그인 허용 국가",
-
     "/pin": "PIN 로그인",
     "/pin/create": "PIN 설정",
 

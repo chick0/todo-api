@@ -250,9 +250,6 @@
         <hr />
 
         <h2>로그인 기록</h2>
-        <div class="buttons">
-            <a class="button" href="#/security/country">로그인 허용 국가 설정</a>
-        </div>
         <div class="table-wrapped">
             <table>
                 <thead>

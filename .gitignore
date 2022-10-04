@@ -15,9 +15,6 @@ __pycache__/
 dist/
 dist-*.zip
 
-# GeoIP2 database
-geoip/*.mmdb
-
 # etc..
 .env
 .jwt.json

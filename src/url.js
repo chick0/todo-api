@@ -26,6 +26,3 @@ export const RETRY = BASE_URL + "/retry";
 export const RESET = BASE_URL + "/reset";
 export const RESET_STEP_1 = RESET + "/step1";
 export const RESET_STEP_2 = RESET + "/step2";
-
-export const COUNTRY = BASE_URL + "/country";
-export const COUNTRY_CODES = COUNTRY + "/codes";
