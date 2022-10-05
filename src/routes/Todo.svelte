@@ -292,6 +292,11 @@
                         bind:value="{todo.text}"
                         on:input="{() => autosize(todo.textarea)}"
                         on:focus="{() => autosize(todo.textarea)}"
+                        on:blur="{() => {
+                            if(todo.text == todo.reset){
+                                todo.editmode = false;
+                            }
+                        }}"                        
                         on:keydown="{(e) => {
                             if (e.key == 'Escape') {
                                 todo.textarea.blur();
