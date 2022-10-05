@@ -5,6 +5,7 @@
     import { TODO, TODO_CHECK } from "../url.js";
     import { is_login, get_token } from "../user.js";
     import { to_datestring, to_timestring } from "../time.js";
+    import { has_label, parse_labels, remove_label } from "../label.js";
 
     // Style for rendered markdown
     import "../todo-content.css";
@@ -381,6 +382,13 @@
                                 });
                         }}">수정한 할 일 저장</button>
                 {:else}
+                    {#if has_label(todo.text)}
+                        <div class="labels">
+                            {#each parse_labels(todo.text) as label}
+                                <span class="lv{label.level}">{label.text}</span>
+                            {/each}
+                        </div>
+                    {/if}
                     <div
                         class="todo-content"
                         on:dblclick="{() => {
@@ -391,7 +399,7 @@
                                 }, 300);
                             }
                         }}">
-                        {@html DOMPurify.sanitize(marked.parse(todo.text))}
+                        {@html DOMPurify.sanitize(marked.parse(remove_label(todo.text)))}
                     </div>
                 {/if}
 
