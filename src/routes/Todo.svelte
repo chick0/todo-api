@@ -5,7 +5,6 @@
     import { TODO, TODO_CHECK } from "../url.js";
     import { is_login, get_token } from "../user.js";
     import { to_datestring, to_timestring } from "../time.js";
-    import About from "./About.svelte";
 
     /**
      * Fetch todo list from api server
@@ -86,16 +85,41 @@
         fetch_todos();
     }
 
+    /**
+     * marked.js markdown renderer
+     *
+     * @type {Object}
+     */
     const renderer = new marked.Renderer();
 
-    // @ts-ignore
+    /**
+     * @param {string} href
+     * @param {string} title
+     * @param {string} text
+     */
     renderer.link = (href, title, text) => {
         return `<a target="_blank" rel="noreferrer" href="${href}">${text}</a>`;
     };
 
+    /**
+     * @param {string} head
+     * @param {string} body
+     */
+    renderer.table = (head, body) => {
+        return [
+            '<div class="table-wrapped">',
+            "<table>",
+            "<thead>" + head + "</thead>",
+            "<tbody>" + body + "</tbody>",
+            "</table>",
+            "</div>",
+        ].join("");
+    };
+
     marked.setOptions({
-        renderer: renderer,
+        breaks: true,
         headerIds: false,
+        renderer: renderer,
     });
 </script>
 
