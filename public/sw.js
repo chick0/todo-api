@@ -1,4 +1,4 @@
-const PRECACHE = "precache-v3";
+const PRECACHE = "precache-v4";
 const PRECACHE_URLS = [
     "/icons/192.png",
     "/minireset.min.css",
