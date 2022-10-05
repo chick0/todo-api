@@ -316,6 +316,8 @@
                         on:input="{() => autosize(todo.textarea)}"
                         on:focus="{() => autosize(todo.textarea)}"
                         on:blur="{() => {
+                            todo.text = todo.text.trim();
+
                             if (todo.text == todo.reset) {
                                 todo.editmode = false;
                             }
@@ -325,7 +327,10 @@
                                 todo.textarea.blur();
                             } else if (e.ctrlKey == true && e.key == 'Enter') {
                                 todo.textarea.blur();
-                                todo.button.click();
+
+                                if (todo.editmode) {
+                                    todo.button.click();
+                                }
                             }
                         }}"></textarea>
                     <p>
