@@ -6,6 +6,9 @@
     import { is_login, get_token } from "../user.js";
     import { to_datestring, to_timestring } from "../time.js";
 
+    // Style for rendered markdown
+    import "../todo-content.css";
+
     /**
      * Fetch todo list from api server
      */
@@ -93,15 +96,6 @@
     const renderer = new marked.Renderer();
 
     /**
-     * @param {string} href
-     * @param {string} title
-     * @param {string} text
-     */
-    renderer.link = (href, title, text) => {
-        return `<a target="_blank" rel="noreferrer" href="${href}">${text}</a>`;
-    };
-
-    /**
      * @param {string} head
      * @param {string} body
      */
@@ -114,6 +108,34 @@
             "</table>",
             "</div>",
         ].join("");
+    };
+
+    /**
+     * @param {string} text
+     * @param {number} level
+     */
+    renderer.heading = (text, level) => {
+        return `<h${level} class="todo-content">${text}</h${level}>`;
+    };
+
+    renderer.hr = () => {
+        return "<hr class='todo-content'>";
+    };
+
+    /**
+     * @param {string} href
+     * @param {string|null} title
+     * @param {string} text
+     */
+    renderer.link = (href, title, text) => {
+        /**
+         * @returns {string} Get title attribute
+         */
+        function get_title() {
+            return title == null ? "" : `title="${title}"`;
+        }
+
+        return `<a target="_blank" rel="noreferrer" href="${href}" ${get_title()}>${text}</a>`;
     };
 
     marked.setOptions({
@@ -293,10 +315,10 @@
                         on:input="{() => autosize(todo.textarea)}"
                         on:focus="{() => autosize(todo.textarea)}"
                         on:blur="{() => {
-                            if(todo.text == todo.reset){
+                            if (todo.text == todo.reset) {
                                 todo.editmode = false;
                             }
-                        }}"                        
+                        }}"
                         on:keydown="{(e) => {
                             if (e.key == 'Escape') {
                                 todo.textarea.blur();

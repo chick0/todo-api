@@ -1,0 +1,39 @@
+@font-face {
+    font-family: "D2Coding";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("https://cdn.jsdelivr.net/gh/chick0/fonts@f4a5aa1819a4d7d8c7e4ab5a3c63ad54b512768b/d2coding/D2Coding.v1.3.2.woff2")
+        format("woff2");
+    unicode-range: U+0020-007E;
+}
+
+div.todo-content {
+    min-height: 25px;
+    overflow-x: auto;
+}
+
+h1.todo-content,
+h2.todo-content {
+    font-size: 30px;
+}
+
+h3.todo-content,
+h4.todo-content {
+    font-size: 25px;
+}
+
+hr.todo-content {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-bottom: 1px dashed var(--color);
+}
+
+blockquote {
+    padding: 5px;
+    border: 2px dashed var(--color);
+}
+
+code {
+    font-family: D2Coding, Pretendard, monospace;
+}

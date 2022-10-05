@@ -292,25 +292,3 @@ a:hover:not(.button) {
     border-radius: 50%;
     animation: spinner 0.8s linear infinite;
 }
-
-/* Todo-Content */
-.todo-content {
-    min-height: 25px;
-    overflow-x: auto;
-}
-
-.todo-content > h1,
-.todo-content > h2 {
-    font-size: 24px;
-}
-
-.todo-content > hr {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    border-bottom: 1px dashed var(--color);
-}
-
-.todo-content > blockquote {
-    padding: 5px;
-    border: 2px dashed var(--color);
-}
