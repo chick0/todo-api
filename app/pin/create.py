@@ -43,6 +43,16 @@ def create(session: AuthSession):
             message="PIN은 숫자로 입력해야 합니다."
         )
 
+    MAX_PIN = 5
+
+    if Pin.query.filter_by(
+        owner=session.user_id
+    ).count() >= MAX_PIN:
+        raise APIError(
+            code=400,
+            message=f"{MAX_PIN}개보다 많은 PIN을 등록 할 수 없습니다."
+        )
+
     ctx.code = sha512(ctx.code.encode()).hexdigest()
 
     pin = Pin()

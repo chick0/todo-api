@@ -36,6 +36,7 @@
     {:else}
         <div class="buttons">
             <a class="button" href="#/todo">할 일</a>
+            <a class="button" href="#/user">계정 정보</a>
         </div>
         <hr />
         <p>PIN 입력뒤 생성하기 버튼을 눌러주세요.</p>
