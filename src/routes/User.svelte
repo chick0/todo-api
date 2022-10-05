@@ -328,7 +328,7 @@
     }
 
     .clickable:hover {
-        text-shadow: 0 0 3px var(--red);
+        text-shadow: 0 0 var(--text-shadow) var(--red);
     }
 
     .red {

@@ -6,6 +6,8 @@
     --green: #49cd2e;
     --blue: #0087ff;
 
+    --text-shadow: 2px;
+
     /* Checked todo content */
     --checked: #808080;
 
@@ -27,6 +29,8 @@
         --red: #dc0000;
         --green: #00891c;
         --blue: #0087ff;
+
+        --text-shadow: 1px;
     }
 }
 
@@ -225,7 +229,7 @@ a {
 }
 
 a:hover:not(.button) {
-    text-shadow: 0 0 3px var(--blue);
+    text-shadow: 0 0 var(--text-shadow) var(--blue);
 }
 
 /* Button display */
