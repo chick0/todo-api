@@ -1,7 +1,6 @@
 <script>
     import { onMount } from "svelte";
     import { VERSION } from "../url.js";
-    import { is_login } from "../user.js";
     import { to_string } from "../time.js";
 
     let tag = TAG;
@@ -26,11 +25,7 @@
 <div class="section container">
     <h1>버전 정보</h1>
     <div class="buttons">
-        <a class="button" href="#/">메인 화면</a>
         <a class="button" href="/cache.html">캐시 관리자</a>
-        {#if is_login()}
-            <a class="button" href="#/todo">할 일</a>
-        {/if}
     </div>
     <br />
     <div class="table-wrapped">

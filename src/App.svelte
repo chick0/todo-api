@@ -52,13 +52,21 @@
 <nav class="container">
     <div class="navbar">
         <ul class="{vertical_open == true ? 'nav-opened' : 'nav-closed'}">
-            <li on:click="{() => push('/')}"><b>To-Do</b></li>
             <li
-                class="trigger"
+                class="head"
+                on:click="{() => push('/')}"
+                on:dblclick="{() => {
+                    window.getSelection()?.removeAllRanges();
+                    push('/version');
+                }}">
+                <b>To-Do</b>
+            </li>
+            <li
+                class="head trigger"
                 on:click="{() => {
                     vertical_open = !vertical_open;
                 }}">
-                {vertical_open == true ? "-" : "+"}
+                <b>{vertical_open == true ? "-" : "+"}</b>
             </li>
             {#if login_status == false}
                 <li on:click="{() => push('/login')}">로그인</li>

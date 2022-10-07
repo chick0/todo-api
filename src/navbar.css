@@ -11,8 +11,10 @@
 
     .navbar ul li.trigger {
         position: absolute;
+        width: 50%;
         right: 15px;
-        margin-top: -45px;
+        margin-top: -42px;
+        text-align: right;
     }
 
     .navbar .nav-closed li:not(:first-child):not(.trigger) {
@@ -26,6 +28,10 @@
         text-align: left;
         text-decoration: none;
         padding-top: 15px;
+    }
+
+    .navbar li:not(.head) {
+        border-bottom: 1px solid var(--color);
     }
 }
 
