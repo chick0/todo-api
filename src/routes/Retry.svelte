@@ -31,13 +31,8 @@
     {#if is_loading == true}
         <div class="spinner"></div>
     {:else}
-        <div class="buttons">
-            <a class="button" href="#/login">로그인</a>
-            <a class="button" href="#/sign-up">회원가입</a>
-            <a class="button" href="#/reset">비밀번호 재설정</a>
-        </div>
-        <hr />
         <p>5분마다 한 번씩 시도할 수 있습니다.</p>
+        <br />
         <p>반복해서 오류가 발생하는 경우에는 <b>{help_email}</b>로 메일을 보내주세요.</p>
         <div class="field">
             <label for="email-1">이메일</label>

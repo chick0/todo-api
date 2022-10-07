@@ -40,11 +40,6 @@
 
 <div class="section container">
     <h1>비밀번호 재설정</h1>
-    <div class="buttons">
-        <a class="button" href="#/login">로그인</a>
-        <a class="button" href="#/sign-up">회원가입</a>
-    </div>
-    <hr />
     {#if is_loading == true}
         <div class="spinner"></div>
     {:else if step == 1}
