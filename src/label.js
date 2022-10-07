@@ -46,6 +46,7 @@ export function parse_labels(text) {
             });
     }
 
+    labels.sort((a, b) => b.level - a.level);
     return labels;
 }
 
