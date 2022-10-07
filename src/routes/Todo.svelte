@@ -152,16 +152,15 @@
 <div class="section container">
     <h2>할 일</h2>
     <div class="buttons">
-        {#if refresh_able == true}
-            <button
-                class="button"
-                on:click="{() => {
-                    refresh_able = false;
-                    is_loading = true;
-                    todos = [];
-                    fetch_todos();
-                }}">새로고침</button>
-        {/if}
+        <button
+            class="button"
+            style="visibility: {refresh_able == true ? 'visible' : 'hidden'};"
+            on:click="{() => {
+                refresh_able = false;
+                is_loading = true;
+                todos = [];
+                fetch_todos();
+            }}">새로고침</button>
     </div>
 
     <hr />
@@ -382,15 +381,7 @@
                                 });
                         }}">수정한 할 일 저장</button>
                 {:else}
-                    {#if has_label(todo.text)}
-                        <div class="labels">
-                            {#each parse_labels(todo.text) as label}
-                                <span class="lv{label.level}">{label.text}</span>
-                            {/each}
-                        </div>
-                    {/if}
                     <div
-                        class="todo-content"
                         on:dblclick="{() => {
                             if (todo.checked == false) {
                                 todo.editmode = true;
@@ -399,7 +390,16 @@
                                 }, 300);
                             }
                         }}">
-                        {@html DOMPurify.sanitize(marked.parse(remove_label(todo.text)))}
+                        {#if has_label(todo.text)}
+                            <div class="labels">
+                                {#each parse_labels(todo.text) as label}
+                                    <span class="lv{label.level}">{label.text}</span>
+                                {/each}
+                            </div>
+                        {/if}
+                        <div class="todo-content">
+                            {@html DOMPurify.sanitize(marked.parse(remove_label(todo.text)))}
+                        </div>
                     </div>
                 {/if}
 
