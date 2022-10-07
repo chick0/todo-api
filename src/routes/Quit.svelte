@@ -21,12 +21,7 @@
 
 <div class="section container">
     <h1>회원 탈퇴</h1>
-    <div class="buttons">
-        <a class="button" href="#/todo">할 일</a>
-        <a class="button" href="#/user">계정 정보</a>
-    </div>
-
-    <hr />
+    <br />
     {#if is_loading == true}
         <div class="spinner"></div>
     {:else if step == 1}
