@@ -104,12 +104,10 @@
                 }}">
                 <b>To-Do</b>
             </li>
-            <li
-                class="head trigger"
-                on:click="{() => {
-                    vertical_open = !vertical_open;
-                }}">
-                <b>{vertical_open == true ? "-" : "+"}</b>
+            <li class="head trigger" on:click="{() => (vertical_open = !vertical_open)}">
+                <span></span>
+                <span></span>
+                <span></span>
             </li>
             {#if login_status == false}
                 <li on:click="{() => push('/login')}">로그인</li>

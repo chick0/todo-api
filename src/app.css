@@ -8,7 +8,7 @@
 
     --text-shadow: 2px;
 
-    /* Checked todo content */
+    /* Checked */
     --checked: #808080;
 
     /* Button */
@@ -31,6 +31,8 @@
         --blue: #0087ff;
 
         --text-shadow: 1px;
+
+        --checked: #b1b1b1;
     }
 }
 

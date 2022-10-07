@@ -11,10 +11,20 @@
 
     .navbar ul li.trigger {
         position: absolute;
-        width: 50%;
         right: 15px;
-        margin-top: -42px;
-        text-align: right;
+        margin-top: -38px;
+    }
+
+    .navbar ul li.trigger > span {
+        display: block;
+        width: 35px;
+        border-top: 1px solid var(--color);
+        padding-bottom: 10px;
+        content: "";
+    }
+
+    .navbar ul.nav-opened li.trigger > span {
+        border-color: var(--checked);
     }
 
     .navbar .nav-closed li:not(:first-child):not(.trigger) {
@@ -28,10 +38,6 @@
         text-align: left;
         text-decoration: none;
         padding-top: 15px;
-    }
-
-    .navbar li:not(.head) {
-        border-bottom: 1px solid var(--color);
     }
 }
 
