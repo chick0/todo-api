@@ -55,7 +55,7 @@
                             let textarea = document.querySelector("div.todo.new > textarea");
 
                             if (textarea != undefined) {
-                                textarea.scrollIntoView();
+                                window.scrollTo(0, textarea.offsetTop - 20);
                                 textarea.focus();
                             }
                         }, 150);
