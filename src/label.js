@@ -33,13 +33,11 @@ export function parse_labels(text) {
                 let level = label.split("").filter((x) => x == "@").length;
                 let text = label.slice(level, label.length).trim();
 
-                if (level < 1) {
-                    level = 1;
-                } else if (level > 3) {
+                if (level > 3) {
                     level = 3;
                 }
 
-                if (text.length != 0) {
+                if (level >= 1 && text.length != 0) {
                     labels.push({
                         level,
                         text,
