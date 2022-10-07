@@ -26,6 +26,42 @@
             alert("치명적인 오류가 발생해 재시작합니다.");
             window.location.reload();
         };
+
+        window.addEventListener("keydown", (e) => {
+            if (e.target == document.body && e.shiftKey && e.key != "Shift") {
+                if (e.key == "@") {
+                    if (is_login()) {
+                        if (confirm("로그아웃 하시겠습니까?")) {
+                            push("/logout");
+                        }
+                    } else {
+                        push("/login");
+                    }
+                } else if (e.key == "#") {
+                    if (where_am_i != "/todo") {
+                        push("/todo");
+                    } else {
+                        /**
+                         * @type {HTMLElement} New todo input area open button
+                         */
+                        let open = document.querySelector("p.clickable.open");
+                        open?.click();
+
+                        setTimeout(() => {
+                            /**
+                             * @type {HTMLElement} New todo input textarea
+                             */
+                            let textarea = document.querySelector("div.todo.new > textarea");
+
+                            if (textarea != undefined) {
+                                textarea.scrollIntoView();
+                                textarea.focus();
+                            }
+                        }, 150);
+                    }
+                }
+            }
+        });
     });
 
     let login_status = is_login();
@@ -35,7 +71,13 @@
      */
     let vertical_open = false;
 
+    /**
+     * SPA Router path
+     */
+    let where_am_i = "";
+
     location.subscribe((path) => {
+        where_am_i = path;
         let title = titles[path];
 
         if (title == null) {

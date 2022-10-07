@@ -144,7 +144,7 @@
 </script>
 
 <div class="section container">
-    <h2>할 일</h2>
+    <h1>할 일</h1>
     <div class="buttons">
         <button
             class="button"
@@ -163,7 +163,7 @@
     {:else}
         {#if newTodoOpen == false}
             <p
-                class="clickable"
+                class="clickable open"
                 on:click="{() => {
                     newTodoOpen = true;
                 }}">
