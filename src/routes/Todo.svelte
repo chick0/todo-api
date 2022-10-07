@@ -27,10 +27,6 @@
 
                     is_loading = false;
 
-                    setTimeout(() => {
-                        refresh_able = true;
-                    }, 3000);
-
                     if (todos.length == 0) {
                         newTodoOpen = true;
                         newTodo = "- 이 곳에 할 일을 적어주세요!\n- 마크다운 문법을 사용 할 수 있습니다.";
@@ -83,8 +79,6 @@
     let newTodoSave = undefined;
 
     let is_loading = true;
-
-    let refresh_able = false;
 
     if (!is_login()) {
         push("/login");
@@ -154,12 +148,12 @@
     <div class="buttons">
         <button
             class="button"
-            style="visibility: {refresh_able == true ? 'visible' : 'hidden'};"
             on:click="{() => {
-                refresh_able = false;
-                is_loading = true;
-                todos = [];
-                fetch_todos();
+                if (is_loading == false) {
+                    is_loading = true;
+                    todos = [];
+                    fetch_todos();
+                }
             }}">새로고침</button>
     </div>
 
