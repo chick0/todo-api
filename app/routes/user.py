@@ -81,7 +81,7 @@ def fetch(session: AuthSession):
         owner=session.user_id
     ).order_by(
         History.created_at.desc()
-    ).limit(15).all()
+    ).limit(10).all()
 
     return UserResponse(
         count=Todo.query.filter_by(
@@ -147,7 +147,7 @@ def more(session: AuthSession):
         History.id < cursor
     ).order_by(
         History.created_at.desc()
-    ).limit(15).all()
+    ).limit(10).all()
 
     return HistoryMoreResponse(
         history_list=[
