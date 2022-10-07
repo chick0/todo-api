@@ -6,8 +6,6 @@
     import { is_login, get_token } from "../user.js";
     import { to_datestring, to_timestring } from "../time.js";
     import { has_label, parse_labels, remove_label } from "../label.js";
-
-    // Style for rendered markdown
     import "../todo-content.css";
 
     /**
@@ -28,6 +26,10 @@
                     });
 
                     is_loading = false;
+
+                    setTimeout(() => {
+                        refresh_able = true;
+                    }, 3000);
 
                     if (todos.length == 0) {
                         newTodoOpen = true;
@@ -74,7 +76,6 @@
 
     const TOKEN = get_token();
 
-    let show_hidden_button = false;
     let todos = [];
     let newTodo = "";
     let newTodoOpen = false;
@@ -82,6 +83,8 @@
     let newTodoSave = undefined;
 
     let is_loading = true;
+
+    let refresh_able = false;
 
     if (!is_login()) {
         push("/login");
@@ -147,25 +150,17 @@
 </script>
 
 <div class="section container">
-    <h1
-        on:dblclick="{() => {
-            show_hidden_button = !show_hidden_button;
-        }}">
-        To-Do
-    </h1>
+    <h2>할 일</h2>
     <div class="buttons">
-        <a class="button" href="#/user">계정 정보</a>
-        <a class="button" href="#/logout">로그아웃</a>
-        <button
-            class="button"
-            on:click="{() => {
-                is_loading = true;
-                todos = [];
-                fetch_todos();
-            }}">새로고침</button>
-        {#if show_hidden_button}
-            <a class="button" href="#/version">버전 정보</a>
-            <a class="button" href="/cache.html">캐시 관리자</a>
+        {#if refresh_able == true}
+            <button
+                class="button"
+                on:click="{() => {
+                    refresh_able = false;
+                    is_loading = true;
+                    todos = [];
+                    fetch_todos();
+                }}">새로고침</button>
         {/if}
     </div>
 

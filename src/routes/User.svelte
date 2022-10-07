@@ -54,19 +54,20 @@
 
 <div class="section container">
     <h1>계정 정보</h1>
-    <div class="buttons">
-        <a class="button" href="#/todo">할 일</a>
-        <a class="button" href="#/logout">로그아웃</a>
-        <a class="button" href="#/user/quit">회원 탈퇴</a>
-    </div>
 
     {#if is_loading == true}
         <div class="spinner"></div>
     {:else}
-        <hr />
+        <br />
 
         <p class="summary">
             이 계정의 이메일 주소는 <u>{email}</u>이며, 등록된 할 일은 총 <u>{count}개</u>가 있습니다.
+        </p>
+
+        <br />
+
+        <p class="summary">
+            계정에 별다른 문제가 없으며, <a href="#/user/quit">회원 탈퇴</a> 메뉴에서 계정을 삭제할 수 있습니다.
         </p>
 
         <hr />
