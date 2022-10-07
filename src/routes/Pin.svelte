@@ -15,7 +15,8 @@
         push("/todo");
     } else {
         if (pin_token == null) {
-            push("/login");
+            // push("/login");
+            is_loading = false;
         } else {
             is_loading = false;
         }
@@ -30,7 +31,7 @@
         <div class="buttons">
             <a class="button" href="#/login?force">또는 이메일 로그인</a>
         </div>
-        <hr />
+
         <div class="field">
             <input
                 id="pin"
