@@ -61,7 +61,8 @@ hr.todo-content {
 
 blockquote {
     padding: 5px;
-    border: 2px dashed var(--color);
+    border: 1px dashed var(--blue);
+    border-left: 3px solid var(--blue);
 }
 
 code {
