@@ -70,7 +70,7 @@
     <h2>단축키</h2>
     <br />
     <p>편의성을 위해 <b>To-Do</b>는 몇 가지 단축키를 제공합니다.</p>
-    <div class="table-wrapper">
+    <div class="table-wrapped">
         <table>
             <thead>
                 <tr>
