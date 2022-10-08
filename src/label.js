@@ -1,4 +1,20 @@
 /**
+ * Label Level Calculation
+ * 
+ * @param {string} label Unparsed label
+ * @returns {number} level
+ */
+function calc_level(label) {
+    if (label.startsWith("@@@")) {
+        return 3;
+    } else if (label.startsWith("@@")) {
+        return 2;
+    } else {
+        return 1;
+    }
+}
+
+/**
  * Check todo has label
  *
  * @param {string} text
@@ -30,7 +46,7 @@ export function parse_labels(text) {
             .forEach((label) => {
                 label = label.trim();
 
-                let level = label.split("").filter((x) => x == "@").length;
+                let level = calc_level(label);
                 let text = label.slice(level, label.length).trim();
 
                 if (level > 3) {
