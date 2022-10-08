@@ -37,7 +37,7 @@ def delete_login_history():
     logger.info("Try to delete login history")
     session = factory()
 
-    date = datetime.now() - timedelta(days=31 * 3)
+    date = datetime.now() - timedelta(days=7 * 2)
 
     result = session.query(History).filter(
         History.created_at < date
