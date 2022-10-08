@@ -1,9 +1,9 @@
 <script>
     import { push } from "svelte-spa-router";
-    import { USER, SESSION_DELETE, PIN, MORE_HISTORY } from "../url.js";
-    import { is_login, get_token, get_payload } from "../user.js";
-    import { get_pin_token } from "../pin.js";
-    import { to_datestring, to_timestring } from "../time.js";
+    import { USER, SESSION_DELETE, PIN, MORE_HISTORY } from "src/url.js";
+    import { is_login, get_token, get_payload } from "src/user.js";
+    import { get_pin_token } from "src/pin.js";
+    import { to_datestring, to_timestring } from "src/time.js";
 
     const TOKEN = get_token();
     const payload = get_payload();

@@ -1,7 +1,7 @@
 <script>
     import { push } from "svelte-spa-router";
-    import { QUIT } from "../url.js";
-    import { is_login, get_token } from "../user.js";
+    import { QUIT } from "src/url.js";
+    import { is_login, get_token } from "src/user.js";
 
     const TOKEN = get_token();
 

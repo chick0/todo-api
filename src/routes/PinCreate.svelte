@@ -1,9 +1,9 @@
 <script>
     import { onMount } from "svelte";
     import { push } from "svelte-spa-router";
-    import { PIN } from "../url.js";
-    import { is_login, get_token } from "../user.js";
-    import { set_pin_token, get_pin_token } from "../pin.js";
+    import { PIN } from "src/url.js";
+    import { is_login, get_token } from "src/user.js";
+    import { set_pin_token, get_pin_token } from "src/pin.js";
 
     const TOKEN = get_token();
 

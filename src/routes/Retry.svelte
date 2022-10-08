@@ -1,7 +1,7 @@
 <script>
     import { push } from "svelte-spa-router";
-    import { RETRY } from "../url.js";
-    import { is_login } from "../user.js";
+    import { RETRY } from "src/url.js";
+    import { is_login } from "src/user.js";
 
     let is_loading = true;
     let help_email = "-";

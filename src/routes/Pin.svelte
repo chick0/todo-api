@@ -1,8 +1,8 @@
 <script>
     import { push } from "svelte-spa-router";
-    import { PIN_LOGIN } from "../url.js";
-    import { is_login, set_token } from "../user.js";
-    import { get_pin_token, clear_pin_token } from "../pin.js";
+    import { PIN_LOGIN } from "src/url.js";
+    import { is_login, set_token } from "src/user.js";
+    import { get_pin_token, clear_pin_token } from "src/pin.js";
 
     let is_loading = true;
     const pin_token = get_pin_token();

@@ -2,11 +2,11 @@
     import { push } from "svelte-spa-router";
     import { marked } from "marked";
     import DOMPurify from "dompurify";
-    import { TODO, TODO_CHECK } from "../url.js";
-    import { is_login, get_token } from "../user.js";
-    import { to_datestring, to_timestring } from "../time.js";
-    import { has_label, parse_labels, remove_label } from "../label.js";
-    import "../todo-content.css";
+    import { TODO, TODO_CHECK } from "src/url.js";
+    import { is_login, get_token } from "src/user.js";
+    import { to_datestring, to_timestring } from "src/time.js";
+    import { has_label, parse_labels, remove_label } from "src/label.js";
+    import "src/todo-content.css";
 
     /**
      * Fetch todo list from api server

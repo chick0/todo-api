@@ -1,8 +1,8 @@
 <script>
     import { push } from "svelte-spa-router";
-    import { LOGIN } from "../url.js";
-    import { is_login, set_token } from "../user.js";
-    import { get_pin_token } from "../pin.js";
+    import { LOGIN } from "src/url.js";
+    import { is_login, set_token } from "src/user.js";
+    import { get_pin_token } from "src/pin.js";
 
     if (is_login()) {
         push("/todo");

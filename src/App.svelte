@@ -2,11 +2,11 @@
     import Router from "svelte-spa-router";
     import { location, push } from "svelte-spa-router";
     import { onMount } from "svelte";
-    import { titles } from "./title.js";
-    import { routes } from "./router.js";
-    import { is_login } from "./user.js";
-    import "./navbar.css";
-    import "./D2Coding.css";
+    import { titles } from "src/title.js";
+    import { routes } from "src/router.js";
+    import { is_login } from "src/user.js";
+    import "src/navbar.css";
+    import "src/D2Coding.css";
 
     /**
      * Update theme-color meta data

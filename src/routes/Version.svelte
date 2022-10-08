@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
-    import { VERSION } from "../url.js";
-    import { to_string } from "../time.js";
+    import { VERSION } from "src/url.js";
+    import { to_string } from "src/time.js";
 
     let tag = TAG;
     let build_date = new Date(BUILD_DATE);
