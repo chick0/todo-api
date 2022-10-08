@@ -29,7 +29,7 @@
 {#if checking_pin_login}
     <div class="spinner"></div>
 {:else}
-    <div class="section container">
+    <div class="container">
         <h1>로그인</h1>
         <div class="buttons">
             <a class="button" href="#/reset">비밀번호 재설정</a>

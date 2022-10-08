@@ -2,7 +2,7 @@
 <html lang="ko">
     <head>
         <meta charset="utf-8" />
-        <meta name="robots" content="noindex,nofollow" />
+        <meta name="robots" content="noindex, nofollow" />
         <meta name="author" content="chick_0" />
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, shrink-to-fit=no" />
         <link rel="icon" type="image/png" href="/icons/192.png" sizes="192x192" />
@@ -13,9 +13,6 @@
             :root {
                 --background: #141414;
                 --color: #fff;
-                --button-background: #ffcc4d;
-                --button-hover: #ffdb81;
-                --button-text: #000;
             }
 
             @media (prefers-color-scheme: light) {
@@ -33,15 +30,11 @@
                 background-color: var(--background);
             }
 
-            .section {
-                padding-top: 60px;
-                padding-bottom: 60px;
-            }
-
             .container {
                 text-align: left;
                 margin-left: 5%;
                 margin-right: 5%;
+                padding-top: 20px;
             }
 
             @media (min-width: 700px) {
@@ -60,46 +53,38 @@
                 display: inline-block;
                 text-decoration: none;
                 cursor: pointer;
-
-                color: var(--button-text);
-                background-color: var(--button-background);
-
+                color: #000;
+                background-color: #ffcc4d;
                 font: inherit;
-                font-size: 20px !important;
-
+                font-size: 20px;
                 padding: 10px;
-                border: 1px solid var(--button-background);
+                border: 1px solid #ffcc4d;
                 border-radius: 0.25rem;
             }
 
             .button:hover {
-                background-color: var(--button-hover);
-                border: 1px solid var(--button-hover);
+                background-color: #ffdb81;
+                border: 1px solid #ffdb81;
             }
 
-            li,
+            ul#list {
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+
             li > ul {
-                margin-left: 25px;
-            }
-
-            ul > li {
-                margin-left: 0;
-            }
-
-            ul > li::before {
-                content: "-";
-                margin-right: 10px;
+                margin-left: 30px;
             }
         </style>
     </head>
     <body>
-        <div class="section container">
+        <div class="container">
             <h1>캐시 관리자</h1>
             <div class="buttons">
                 <a class="button" href="/#/">메인 화면으로 이동</a>
             </div>
 
-            <ul id="list" class="section"></ul>
+            <ul id="list"></ul>
 
             <div class="buttons">
                 <button class="button" id="delete">런타임 캐시 삭제하기</button>
@@ -156,6 +141,7 @@
                         render();
                     });
             });
+
             document.getElementById("refresh").addEventListener("click", () => {
                 render();
             });

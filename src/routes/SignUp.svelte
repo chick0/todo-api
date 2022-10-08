@@ -13,7 +13,7 @@
     let submit = undefined;
 </script>
 
-<div class="section container">
+<div class="container">
     <h1>회원가입</h1>
 
     <div class="field">

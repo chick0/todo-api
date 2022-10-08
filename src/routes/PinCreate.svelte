@@ -29,7 +29,7 @@
     }
 </script>
 
-<div class="section container">
+<div class="container">
     <h1>PIN 설정</h1>
     {#if is_loading == true}
         <div class="spinner"></div>

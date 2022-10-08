@@ -52,7 +52,7 @@
     }
 </script>
 
-<div class="section container">
+<div class="container">
     <h1>계정 정보</h1>
 
     {#if is_loading == true}

@@ -22,7 +22,7 @@
     }
 </script>
 
-<div class="section container">
+<div class="container">
     <h1>이메일 인증</h1>
     {#if is_loading == true}
         <div class="spinner"></div>

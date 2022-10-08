@@ -19,7 +19,7 @@
     let quit_token = "";
 </script>
 
-<div class="section container">
+<div class="container">
     <h1>회원 탈퇴</h1>
     <br />
     {#if is_loading == true}

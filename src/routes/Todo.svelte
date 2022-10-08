@@ -165,7 +165,7 @@
     });
 </script>
 
-<div class="section container">
+<div class="container">
     <h1>할 일</h1>
     <div class="buttons">
         <button

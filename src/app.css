@@ -89,16 +89,16 @@ h2 {
     font-size: 50px;
 }
 
-/* Layout */
-.section {
-    padding-top: 20px;
-    padding-bottom: 60px;
-}
-
+/* Container */
 .container {
     text-align: left;
     margin-left: 5%;
     margin-right: 5%;
+}
+
+div.container {
+    padding-top: 20px;
+    padding-bottom: 60px;
 }
 
 @media (min-width: 700px) {
@@ -272,7 +272,7 @@ a:hover:not(.button) {
     background-color: var(--button-background);
 
     font: inherit;
-    font-size: 20px !important;
+    font-size: 20px;
 
     padding: 10px;
     border: 1px solid var(--button-background);

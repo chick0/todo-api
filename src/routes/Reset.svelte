@@ -38,7 +38,7 @@
     }
 </script>
 
-<div class="section container">
+<div class="container">
     <h1>비밀번호 재설정</h1>
     {#if is_loading == true}
         <div class="spinner"></div>

@@ -2,7 +2,7 @@
 <html lang="ko">
     <head>
         <meta charset="utf-8" />
-        <meta name="robots" content="noindex,nofollow" />
+        <meta name="robots" content="noindex, nofollow" />
         <meta name="author" content="chick_0" />
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, shrink-to-fit=no" />
         <link rel="icon" type="image/png" href="/icons/192.png" sizes="192x192" />
@@ -13,9 +13,6 @@
             :root {
                 --background: #141414;
                 --color: #fff;
-                --button-background: #ffcc4d;
-                --button-hover: #ffdb81;
-                --button-text: #000;
             }
 
             @media (prefers-color-scheme: light) {
@@ -27,32 +24,19 @@
 
             html {
                 font-family: Pretendard, -apple-system, system-ui, Roboto, sans-serif;
-                font-size: 22px;
                 font-weight: 400;
                 color: var(--color);
                 background-color: var(--background);
             }
 
-            .section {
-                padding-top: 60px;
-                padding-bottom: 60px;
-            }
-
             .container {
-                text-align: left;
-                margin-left: 5%;
-                margin-right: 5%;
-            }
-
-            @media (min-width: 700px) {
-                .container {
-                    margin-left: 20%;
-                    margin-right: 20%;
-                }
+                padding-top: 10%;
+                padding-bottom: 60px;
+                text-align: center;
             }
 
             h1 {
-                font-size: 60px;
+                font-size: 120px;
                 font-weight: 600;
             }
 
@@ -60,31 +44,28 @@
                 display: inline-block;
                 text-decoration: none;
                 cursor: pointer;
-
-                color: var(--button-text);
-                background-color: var(--button-background);
-
+                color: #000;
+                background-color: #ffcc4d;
                 font: inherit;
-                font-size: 20px !important;
-
+                font-size: 20px;
                 padding: 10px;
-                border: 1px solid var(--button-background);
+                border: 1px solid #ffcc4d;
                 border-radius: 0.25rem;
             }
 
             .button:hover {
-                background-color: var(--button-hover);
-                border: 1px solid var(--button-hover);
+                background-color: #ffdb81;
+                border: 1px solid #ffdb81;
             }
         </style>
     </head>
     <body>
-        <div class="section container">
+        <div class="container">
             <h1>404</h1>
             <br />
-            <p>등록된 페이지가 없습니다.</p>
+            <p style="font-size: 28px">등록된 페이지가 없습니다</p>
             <br />
-            <a class="button" href="/#/">메인 화면으로 이동</a>
+            <a class="button" href="/">메인 화면으로 이동</a>
         </div>
     </body>
 </html>

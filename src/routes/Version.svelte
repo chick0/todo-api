@@ -22,7 +22,7 @@
     });
 </script>
 
-<div class="section container">
+<div class="container">
     <h1>버전 정보</h1>
     <div class="buttons">
         <a class="button" href="/cache.html">캐시 관리자</a>

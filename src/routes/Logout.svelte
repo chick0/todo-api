@@ -37,7 +37,7 @@
     }
 </script>
 
-<div class="section container">
+<div class="container">
     <h1>로그아웃</h1>
     <p>저장된 인증 정보를 삭제하고 있습니다...</p>
 
