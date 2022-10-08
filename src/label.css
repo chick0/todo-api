@@ -1,0 +1,36 @@
+/* Label area */
+div.labels {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Label Colors */
+span.lv1 {
+    --label-text: #ffffff;
+    --label-color: #2093ff;
+}
+
+span.lv2 {
+    --label-text: #000;
+    --label-color: #ffcc4d;
+}
+
+span.lv3 {
+    --label-text: #fff;
+    --label-color: #dc143c;
+}
+
+/* Label */
+div.labels > span {
+    color: var(--label-text);
+    background-color: var(--label-color);
+    border-radius: 0.25rem;
+    padding: 6px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+}
+
+div.labels > span:not(:last-child) {
+    margin-right: 3px;
+}

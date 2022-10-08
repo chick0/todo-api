@@ -151,6 +151,23 @@ input:focus {
     border-color: var(--red);
 }
 
+textarea {
+    font: inherit;
+    font-size: 20px;
+
+    display: block;
+    overflow-wrap: break-word;
+    resize: none;
+
+    width: 100%;
+    min-height: 60px;
+
+    padding: 10px;
+    border: 1px solid var(--color);
+    background-color: var(--background);
+    color: var(--color);
+}
+
 /* Ordered Lists */
 ol {
     counter-reset: section;
@@ -307,4 +324,15 @@ a:hover:not(.button) {
     border-top-color: var(--spinner-b);
     border-radius: 50%;
     animation: spinner 0.8s linear infinite;
+}
+
+/* etc.. */
+blockquote {
+    padding: 5px;
+    border: 1px dashed var(--blue);
+    border-left: 3px solid var(--blue);
+}
+
+code {
+    font-family: D2Coding, Pretendard, monospace;
 }

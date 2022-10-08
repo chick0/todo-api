@@ -7,6 +7,7 @@
     import { to_datestring, to_timestring } from "src/time.js";
     import { has_label, parse_labels, remove_label } from "src/label.js";
     import "src/todo-content.css";
+    import "src/label.css";
 
     /**
      * Fetch todo list from api server
@@ -472,23 +473,6 @@
         display: inline-block;
         width: 15px;
         text-align: center;
-    }
-
-    textarea {
-        font-family: Pretendard, sans-serif;
-        font-size: 20px;
-
-        display: block;
-        overflow-wrap: break-word;
-        resize: none;
-
-        width: 100%;
-        min-height: 60px;
-
-        padding: 10px;
-        border: 1px solid var(--color);
-        background-color: var(--background);
-        color: var(--color);
     }
 
     /* Todo Element */
