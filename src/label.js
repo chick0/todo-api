@@ -1,6 +1,6 @@
 /**
  * Label Level Calculation
- * 
+ *
  * @param {string} label Unparsed label
  * @returns {number} level
  */
