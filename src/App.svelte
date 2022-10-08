@@ -115,7 +115,11 @@
             {:else}
                 <li on:click="{() => push('/todo')}">할 일</li>
                 <li on:click="{() => push('/user')}">계정 정보</li>
-                <li on:click="{() => push('/logout')}">로그아웃</li>
+                <li on:click="{() => {
+                    if (confirm("로그아웃 하시겠습니까?")) {
+                        push("/logout");
+                    }
+                }}">로그아웃</li>
             {/if}
         </ul>
     </div>
