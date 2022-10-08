@@ -21,8 +21,30 @@
             .then((json) => {
                 if (json.status === true) {
                     todos = json.todos.map((todo) => {
+                        let labels = parse_labels(todo.text);
+
+                        let high_level = labels[0]?.level;
+                        if (high_level == undefined) {
+                            high_level = 0;
+                        }
+
+                        todo.high_level = high_level;
+                        todo.total_level = labels.map((label) => label.level).reduce((a, b) => a + b, 0);
+
                         todo.reset = todo.text;
                         return todo;
+                    });
+
+                    todos.sort((a, b) => {
+                        if (a.checked) {
+                            return 0;
+                        }
+
+                        if (a.high_level == b.high_level) {
+                            return b.total_level - a.total_level;
+                        }
+
+                        return b.high_level - a.high_level;
                     });
 
                     is_loading = false;
