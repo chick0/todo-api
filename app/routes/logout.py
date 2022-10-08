@@ -1,16 +1,12 @@
 from flask import Blueprint
-from pydantic import BaseModel
 
 from app import db
 from app.models import DBSession
 from app.auth import AuthSession
 from app.auth import login_required
+from app.response import BaseResponse
 
 bp = Blueprint("logout", __name__, url_prefix="/api/logout")
-
-
-class LogoutResponse(BaseModel):
-    status: bool = True
 
 
 @bp.delete("")
@@ -24,4 +20,4 @@ def logout(session: AuthSession):
     if dbs != 0:
         db.session.commit()
 
-    return LogoutResponse().dict()
+    return BaseResponse().dict()

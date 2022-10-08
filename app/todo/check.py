@@ -9,8 +9,9 @@ from app import db
 from app.models import Todo
 from app.auth import AuthSession
 from app.auth import login_required
-from app.utils import timestamp
 from app.error import APIError
+from app.response import BaseResponse
+from app.utils import timestamp
 
 
 class CheckRequest(BaseModel):
@@ -18,9 +19,7 @@ class CheckRequest(BaseModel):
     checked: bool
 
 
-class CheckResponse(BaseModel):
-    status: bool = True
-    message: str = ""
+class CheckResponse(BaseResponse):
     checked: bool
     checked_at: Optional[int]
 

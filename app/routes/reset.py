@@ -12,8 +12,9 @@ from app.reset import check_flag
 from app.reset import set_flag
 from app.reset import ResetToken
 from app.reset import parse_token
-from app.utils import get_help_mail
 from app.error import APIError
+from app.response import BaseResponse
+from app.utils import get_help_mail
 
 bp = Blueprint("reset", __name__, url_prefix="/api/reset")
 
@@ -24,11 +25,6 @@ class CreateResetRequest(BaseModel):
 
 class ResetRequest(BaseModel):
     password: str
-
-
-class ResetResponse(BaseModel):
-    status: bool = True
-    message: str = ""
 
 
 @bp.get("")
@@ -76,7 +72,7 @@ def create_reset_request():
 
     if result is True:
         set_flag(email=ctx.email)
-        return ResetResponse(
+        return BaseResponse(
             message="해당 이메일 주소로 비밀번호 재설정 링크를 전송했습니다."
         ).dict(), 201
     else:
@@ -111,6 +107,6 @@ def reset_request():
     user.password = ctx.password
     db.session.commit()
 
-    return ResetResponse(
+    return BaseResponse(
         message="비밀번호가 재설정되었습니다."
     ).dict()

@@ -10,15 +10,14 @@ from app.models import Pin
 from app.error import APIError
 from app.pin import parse_token
 from app.auth import create_auth_token
+from app.response import BaseResponse
 
 
 class PinLoginRequest(BaseModel):
     code: str
 
 
-class PinLoginResponse(BaseModel):
-    status: bool = True
-    message: str = ""
+class PinLoginResponse(BaseResponse):
     token: str
 
 

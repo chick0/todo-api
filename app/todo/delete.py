@@ -7,15 +7,11 @@ from app.models import Todo
 from app.auth import AuthSession
 from app.auth import login_required
 from app.error import APIError
+from app.response import BaseResponse
 
 
 class DeleteRequest(BaseModel):
     id: int
-
-
-class DeleteResponse(BaseModel):
-    status: bool = True
-    message: str = ""
 
 
 @bp.delete("")
@@ -35,4 +31,4 @@ def delete(session: AuthSession):
 
     db.session.commit()
 
-    return DeleteResponse().dict()
+    return BaseResponse().dict()

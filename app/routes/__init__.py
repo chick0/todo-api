@@ -1,5 +1,6 @@
 # flake8: noqa
 __all__ = [
+    "help",
     "login",
     "logout",
     "pin",

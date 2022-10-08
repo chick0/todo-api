@@ -7,15 +7,11 @@ from app.models import Pin
 from app.auth import AuthSession
 from app.auth import login_required
 from app.error import APIError
+from app.response import BaseResponse
 
 
 class DeleteRequest(BaseModel):
     id: int
-
-
-class DeleteResponse(BaseModel):
-    status: bool = True
-    message: str
 
 
 @bp.delete("")
@@ -37,6 +33,6 @@ def delete(session: AuthSession):
     db.session.delete(pin)
     db.session.commit()
 
-    return DeleteResponse(
+    return BaseResponse(
         message="해당 PIN이 삭제되었습니다."
     ).dict(), 200

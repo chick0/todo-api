@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from app.models import User
 from app.auth import create_auth_token
 from app.error import APIError
+from app.response import BaseResponse
 
 bp = Blueprint("login", __name__, url_prefix="/api/login")
 
@@ -16,9 +17,7 @@ class LoginRequest(BaseModel):
     password: str
 
 
-class LoginResponse(BaseModel):
-    status: bool = True
-    message: str = ""
+class LoginResponse(BaseResponse):
     token: str = ""
     email_verify_required: bool = False
 

@@ -5,17 +5,13 @@ from app import db
 from app.models import DBSession
 from app.auth import AuthSession
 from app.auth import login_required
+from app.response import BaseResponse
 
 bp = Blueprint("session", __name__, url_prefix="/api/session")
 
 
 class DeleteRequest(BaseModel):
     id: int
-
-
-class DeleteResponse(BaseModel):
-    status: bool = True
-    message: str = ""
 
 
 @bp.delete("/all")
@@ -27,7 +23,7 @@ def delete_all(session: AuthSession):
 
     db.session.commit()
 
-    return DeleteResponse().dict()
+    return BaseResponse().dict()
 
 
 @bp.delete("/<int:session_id>")
@@ -40,4 +36,4 @@ def delete_one(session_id: int, session: AuthSession):
 
     db.session.commit()
 
-    return DeleteResponse().dict()
+    return BaseResponse().dict()

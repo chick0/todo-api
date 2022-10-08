@@ -7,8 +7,9 @@ from pydantic import BaseModel
 
 from app import db
 from app.models import User
-from app.verify import send_verify_request
 from app.error import APIError
+from app.response import BaseResponse
+from app.verify import send_verify_request
 
 bp = Blueprint("sign-up", __name__, url_prefix="/api/sign-up")
 
@@ -16,11 +17,6 @@ bp = Blueprint("sign-up", __name__, url_prefix="/api/sign-up")
 class SignUpRequest(BaseModel):
     email: str
     password: str
-
-
-class SignUpResponse(BaseModel):
-    status: bool = True
-    message: str
 
 
 @bp.post("")
@@ -41,7 +37,7 @@ def sign_up():
     ).first()
 
     if user is not None:
-        return SignUpResponse(
+        return BaseResponse(
             message="이미 가입한 이메일입니다! 비밀번호를 잊은 경우 '계정 찾기'를 통해 비밀번호를 재설정해야합니다."
         ).dict()
 
@@ -63,7 +59,7 @@ def sign_up():
     )
 
     if result is True:
-        return SignUpResponse(
+        return BaseResponse(
             message="가입이 완료되었습니다! 이메일 인증 이후 계정을 사용할 수 있습니다."
         ).dict(), 201
     else:

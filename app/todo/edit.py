@@ -9,6 +9,7 @@ from app.models import Todo
 from app.auth import AuthSession
 from app.auth import login_required
 from app.error import APIError
+from app.response import BaseResponse
 
 
 class EditRequest(BaseModel):
@@ -16,9 +17,7 @@ class EditRequest(BaseModel):
     text: str
 
 
-class EditResponse(BaseModel):
-    status: bool = True
-    message: str = ""
+class EditResponse(BaseResponse):
     text: Optional[str]
 
 

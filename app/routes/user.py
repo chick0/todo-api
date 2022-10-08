@@ -13,6 +13,7 @@ from app.auth import token_ttl
 from app.auth import AuthSession
 from app.auth import login_required
 from app.error import APIError
+from app.response import BaseResponse
 from app.utils import timestamp
 from app.utils import parse_user_agent
 
@@ -43,18 +44,14 @@ class PinResponse(BaseModel):
     last_access: Optional[int]
 
 
-class UserResponse(BaseModel):
-    status: bool = True
-    message: str = ""
+class UserResponse(BaseResponse):
     count: int
     pin_list: list[PinResponse]
     session_list: list[SessionResponse]
     history_list: list[HistoryResponse]
 
 
-class HistoryMoreResponse(BaseModel):
-    status: bool = True
-    message: str = ""
+class HistoryMoreResponse(BaseResponse):
     history_list: list[HistoryResponse]
 
 

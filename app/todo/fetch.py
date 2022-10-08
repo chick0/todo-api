@@ -1,16 +1,14 @@
 from app.routes.todo import bp
-from pydantic import BaseModel
 
 from app.models import Todo
 from app.auth import AuthSession
 from app.auth import login_required
 from app.todo import TodoResponse
+from app.response import BaseResponse
 from app.utils import timestamp
 
 
-class TodoListResponse(BaseModel):
-    status: bool = True
-    message: str = ""
+class TodoListResponse(BaseResponse):
     todos: list[TodoResponse]
 
 

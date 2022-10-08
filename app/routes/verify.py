@@ -5,15 +5,14 @@ from pydantic import BaseModel
 
 from app import db
 from app.models import User
-from app.verify import parse_token
 from app.error import APIError
+from app.response import BaseResponse
+from app.verify import parse_token
 
 bp = Blueprint("verify", __name__, url_prefix="/api/verify")
 
 
-class VerifySessionResponse(BaseModel):
-    status: bool = True
-    message: str = ""
+class VerifySessionResponse(BaseResponse):
     email: str
     exp: int
 
@@ -22,11 +21,6 @@ class VerifyAnswerRequest(BaseModel):
     # true : pass
     # false: drop
     answer: bool
-
-
-class VerifyAnswerResponse(BaseModel):
-    status: bool = True
-    message: str
 
 
 @bp.get("")
@@ -81,13 +75,13 @@ def verify_answer():
         user.email_verified = True
         db.session.commit()
 
-        return VerifyAnswerResponse(
+        return BaseResponse(
             message="인증 시도가 승인 되었으며 지금부터 계정을 사용 할 수 있습니다."
         ).dict(), 201
     else:
         db.session.delete(user)
         db.session.commit()
 
-        return VerifyAnswerResponse(
+        return BaseResponse(
             message="인증 시도가 취소 되었으며 계정이 삭제됩니다."
         ).dict()

@@ -1,5 +1,4 @@
 from re import findall
-from typing import Optional
 from hashlib import sha512
 from datetime import datetime
 
@@ -12,18 +11,17 @@ from app.models import Pin
 from app.auth import AuthSession
 from app.auth import login_required
 from app.pin import create_token
-from app.utils import get_ip
 from app.error import APIError
+from app.response import BaseResponse
+from app.utils import get_ip
 
 
 class PinCreateRequest(BaseModel):
     code: str
 
 
-class PinCreateResponse(BaseModel):
-    status: bool = True
-    message: str
-    token: Optional[str]
+class PinCreateResponse(BaseResponse):
+    token: str
 
 
 @bp.post("")

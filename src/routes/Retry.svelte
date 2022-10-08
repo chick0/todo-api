@@ -1,6 +1,6 @@
 <script>
     import { push } from "svelte-spa-router";
-    import { RETRY } from "src/url.js";
+    import { HELP, RETRY } from "src/url.js";
     import { is_login } from "src/user.js";
 
     let is_loading = true;
@@ -14,14 +14,10 @@
         push("/todo");
     } else {
         is_loading = false;
-        fetch(RETRY)
+        fetch(HELP)
             .then((resp) => resp.json())
             .then((json) => {
-                if (json.help != null) {
-                    help_email = json.help;
-                } else {
-                    help_email = "오류";
-                }
+                help_email = json.email;
             });
     }
 </script>

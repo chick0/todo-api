@@ -10,17 +10,16 @@ from app.models import Todo
 from app.auth import AuthSession
 from app.auth import login_required
 from app.todo import TodoResponse
-from app.utils import timestamp
 from app.error import APIError
+from app.response import BaseResponse
+from app.utils import timestamp
 
 
 class CreateRequest(BaseModel):
     text: str
 
 
-class CreateResponse(BaseModel):
-    status: bool = True
-    message: str = ""
+class CreateResponse(BaseResponse):
     todo: Optional[TodoResponse] = None
 
 

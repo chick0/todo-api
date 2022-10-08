@@ -88,7 +88,7 @@ def create_auth_token(user: User, pin: Pin = None) -> str:
     ).filter(
         DBSession.dropped_at >= datetime.now()
     ).count() >= MAX_DB_SESSION:
-        last_accessed_session = DBSession.query.filter_by(
+        target = DBSession.query.filter_by(
             owner=user.id
         ).filter(
             DBSession.dropped_at >= datetime.now()
@@ -96,7 +96,7 @@ def create_auth_token(user: User, pin: Pin = None) -> str:
             DBSession.last_access.asc()
         ).first()
 
-        db.session.delete(last_accessed_session)
+        db.session.delete(target)
         db.session.commit()
 
     now = datetime.now()

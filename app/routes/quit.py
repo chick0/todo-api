@@ -1,4 +1,3 @@
-from typing import Optional
 from hashlib import sha512
 
 from flask import Blueprint
@@ -16,6 +15,7 @@ from app.auth import login_required
 from app.quit import create_token
 from app.quit import check_quit_session
 from app.error import APIError
+from app.response import BaseResponse
 
 bp = Blueprint("quit", __name__, url_prefix="/api/quit")
 
@@ -24,10 +24,8 @@ class CheckPasswordRequest(BaseModel):
     password: str
 
 
-class QuitResponse(BaseModel):
-    status: bool = True
-    message: str
-    token: Optional[str]
+class CheckPasswordResponse(BaseResponse):
+    token: str
 
 
 @bp.post("")
@@ -48,7 +46,7 @@ def check_password(session: AuthSession):
             message="비밀번호가 일치하지 않습니다."
         )
 
-    return QuitResponse(
+    return CheckPasswordResponse(
         message="비밀번호가 일치합니다.",
         token=create_token(
             user_id=session.user_id
@@ -92,6 +90,6 @@ def quit(session: AuthSession):
 
     db.session.commit()
 
-    return QuitResponse(
+    return BaseResponse(
         message="계정이 삭제되었습니다."
     ).dict()
