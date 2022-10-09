@@ -333,6 +333,15 @@ blockquote {
     border-left: 3px solid var(--blue);
 }
 
+@font-face {
+    font-family: "D2Coding";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/D2Coding.woff2") format("woff2");
+    unicode-range: U+0020-007E;
+}
+
 code {
     font-family: D2Coding, Pretendard, monospace;
 }

@@ -6,7 +6,6 @@
     import { routes } from "src/router.js";
     import { is_login } from "src/user.js";
     import "src/navbar.css";
-    import "src/D2Coding.css";
 
     /**
      * Update theme-color meta data
