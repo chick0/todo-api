@@ -49,11 +49,6 @@
                     });
 
                     is_loading = false;
-
-                    if (todos.length == 0) {
-                        newTodoOpen = true;
-                        newTodo = "- 이 곳에 할 일을 적어주세요!\n- 마크다운 문법을 사용 할 수 있습니다.";
-                    }
                 } else {
                     alert(json.message);
                 }
