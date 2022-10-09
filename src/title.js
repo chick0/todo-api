@@ -10,6 +10,7 @@ export const titles = {
     "/reset": "비밀번호 재설정",
 
     "/todo": "할 일",
+    "/todo/clean-up": "할 일 정리",
 
     "/user": "계정 정보",
     "/user/quit": "회원 탈퇴",

@@ -178,6 +178,7 @@
                     fetch_todos();
                 }
             }}">새로고침</button>
+        <a class="button" href="#/todo/clean-up">정리하기</a>
     </div>
 
     <hr />

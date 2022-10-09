@@ -9,6 +9,7 @@ from app import db
 from app.models import Todo
 from app.auth import AuthSession
 from app.auth import login_required
+from app.todo import MAX_TODO
 from app.todo import TodoResponse
 from app.error import APIError
 from app.response import BaseResponse
@@ -27,8 +28,6 @@ class CreateResponse(BaseResponse):
 @login_required
 def create(session: AuthSession):
     ctx = CreateRequest(**request.json)
-
-    MAX_TODO = 100
 
     if Todo.query.filter_by(
         owner=session.user_id

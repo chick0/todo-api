@@ -10,6 +10,8 @@ export const SIGN_UP = BASE_URL + "/sign-up";
 export const TODO = BASE_URL + "/todo";
 export const TODO_CHECK = TODO + "/check";
 
+export const CLEAN_UP = BASE_URL + "/clean-up";
+
 export const USER = BASE_URL + "/user";
 export const MORE_HISTORY = (cursor) => USER + `/more?cursor=${cursor}`;
 export const SESSION_DELETE = (id) => BASE_URL + `/session/${id}`;
