@@ -5,7 +5,6 @@ const PRECACHE_URLS = [
     "/Pretendard.css",
     "/Pretendard/Regular.woff2",
     "/Pretendard/SemiBold.woff2",
-    "/D2Coding.woff2",
     "/cache.html",
 ];
 
@@ -52,7 +51,7 @@ self.addEventListener("fetch", (event) => {
                     console.log(" ", event.request.url);
                 }
 
-                if (event.request.url.includes("assets")) {
+                if (event.request.url.includes("assets") || event.request.url.endsWith(".woff2")) {
                     return caches.open(RUNTIME).then((cache) => {
                         return fetch(event.request).then((response) => {
                             return cache.put(event.request, response.clone()).then(() => {
