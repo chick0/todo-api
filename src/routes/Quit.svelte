@@ -14,6 +14,7 @@
 
     // step 1
     let password = "";
+    let submit = undefined;
 
     // step 2
     let quit_token = "";
@@ -32,15 +33,21 @@
             <input
                 type="password"
                 id="password"
-                bind:value="{password}"
                 placeholder="Password"
                 required
-                minlength="8" />
+                minlength="8"
+                bind:value="{password}"
+                on:keydown="{(e) => {
+                    if (e.key == 'Enter') {
+                        submit.click();
+                    }
+                }}" />
         </div>
 
         <button
             class="button max"
             type="submit"
+            bind:this="{submit}"
             on:click="{() => {
                 is_loading = true;
                 fetch(QUIT, {
