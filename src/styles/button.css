@@ -1,0 +1,63 @@
+/* Button display */
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.buttons > .button:not(:last-child) {
+    margin-right: 3px;
+}
+
+.buttons > .button {
+    margin-bottom: 3px;
+}
+
+/* Button */
+.button {
+    --background: #ffcc4d;
+    --text: #000;
+
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+
+    color: var(--text);
+    background-color: var(--background);
+
+    font: inherit;
+    font-size: 20px;
+    padding: 10px;
+    border: 1px solid var(--background);
+    border-radius: 0.25rem;
+}
+
+.button:hover {
+    --background: #ffdb81;
+    background-color: var(--background);
+    border: 1px solid var(--background);
+}
+
+/* Fullwidth button */
+.button.max {
+    width: 100%;
+}
+
+/* Button with spinner */
+.button.spin {
+    pointer-events: none;
+    color: transparent !important;
+}
+
+.button.spin::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border: 6px solid var(--spinner-a);
+    border-top-color: var(--spinner-b);
+    border-radius: 50%;
+    animation: spinner 0.8s linear infinite;
+}

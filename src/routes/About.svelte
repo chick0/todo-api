@@ -1,6 +1,5 @@
 <script>
     import { parse_labels } from "src/label.js";
-    import "src/label.css";
 
     let raw_labels = "@1단계, @@2단계, @@@3단계\n\n@이렇게 첫 줄에 적히지 않은 라벨은 무시됩니다";
 </script>

@@ -1,0 +1,130 @@
+:root {
+    --background: #141414;
+    --color: #fff;
+
+    --red: #e94747;
+    --green: #49cd2e;
+    --blue: #0087ff;
+    --gray: #808080;
+
+    --text-shadow: 2px;
+
+    /* Spinner */
+    --spinner-a: #141414;
+    --spinner-b: #ffcc4d;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --background: #fff;
+        --color: #000;
+
+        --red: #dc0000;
+        --green: #00891c;
+        --blue: #0087ff;
+        --gray: #b1b1b1;
+
+        --text-shadow: 1px;
+    }
+}
+
+html {
+    font-family: Pretendard, -apple-system, system-ui, Roboto, sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--color);
+    background-color: var(--background);
+    word-break: keep-all;
+}
+
+*:focus {
+    outline: none;
+}
+
+/* Heading */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 60px;
+}
+
+h2 {
+    font-size: 50px;
+}
+
+/* Container */
+.container {
+    text-align: left;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+div.container {
+    padding-top: 20px;
+    padding-bottom: 60px;
+}
+
+@media (min-width: 700px) {
+    .container {
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+}
+
+/* Breakpoint */
+br.breakpoint {
+    margin-top: 30px;
+    border: none;
+}
+
+/* For text button */
+.clickable {
+    cursor: pointer;
+}
+
+/* Link */
+a {
+    color: var(--blue);
+    text-decoration: underline 2px var(--blue);
+}
+
+a:hover:not(.button) {
+    text-shadow: 0 0 var(--text-shadow) var(--blue);
+}
+
+/* Block */
+blockquote {
+    padding: 5px;
+    border: 1px dashed var(--blue);
+    border-left: 3px solid var(--blue);
+}
+
+/* Loading spinner */
+.spinner {
+    position: absolute;
+    top: calc(50% - 60px);
+    left: calc(50% - 60px);
+    border: 16px solid var(--spinner-a);
+    border-top-color: var(--spinner-b);
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+    from {
+        transform: rotate(0turn);
+    }
+
+    to {
+        transform: rotate(1turn);
+    }
+}

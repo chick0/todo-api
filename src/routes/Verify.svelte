@@ -74,7 +74,7 @@
         <p>이 이메일 인증 요청은 <b>{date}</b>에 만료됩니다.</p>
         <br />
         <p>만약, 본인의 인증 시도가 아니라면 '<b>❌ 인증 취소</b>'를 선택하거나, 무시하면 됩니다.</p>
-        <hr />
+        <br class="breakpoint" />
         <div class="buttons">
             <button
                 class="button"

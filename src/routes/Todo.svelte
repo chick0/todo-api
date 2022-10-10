@@ -7,7 +7,6 @@
     import { to_datestring, to_timestring } from "src/time.js";
     import { has_label, parse_labels, remove_label } from "src/label.js";
     import "src/todo-content.css";
-    import "src/label.css";
 
     /**
      * Fetch todo list from api server
@@ -176,7 +175,8 @@
         <a class="button" href="#/todo/clean-up">정리하기</a>
     </div>
 
-    <hr />
+    <br class="breakpoint" />
+
     {#if is_loading == true}
         <div class="spinner"></div>
     {:else}
@@ -267,7 +267,7 @@
             </div>
         {/if}
 
-        <hr />
+        <br class="breakpoint" />
 
         {#if todos.length == 0}
             <p>저장된 할 일이 없습니다!</p>
@@ -492,7 +492,7 @@
 
     /* Change checked todo color */
     .todo.checked > div {
-        color: var(--checked);
+        color: var(--gray);
     }
 
     /* Todo checkbox */

@@ -14,6 +14,7 @@ export default defineConfig({
         alias: {
             src: path.resolve(__dirname) + "/src",
             routes: path.resolve(__dirname) + "/src/routes",
+            styles: path.resolve(__dirname) + "/src/styles",
         },
     },
 });

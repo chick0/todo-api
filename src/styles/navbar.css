@@ -37,7 +37,7 @@
     }
 
     .navbar ul.nav-opened li.trigger > span {
-        border-color: var(--checked);
+        border-color: var(--gray);
     }
 
     .navbar .nav-closed li:not(:first-child):not(.trigger) {

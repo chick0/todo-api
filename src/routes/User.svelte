@@ -86,7 +86,7 @@
             </p>
         {/if}
 
-        <hr />
+        <br class="breakpoint" />
 
         <h2>PIN</h2>
         {#if has_pin_token == false || pin_list.length == 0}
@@ -162,7 +162,7 @@
             </div>
         {/if}
 
-        <hr />
+        <br class="breakpoint" />
 
         <h2>로그인 세션</h2>
         <div class="buttons">
@@ -264,7 +264,7 @@
             </table>
         </div>
 
-        <hr />
+        <br class="breakpoint" />
 
         <h2>로그인 기록</h2>
         <div class="table-wrapped">

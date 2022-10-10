@@ -15,9 +15,23 @@ h4.todo-content {
     font-size: 25px;
 }
 
-/* etc.. */
+/* Breakpoint */
 hr.todo-content {
     margin-top: 10px;
     margin-bottom: 5px;
     border-bottom: 1px dashed var(--color);
+}
+
+/* Code */
+@font-face {
+    font-family: "D2Coding";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/D2Coding.woff2") format("woff2");
+    unicode-range: U+0020-007E;
+}
+
+code {
+    font-family: D2Coding, Pretendard, monospace;
 }

@@ -6,24 +6,24 @@ div.labels {
 
 /* Label Colors */
 span.lv1 {
-    --label-text: #ffffff;
-    --label-color: #2093ff;
+    --background: #2093ff;
+    --color: #fff;
 }
 
 span.lv2 {
-    --label-text: #000;
-    --label-color: #ffcc4d;
+    --background: #ffcc4d;
+    --color: #000;
 }
 
 span.lv3 {
-    --label-text: #fff;
-    --label-color: #dc143c;
+    --background: #dc143c;
+    --color: #fff;
 }
 
 /* Label */
 div.labels > span {
-    color: var(--label-text);
-    background-color: var(--label-color);
+    color: var(--color);
+    background-color: var(--background);
     border-radius: 0.25rem;
     padding: 6px;
     padding-top: 3px;

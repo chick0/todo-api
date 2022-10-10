@@ -5,7 +5,6 @@
     import { titles } from "src/title.js";
     import { routes } from "src/router.js";
     import { is_login } from "src/user.js";
-    import "src/navbar.css";
 
     /**
      * Update theme-color meta data
