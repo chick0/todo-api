@@ -79,42 +79,47 @@
         <div class="field">
             <h3>사용량</h3>
             <p>{cacl_percent(max, total)}%</p>
-            <progress class="{cacl_percent(max, total) >= 80 ? 'red' : ''}" max="{max}" value="{total}"></progress>
+            <progress class="{cacl_percent(max, total) >= 80 ? 'red' : ''}" max="{max}" value="{total}">
+                {cacl_percent(max, total)}%
+            </progress>
         </div>
 
         <div class="field">
             <h3>완료비율</h3>
             <p>{cacl_percent(total, checked)}%</p>
-            <progress class="{cacl_percent(total, checked) >= 70 ? 'red' : ''}" max="{total}" value="{checked}"
-            ></progress>
-            <button
-                class="button max"
-                on:click="{() => {
-                    is_loading = true;
-                    fetch(CLEAN_UP, {
-                        method: 'DELETE',
-                        headers: {
-                            'x-auth': TOKEN,
-                        },
-                    })
-                        .then((resp) => resp.json())
-                        .then((json) => {
-                            if (json.status) {
-                                fetch_status();
-                            } else {
-                                alert(json.message);
-                                is_loading = false;
-                            }
-
-                            if (json.logout_required == true) {
-                                push('/logout');
-                            }
+            <progress class="{cacl_percent(total, checked) >= 70 ? 'red' : ''}" max="{total}" value="{checked}">
+                {cacl_percent(total, checked)}%
+            </progress>
+            {#if checked != 0}
+                <button
+                    class="button max"
+                    on:click="{() => {
+                        is_loading = true;
+                        fetch(CLEAN_UP, {
+                            method: 'DELETE',
+                            headers: {
+                                'x-auth': TOKEN,
+                            },
                         })
-                        .catch(() => {
-                            alert('알 수 없는 오류가 발생했습니다.');
-                            push('/todo');
-                        });
-                }}">완료한 할 일 삭제</button>
+                            .then((resp) => resp.json())
+                            .then((json) => {
+                                if (json.status) {
+                                    fetch_status();
+                                } else {
+                                    alert(json.message);
+                                    is_loading = false;
+                                }
+
+                                if (json.logout_required == true) {
+                                    push('/logout');
+                                }
+                            })
+                            .catch(() => {
+                                alert('알 수 없는 오류가 발생했습니다.');
+                                push('/todo');
+                            });
+                    }}">완료한 할 일 삭제</button>
+            {/if}
         </div>
     {/if}
 </div>
