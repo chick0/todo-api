@@ -1,6 +1,6 @@
 <script>
     import { push } from "svelte-spa-router";
-    import { USER, SESSION_DELETE, PIN, MORE_HISTORY } from "src/url.js";
+    import { USER, HELP, SESSION_DELETE, PIN, MORE_HISTORY } from "src/url.js";
     import { is_login, get_token, get_payload } from "src/user.js";
     import { get_pin_token } from "src/pin.js";
     import { to_datestring, to_timestring } from "src/time.js";
@@ -21,6 +21,8 @@
     let history_cursor = null;
     $: history_cursor = history_list[history_list.length - 1]?.id;
 
+    let help_email = "";
+
     if (!is_login()) {
         push("/todo");
     } else {
@@ -36,6 +38,12 @@
                     pin_list = json.pin_list;
                     session_list = json.session_list;
                     history_list = json.history_list;
+
+                    fetch(HELP)
+                        .then((resp) => resp.json())
+                        .then((json) => {
+                            help_email = json.email;
+                        });
 
                     is_loading = false;
                 } else {
@@ -69,6 +77,14 @@
         <p class="summary">
             계정에 별다른 문제가 없으며, <a href="#/user/quit">회원 탈퇴</a> 메뉴에서 계정을 삭제할 수 있습니다.
         </p>
+
+        {#if help_email.length != 0}
+            <br />
+            <p class="summary">
+                문제가 발생했거나 도움이 필요한 경우에는 <a href="mailto:{help_email}">{help_email}</a>로 이메일을
+                보내주세요.
+            </p>
+        {/if}
 
         <hr />
 
