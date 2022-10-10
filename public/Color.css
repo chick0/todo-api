@@ -1,0 +1,29 @@
+:root {
+    --background: #141414;
+    --color: #fff;
+
+    --red: #e94747;
+    --green: #49cd2e;
+    --blue: #0087ff;
+    --gray: #808080;
+
+    --text-shadow: 2px;
+
+    /* Spinner */
+    --spinner-a: #141414;
+    --spinner-b: #ffcc4d;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --background: #fff;
+        --color: #000;
+
+        --red: #dc0000;
+        --green: #00891c;
+        --blue: #0087ff;
+        --gray: #b1b1b1;
+
+        --text-shadow: 1px;
+    }
+}
