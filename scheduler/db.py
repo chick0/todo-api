@@ -11,8 +11,9 @@ SQLALCHEMY_DATABASE_URI = environ['SQLALCHEMY_DATABASE_URI']
 
 engine = create_engine(
     url=SQLALCHEMY_DATABASE_URI,
-    pool_size=5,
-    max_overflow=10
+    pool_size=2,
+    max_overflow=3,
+    pool_pre_ping=True
 )
 
 factory = sessionmaker(bind=engine)
