@@ -64,6 +64,7 @@
     });
 
     let login_status = is_login();
+    let is_component_loading = false;
 
     /**
      * Warning! For mobile device
@@ -126,4 +127,15 @@
     </div>
 </nav>
 
-<Router routes="{routes}" />
+{#if is_component_loading}
+    <div class="spinner"></div>
+{/if}
+
+<Router
+    routes="{routes}"
+    on:routeLoading="{() => {
+        is_component_loading = true;
+    }}"
+    on:routeLoaded="{() => {
+        is_component_loading = false;
+    }}" />
