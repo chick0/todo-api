@@ -87,6 +87,27 @@
         textarea.style.height = 12 + textarea.scrollHeight + "px";
     }
 
+    /**
+     * Render markdown and purify
+     *
+     * @param {string} markdown MarkDown string
+     * @returns {string} HTML String
+     */
+    function get_html(markdown) {
+        let lable_removed = remove_label(markdown);
+        return DOMPurify.sanitize(marked.parse(lable_removed), {});
+    }
+
+    DOMPurify.addHook("afterSanitizeAttributes", function (node) {
+        let tag = node.tagName.toLowerCase();
+
+        if (tag == "a" && "target" in node) {
+            if (window.innerWidth > 700) {
+                node.setAttribute("target", "_blank");
+            }
+        }
+    });
+
     const TOKEN = get_token();
 
     let todos = [];
@@ -150,7 +171,7 @@
             return title == null ? "" : `title="${title}"`;
         }
 
-        return `<a target="_blank" rel="noreferrer" href="${href}" ${get_title()}>${text}</a>`;
+        return `<a rel="noreferrer" href="${href}" ${get_title()}>${text}</a>`;
     };
 
     marked.setOptions({
@@ -411,7 +432,7 @@
                             </div>
                         {/if}
                         <div class="todo-content">
-                            {@html DOMPurify.sanitize(marked.parse(remove_label(todo.text)))}
+                            {@html get_html(todo.text)}
                         </div>
                     </div>
                 {/if}
