@@ -22,6 +22,12 @@
     $: history_cursor = history_list[history_list.length - 1]?.id;
 
     let help_email = "";
+    let mail_to = "";
+    $: mail_to = [
+        "mailto:" + help_email,
+        "?subject=도움이 필요합니다",
+        "&body=" + ["종류: 오류 신고 / 업데이트 요청 / 기타", "* 버전 정보 : " + TAG].join("\n"),
+    ].join("");
 
     if (!is_login()) {
         push("/todo");
@@ -81,8 +87,9 @@
         {#if help_email.length != 0}
             <br />
             <p class="summary">
-                문제가 발생했거나 도움이 필요한 경우에는 <a href="mailto:{help_email}">{help_email}</a>로 이메일을
-                보내주세요.
+                도움이 필요하다면
+                <a href="{mail_to}" target="_blank" rel="noreferrer">{help_email}</a>
+                로 이메일을 보내주세요.
             </p>
         {/if}
 
