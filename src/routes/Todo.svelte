@@ -37,8 +37,8 @@
                     });
 
                     todos.sort((a, b) => {
-                        if (a.checked) {
-                            return 0;
+                        if (a.checked == true || b.checked == true) {
+                            return a.checked - b.checked;
                         }
 
                         if (a.high_level == b.high_level) {
