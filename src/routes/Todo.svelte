@@ -1,11 +1,10 @@
 <script>
     import { push } from "svelte-spa-router";
-    import { marked } from "marked";
-    import DOMPurify from "dompurify";
     import { TODO, TODO_CHECK } from "src/url.js";
     import { is_login, get_token } from "src/user.js";
     import { to_datestring, to_timestring } from "src/time.js";
-    import { has_label, parse_labels, remove_label } from "src/label.js";
+    import { has_label, parse_labels } from "src/label.js";
+    import { get_html } from "src/markdown.js";
     import "src/todo-content.css";
 
     /**
@@ -88,27 +87,6 @@
         textarea.style.height = 12 + textarea.scrollHeight + "px";
     }
 
-    /**
-     * Render markdown and purify
-     *
-     * @param {string} markdown MarkDown string
-     * @returns {string} HTML String
-     */
-    function get_html(markdown) {
-        let lable_removed = remove_label(markdown);
-        return DOMPurify.sanitize(marked.parse(lable_removed), {});
-    }
-
-    DOMPurify.addHook("afterSanitizeAttributes", function (node) {
-        let tag = node.tagName.toLowerCase();
-
-        if (tag == "a" && "target" in node) {
-            if (window.innerWidth > 700) {
-                node.setAttribute("target", "_blank");
-            }
-        }
-    });
-
     const TOKEN = get_token();
 
     let todos = [];
@@ -124,62 +102,6 @@
     } else {
         fetch_todos();
     }
-
-    /**
-     * marked.js markdown renderer
-     *
-     * @type {Object}
-     */
-    const renderer = new marked.Renderer();
-
-    /**
-     * @param {string} head
-     * @param {string} body
-     */
-    renderer.table = (head, body) => {
-        return [
-            '<div class="table-wrapped">',
-            "<table>",
-            "<thead>" + head + "</thead>",
-            "<tbody>" + body + "</tbody>",
-            "</table>",
-            "</div>",
-        ].join("");
-    };
-
-    /**
-     * @param {string} text
-     * @param {number} level
-     */
-    renderer.heading = (text, level) => {
-        return `<h${level} class="todo-content">${text}</h${level}>`;
-    };
-
-    renderer.hr = () => {
-        return "<hr class='todo-content'>";
-    };
-
-    /**
-     * @param {string} href
-     * @param {string|null} title
-     * @param {string} text
-     */
-    renderer.link = (href, title, text) => {
-        /**
-         * @returns {string} Get title attribute
-         */
-        function get_title() {
-            return title == null ? "" : `title="${title}"`;
-        }
-
-        return `<a rel="noreferrer" href="${href}" ${get_title()}>${text}</a>`;
-    };
-
-    marked.setOptions({
-        breaks: true,
-        headerIds: false,
-        renderer: renderer,
-    });
 </script>
 
 <div class="container">
