@@ -96,7 +96,13 @@
         <ul class="{vertical_open == true ? 'nav-opened' : 'nav-closed'}">
             <li
                 class="head"
-                on:click="{() => push('/')}"
+                on:click="{() => {
+                    if (login_status == true) {
+                        push('/todo');
+                    } else {
+                        push('/');
+                    }
+                }}"
                 on:dblclick="{() => {
                     window.getSelection()?.removeAllRanges();
                     push('/version');
@@ -112,7 +118,6 @@
                 <li on:click="{() => push('/login')}">로그인</li>
                 <li on:click="{() => push('/sign-up')}">회원가입</li>
             {:else}
-                <li on:click="{() => push('/todo')}">할 일</li>
                 <li on:click="{() => push('/user')}">계정 정보</li>
                 <li
                     on:click="{() => {

@@ -1,7 +1,15 @@
 <script>
+    import { push } from "svelte-spa-router";
+    import { is_login } from "src/user";
     import { parse_labels } from "src/label.js";
 
     let raw_labels = "@1단계, @@2단계, @@@3단계\n\n@이렇게 첫 줄에 적히지 않은 라벨은 무시됩니다";
+
+    if (is_login()) {
+        if (confirm("할 일 목록으로 이동하시겠습니까?")) {
+            push("/todo");
+        }
+    }
 </script>
 
 <div class="container">
