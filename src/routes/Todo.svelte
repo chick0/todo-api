@@ -32,6 +32,7 @@
                         todo.total_level = labels.map((label) => label.level).reduce((a, b) => a + b, 0);
 
                         todo.reset = todo.text;
+                        todo.editmode = false;
                         return todo;
                     });
 
@@ -263,7 +264,7 @@
                                     setTimeout(() => {
                                         if (newTodoOpen == true) {
                                             autosize(newTodoElement);
-                                            newTodoElement.focus();
+                                            newTodoElement?.focus();
                                         }
                                     }, 100);
 
@@ -417,11 +418,11 @@
                 {:else}
                     <div
                         on:dblclick="{() => {
-                            if (todo.checked == false) {
+                            if (todo.checked == false && todo.editmode == false) {
                                 todo.editmode = true;
                                 setTimeout(() => {
-                                    todo.textarea.focus();
-                                }, 300);
+                                    todo.textarea?.focus();
+                                }, 10);
                             }
                         }}">
                         {#if has_label(todo.text)}
@@ -478,6 +479,16 @@
                                     });
                             }
                         }}">삭제</b>
+                    {#if todo.checked == false && todo.editmode == false}
+                        <b
+                            class="edit"
+                            on:click="{() => {
+                                todo.editmode = true;
+                                setTimeout(() => {
+                                    todo.textarea?.focus();
+                                }, 10);
+                            }}">수정</b>
+                    {/if}
                 </p>
             </div>
         {/each}
@@ -538,5 +549,16 @@
     .delete:hover {
         cursor: pointer;
         text-shadow: 0 0 var(--text-shadow) var(--red);
+    }
+
+    /* Todo edit button */
+    .edit {
+        font-weight: 600;
+        color: var(--green);
+    }
+
+    .edit:hover {
+        cursor: pointer;
+        text-shadow: 0 0 var(--text-shadow) var(--green);
     }
 </style>
