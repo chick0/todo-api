@@ -58,6 +58,10 @@
                             }
                         }, 150);
                     }
+                } else if (e.key == "$") {
+                    if (where_am_i != "/user") {
+                        push("/user");
+                    }
                 }
             }
         });
