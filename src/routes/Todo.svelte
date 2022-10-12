@@ -176,6 +176,7 @@
                                     }, 100);
 
                                     json.todo.reset = json.todo.text;
+                                    json.todo.editmode = false;
                                     todos.unshift(json.todo);
                                     todos = todos;
                                 } else {
