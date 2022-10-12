@@ -2,8 +2,8 @@
     import { push } from "svelte-spa-router";
     import { TODO, TODO_CHECK } from "src/url.js";
     import { is_login, get_token } from "src/user.js";
-    import { to_datestring, to_timestring } from "src/time.js";
     import { has_label, parse_labels } from "src/label.js";
+    import { to_string } from "src/time.js";
     import { get_html } from "src/markdown.js";
     import "src/todo-content.css";
 
@@ -60,21 +60,6 @@
                 alert("알 수 없는 오류가 발생했습니다.");
                 push("/");
             });
-    }
-
-    /**
-     * Timestamp to string
-     *
-     * @param {number} timestamp timestamp from python api
-     * @returns {string} date or time string
-     */
-    function get_function(timestamp) {
-        let now = Date.now() / 1000;
-        if (now - timestamp > 3600) {
-            return to_datestring(timestamp);
-        } else {
-            return to_timestring(timestamp);
-        }
     }
 
     /**
@@ -363,11 +348,11 @@
                 <p>
                     {#if todo.checked}
                         <span title="완료일">
-                            {get_function(todo.checked_at)}
+                            {to_string(todo.checked_at)}
                         </span>
                     {:else}
                         <span title="생성일">
-                            {get_function(todo.created_at)}
+                            {to_string(todo.created_at)}
                         </span>
                     {/if}
 

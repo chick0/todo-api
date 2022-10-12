@@ -1,20 +1,19 @@
 <script>
     import { onMount } from "svelte";
     import { VERSION } from "src/url.js";
-    import { to_string } from "src/time.js";
 
     let tag = TAG;
     let build_date = new Date(BUILD_DATE);
 
-    let server_id = "-";
-    let started_at = null;
+    let server_id = "정보없음";
+    let started_at = undefined;
 
     onMount(() => {
         fetch(VERSION)
             .then((resp) => resp.json())
             .then((json) => {
                 server_id = json.id;
-                started_at = json.started_at;
+                started_at = new Date(json.started_at * 1000).toLocaleString();
             })
             .catch(() => {
                 alert("서버 정보를 가져오는데 실패했습니다.");
@@ -49,7 +48,7 @@
     <p>- {build_date.toLocaleString()}</p>
     <br />
     <h3>서버 시작 날짜</h3>
-    <p>- {to_string(started_at)}</p>
+    <p>- {started_at}</p>
 </div>
 
 <style>

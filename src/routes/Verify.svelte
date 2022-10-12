@@ -1,7 +1,6 @@
 <script>
     import { push } from "svelte-spa-router";
     import { VERIFY, VERIFY_SESSION } from "src/url.js";
-    import { to_string } from "src/time.js";
 
     const verify_token = sessionStorage.getItem("to-do:verify_token");
 
@@ -20,7 +19,7 @@
             .then((resp) => resp.json())
             .then((json) => {
                 if (json.status) {
-                    date = to_string(json.exp);
+                    date = new Date(json.exp * 1000).toLocaleString();
                     is_loaded = true;
                 } else {
                     alert(json.message);
