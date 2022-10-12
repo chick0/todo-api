@@ -1,6 +1,7 @@
 <script>
     import Router from "svelte-spa-router";
     import { location, push } from "svelte-spa-router";
+    import { fade } from "svelte/transition";
     import { onMount } from "svelte";
     import { titles } from "src/title.js";
     import { routes } from "src/router.js";
@@ -68,7 +69,9 @@
     });
 
     let login_status = is_login();
+
     let is_component_loading = false;
+    let show_loading_warning = false;
 
     /**
      * Warning! For mobile device
@@ -137,14 +140,35 @@
 </nav>
 
 {#if is_component_loading}
-    <div class="spinner"></div>
+    <div class="container">
+        <div class="spinner"></div>
+        {#if show_loading_warning == true}
+            <div in:fade>
+                <p>페이지 로딩이 생각보다 느려지고 있습니다.</p>
+                <p>아래의 버튼을 클릭해 페이지를 새로 고칠 수 있습니다.</p>
+                <br />
+                <button
+                    class="button"
+                    on:click="{() => {
+                        show_loading_warning = false;
+                        window.location.reload();
+                    }}">페이지 새로고침</button>
+            </div>
+        {/if}
+    </div>
 {/if}
 
 <Router
     routes="{routes}"
     on:routeLoading="{() => {
         is_component_loading = true;
+        show_loading_warning = false;
+
+        setTimeout(() => {
+            show_loading_warning = true;
+        }, 1500);
     }}"
     on:routeLoaded="{() => {
         is_component_loading = false;
+        show_loading_warning = false;
     }}" />
