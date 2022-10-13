@@ -95,6 +95,7 @@
                     class="button max"
                     on:click="{() => {
                         is_loading = true;
+
                         fetch(CLEAN_UP, {
                             method: 'DELETE',
                             headers: {

@@ -14,6 +14,7 @@
         push("/todo");
     } else {
         is_loading = false;
+
         fetch(HELP)
             .then((resp) => resp.json())
             .then((json) => {
@@ -53,6 +54,7 @@
             bind:this="{submit}"
             on:click="{() => {
                 is_loading = true;
+
                 fetch(RETRY, {
                     method: 'POST',
                     headers: {

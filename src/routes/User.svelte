@@ -177,6 +177,7 @@
                 on:click="{() => {
                     if (confirm("전체 세션을 삭제하시겠습니까?\n(삭제와 동시에 '모든' 기기에서 로그아웃이 됩니다.)")) {
                         is_loading = true;
+
                         fetch(SESSION_DELETE('all'), {
                             method: 'DELETE',
                             headers: {

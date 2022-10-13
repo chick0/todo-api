@@ -60,6 +60,7 @@
             bind:this="{pin_button}"
             on:click="{() => {
                 is_loading = true;
+
                 fetch(PIN, {
                     method: 'POST',
                     headers: {

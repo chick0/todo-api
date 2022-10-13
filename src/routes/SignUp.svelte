@@ -62,6 +62,7 @@
             bind:this="{submit}"
             on:click="{() => {
                 is_loading = true;
+
                 fetch(SIGN_UP, {
                     method: 'POST',
                     body: JSON.stringify({

@@ -68,6 +68,7 @@
             bind:this="{submit1}"
             on:click="{() => {
                 is_loading = true;
+
                 fetch(RESET_STEP_1, {
                     method: 'POST',
                     headers: {
@@ -119,6 +120,7 @@
             bind:this="{submit2}"
             on:click="{() => {
                 is_loading = true;
+
                 fetch(RESET_STEP_2, {
                     method: 'POST',
                     headers: {

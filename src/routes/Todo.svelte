@@ -373,6 +373,7 @@
                         on:click="{() => {
                             if (confirm('삭제하시겠습니까?')) {
                                 todos = todos.filter((x) => x.id != todo.id);
+
                                 fetch(TODO, {
                                     method: 'DELETE',
                                     headers: {

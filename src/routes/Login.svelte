@@ -75,6 +75,7 @@
             bind:this="{submit}"
             on:click="{() => {
                 is_loading = true;
+
                 fetch(LOGIN, {
                     method: 'POST',
                     body: JSON.stringify({

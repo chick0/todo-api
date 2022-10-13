@@ -50,6 +50,7 @@
             bind:this="{submit}"
             on:click="{() => {
                 is_loading = true;
+
                 fetch(QUIT, {
                     method: 'POST',
                     headers: {
@@ -92,6 +93,7 @@
             type="submit"
             on:click="{() => {
                 is_loading = true;
+
                 fetch(QUIT, {
                     method: 'DELETE',
                     headers: {

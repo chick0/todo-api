@@ -38,6 +38,7 @@
      */
     function send(answer) {
         is_loaded = true;
+
         fetch(VERIFY, {
             method: "POST",
             headers: {
