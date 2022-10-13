@@ -79,6 +79,7 @@
     let newTodoOpen = false;
     let newTodoElement = undefined;
     let newTodoSave = undefined;
+    let newTodoLoading = false;
 
     let is_loading = true;
 
@@ -149,10 +150,15 @@
                 <p>{newTodo.length}/500자</p>
                 <br />
                 <button
-                    class="button max"
+                    class="button max {newTodoLoading == true ? 'spin' : ''}"
                     bind:this="{newTodoSave}"
                     on:click="{() => {
-                        newTodoSave.classList.add('spin');
+                        if (newTodoLoading == true) {
+                            return;
+                        }
+
+                        newTodoLoading = true;
+
                         fetch(TODO, {
                             method: 'POST',
                             headers: {
@@ -183,7 +189,7 @@
                                     alert(json.message);
                                 }
 
-                                newTodoSave.classList.remove('spin');
+                                newTodoLoading = false;
 
                                 if (json.logout_required == true) {
                                     push('/logout');
@@ -191,7 +197,7 @@
                             })
                             .catch(() => {
                                 alert('알 수 없는 오류가 발생했습니다.');
-                                newTodoSave.classList.remove('spin');
+                                newTodoLoading = false;
                             });
                     }}">새로운 할 일 저장</button>
             </div>
@@ -247,7 +253,7 @@
                 {#if todo.editmode == true}
                     <textarea
                         maxlength="500"
-                        readonly="{todo.button?.classList.contains('spin') === true}"
+                        readonly="{todo.loading == true}"
                         bind:this="{todo.textarea}"
                         bind:value="{todo.text}"
                         on:input="{() => autosize(todo.textarea)}"
@@ -283,10 +289,15 @@
                     </p>
                     <br />
                     <button
-                        class="button max"
+                        class="button max {todo.loading == true ? 'spin' : ''}"
                         bind:this="{todo.button}"
                         on:click="{() => {
-                            todo.button.classList.add('spin');
+                            if (todo.loading == true) {
+                                return;
+                            }
+
+                            todo.loading = true;
+
                             fetch(TODO, {
                                 method: 'PATCH',
                                 headers: {
@@ -300,7 +311,7 @@
                             })
                                 .then((resp) => resp.json())
                                 .then((json) => {
-                                    todo.button.classList.remove('spin');
+                                    todo.loading = false;
 
                                     if (json.status == true) {
                                         todo.text = json.text;
@@ -320,7 +331,7 @@
                                 })
                                 .catch(() => {
                                     alert('알 수 없는 오류가 발생했습니다.');
-                                    todo.button.classList.remove('spin');
+                                    todo.loading = false;
                                 });
                         }}">수정한 할 일 저장</button>
                 {:else}

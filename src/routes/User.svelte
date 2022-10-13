@@ -17,17 +17,10 @@
     let history_list = [];
     let session_list = [];
 
-    let more_history_button = undefined;
-    let history_cursor = null;
-    $: history_cursor = history_list[history_list.length - 1]?.id;
+    let loading_more_history = false;
 
     let help_email = "";
     let mail_to = "";
-    $: mail_to = [
-        "mailto:" + help_email,
-        "?subject=도움이 필요합니다",
-        "&body=" + ["종류: 오류 신고 / 업데이트 요청 / 기타", "* 버전 정보 : " + TAG].join("\n"),
-    ].join("");
 
     if (!is_login()) {
         push("/todo");
@@ -49,6 +42,12 @@
                         .then((resp) => resp.json())
                         .then((json) => {
                             help_email = json.email;
+                            mail_to = [
+                                "mailto:" + help_email,
+                                "?subject=도움이 필요합니다",
+                                "&body=" +
+                                    ["종류: 오류 신고 / 업데이트 요청 / 기타", "* 버전 정보 : " + TAG].join("\n"),
+                            ].join("");
                         });
 
                     is_loading = false;
@@ -297,23 +296,24 @@
         </div>
         <br />
         <button
-            class="button max"
-            bind:this="{more_history_button}"
+            class="button max {loading_more_history == true ? 'spin' : ''}"
             on:click="{() => {
-                if (more_history_button.classList.contains('spin')) {
-                    alert('이전 기록들을 가져오고 있습니다. 잠시만 기다려주세요.');
+                if (loading_more_history == true) {
                     return;
                 }
 
-                more_history_button.classList.add('spin');
-                fetch(MORE_HISTORY(history_cursor), {
+                let cursor = history_list[history_list.length - 1]?.id;
+
+                loading_more_history = true;
+
+                fetch(MORE_HISTORY(cursor), {
                     headers: {
                         'x-auth': TOKEN,
                     },
                 })
                     .then((resp) => resp.json())
                     .then((json) => {
-                        if (json.status) {
+                        if (json.status == true) {
                             json.history_list.forEach((history) => {
                                 history_list.push(history);
                             });
@@ -327,11 +327,11 @@
                             push('/logout');
                         }
 
-                        more_history_button.classList.remove('spin');
+                        loading_more_history = false;
                     })
                     .catch(() => {
                         alert('알 수 없는 오류가 발생했습니다.');
-                        more_history_button.classList.remove('spin');
+                        loading_more_history = false;
                     });
             }}">기록 더 불러오기</button>
     {/if}

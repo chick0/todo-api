@@ -4,33 +4,34 @@
     import { is_login, set_token } from "src/user.js";
     import { get_pin_token } from "src/pin.js";
 
-    if (is_login()) {
-        push("/todo");
-    }
-
-    let checking_pin_login = true;
-
-    if (get_pin_token() == null) {
-        checking_pin_login = false;
-    } else {
-        if (!location.hash.endsWith("?force")) {
-            push("/pin");
-        } else {
-            checking_pin_login = false;
-        }
-    }
+    let is_loading = true;
 
     let email = "";
     let password = "";
     let password_input = undefined;
     let submit = undefined;
+
+    if (is_login()) {
+        push("/todo");
+    } else {
+        if (get_pin_token() == null) {
+            is_loading = false;
+        } else {
+            if (!location.hash.endsWith("?force")) {
+                push("/pin");
+            } else {
+                is_loading = false;
+            }
+        }
+    }
 </script>
 
-{#if checking_pin_login}
-    <div class="spinner"></div>
-{:else}
-    <div class="container">
-        <h1>로그인</h1>
+<div class="container">
+    <h1>로그인</h1>
+
+    {#if is_loading == true}
+        <div class="spinner"></div>
+    {:else}
         <div class="buttons">
             <a class="button" href="#/reset">비밀번호 재설정</a>
         </div>
@@ -73,51 +74,47 @@
             type="submit"
             bind:this="{submit}"
             on:click="{() => {
-                if (submit.classList.contains('spin')) {
-                    alert('이미 처리중입니다!');
-                } else {
-                    submit.classList.add('spin');
-                    fetch(LOGIN, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            email: email,
-                            password: password,
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                        .then((resp) => resp.json())
-                        .then((json) => {
-                            if (json.status === true) {
-                                set_token(json.token);
+                is_loading = true;
+                fetch(LOGIN, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        email: email,
+                        password: password,
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then((resp) => resp.json())
+                    .then((json) => {
+                        if (json.status === true) {
+                            set_token(json.token);
 
-                                let push_to = '/todo';
+                            let push_to = '/todo';
 
-                                if (window.innerWidth <= 700) {
-                                    if (confirm('PIN 로그인을 설정하시겠습니까?')) {
-                                        push_to = '/pin/create';
-                                    }
-                                }
-
-                                push(push_to);
-                            } else {
-                                alert(json.message);
-                                submit.classList.remove('spin');
-                                password = '';
-
-                                if (json.email_verify_required) {
-                                    if (confirm('이메일 인증을 다시 시도하시겠습니까?')) {
-                                        push('/retry');
-                                    }
+                            if (window.innerWidth <= 700) {
+                                if (confirm('PIN 로그인을 설정하시겠습니까?')) {
+                                    push_to = '/pin/create';
                                 }
                             }
-                        })
-                        .catch(() => {
-                            alert('알 수 없는 오류가 발생했습니다.');
-                            submit.classList.remove('spin');
-                        });
-                }
+
+                            push(push_to);
+                        } else {
+                            alert(json.message);
+                            is_loading = false;
+                            password = '';
+
+                            if (json.email_verify_required) {
+                                if (confirm('이메일 인증을 다시 시도하시겠습니까?')) {
+                                    push('/retry');
+                                }
+                            }
+                        }
+                    })
+                    .catch(() => {
+                        alert('알 수 없는 오류가 발생했습니다.');
+                        is_loading = false;
+                    });
             }}">로그인</button>
-    </div>
-{/if}
+    {/if}
+</div>
