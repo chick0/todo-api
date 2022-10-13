@@ -5,6 +5,7 @@
     import { get_pin_token, clear_pin_token } from "src/pin.js";
 
     let is_loading = true;
+
     const pin_token = get_pin_token();
 
     let pin = "";
@@ -15,8 +16,7 @@
         push("/todo");
     } else {
         if (pin_token == null) {
-            // push("/login");
-            is_loading = false;
+            push("/login");
         } else {
             is_loading = false;
         }
