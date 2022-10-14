@@ -37,7 +37,7 @@
 
                     todos.sort((a, b) => {
                         if (a.checked == true || b.checked == true) {
-                            return a.checked - b.checked;
+                            return Number(a.checked) - Number(b.checked);
                         }
 
                         if (a.high_level == b.high_level) {
@@ -74,7 +74,28 @@
 
     const TOKEN = get_token();
 
+    /**
+     * @typedef {Object} Todo
+     * @property {number} id
+     * @property {boolean} checked
+     * @property {string} text
+     * @property {number} created_at
+     * @property {number|null} checked_at
+     * @property {boolean} checked_pending
+     * @property {boolean} loading
+     * @property {string} reset
+     * @property {boolean} editmode
+     * @property {HTMLElement} textarea
+     * @property {HTMLElement} button
+     * @property {number} high_level
+     * @property {number} total_level
+     */
+
+    /**
+     *  @type {Todo[]}
+     */
     let todos = [];
+
     let newTodo = "";
     let newTodoOpen = false;
     let newTodoElement = undefined;
