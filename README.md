@@ -16,7 +16,7 @@ API 서버는 Flask 프레임워크로 개발되었습니다.
 
 또 [pydantic](https://github.com/pydantic/pydantic)을 이용해 요청과 응답 값의 타입을 체크하고 있습니다.
 
-추가로 '**선택적**' 의존성이 있습니다. 우선 [paste](https://github.com/cdent/paste) 패키지를 설치하면 웹 로그 기능이 활성화됩니다. 그리고 [flask-cors](https://github.com/corydolphin/flask-cors) 패키지를 설치하면 CORS 설정이 적용됩니다. CORS 기능이 선택적으로 제공되는 이유는 API 서버의 `/` 루트가 프론트엔드로 연결되어있기 때문입니다.
+추가로 '**선택적**' 의존성이 있습니다. [flask-cors](https://github.com/corydolphin/flask-cors) 패키지를 설치하면 CORS 설정이 적용됩니다. CORS 기능이 선택적으로 제공되는 이유는 API 서버의 `/` 루트가 프론트엔드로 연결되어있기 때문입니다. (프론트엔드는 `yarn`을 이용해 빌드하거나 릴리즈에서 다운로드 받을수 있습니다.)
 
 ## 클라이언트
 
@@ -68,12 +68,9 @@ API 서버는 Flask 프레임워크로 개발되었습니다.
 
 만약 파이썬 버전이 3.10보다 아래라면 `importlib-metadata` 패키지를 추가 설치해야합니다.
 
-또 2가지 선택적 의존성이 있습니다.
+추가로 선택적 의존성이 있습니다.
 
-1. Flask-CORS
-    - 기본적으로 API 서버의 최상위 경로가 프론트와 연결되어 있지만, API 서버와 프론트를 분리해서 사용하는 경우에는 해당 의존성을 설치해야합니다.
-2. Paste
-    - 해당 패키지의 [TransLogger](https://github.com/cdent/paste/blob/master/paste/translogger.py)를 활용해 웹 로그 기능을 제공합니다.
+Flask-CORS: 기본적으로 API 서버의 최상위 경로가 프론트와 연결되어 있지만, API 서버와 프론트를 분리해서 사용하는 경우에는 해당 의존성을 설치해야합니다.
 
 ### 서버 설정
 

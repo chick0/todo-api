@@ -4,8 +4,9 @@ from logging import StreamHandler
 from logging import Formatter
 from logging import INFO
 
-from waitress import serve
 from dotenv import load_dotenv
+from waitress import serve
+from paste.translogger import TransLogger
 
 from app import create_app
 
@@ -19,20 +20,9 @@ def init_logger():
     logger.addHandler(hdlr=handler)
 
 
-def get_app():
-    try:
-        from paste.translogger import TransLogger
-        app = TransLogger(create_app())
-    except ImportError:
-        app = create_app()
-        logger.info("TransLogger is disabled")
-
-    return app
-
-
 def start_app():
     host, port = "127.0.0.1", 18282
-    serve(app=get_app(), host=host, port=port)
+    serve(app=TransLogger(create_app()), host=host, port=port)
 
 
 if __name__ == "__main__":

@@ -1,9 +1,10 @@
-flake8
+Flake8
 Flask
 Flask-SQLAlchemy
 Flask-Migrate
 mysqlclient
 waitress
+Paste
 python-dotenv
 pydantic
 PyJWT
