@@ -14,27 +14,27 @@ def get_files() -> list:
 
 def tape():
     try:
-        hash = argv[1][:7]
+        commit_hash = argv[1][:7]
     except IndexError:
-        hash = None
+        commit_hash = None
 
-    if hash is None:
+    if commit_hash is None:
         try:
-            hash = run(
+            commit_hash = run(
                 "git rev-parse --short HEAD",
                 capture_output=True,
                 timeout=1,
                 check=True
             ).stdout.decode().strip()
         except (FileNotFoundError, CalledProcessError):
-            hash = "undefined"
+            commit_hash = "undefined"
 
     files = get_files()
 
     print("total files:", len(files))
 
     with ZipFile(
-        file=f"dist-{hash}.zip",
+        file=f"dist-{commit_hash}.zip",
         mode="w",
         compression=ZIP_DEFLATED,
         compresslevel=9
