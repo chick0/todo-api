@@ -28,7 +28,7 @@ hr.todo-content {
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("/D2Coding.woff2") format("woff2");
+    src: url("/assets/D2Coding.woff2") format("woff2");
     unicode-range: U+0020-007E;
 }
 

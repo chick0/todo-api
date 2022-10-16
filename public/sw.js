@@ -48,27 +48,21 @@ self.addEventListener("fetch", (event) => {
                 if (cachedResponse) {
                     console.log("@", event.request.url);
                     return cachedResponse;
-                } else {
-                    console.log(" ", event.request.url);
                 }
 
-                if (event.request.url.includes("assets") || event.request.url.endsWith(".woff2")) {
-                    return caches.open(RUNTIME).then((cache) => {
-                        return fetch(event.request).then((response) => {
-                            if (response.ok) {
-                                return cache.put(event.request, response.clone()).then(() => {
-                                    return response;
-                                });
-                            } else {
+                return fetch(event.request).then((response) => {
+                    if (response.ok && event.request.url.includes("assets")) {
+                        return caches.open(RUNTIME).then((cache) => {
+                            return cache.put(event.request, response.clone()).then(() => {
+                                console.log("+", event.request.url);
                                 return response;
-                            }
+                            });
                         });
-                    });
-                } else {
-                    return fetch(event.request).then((response) => {
-                        return response;
-                    });
-                }
+                    }
+
+                    console.log(" ", event.request.url);
+                    return response;
+                });
             })
         );
     } else {
