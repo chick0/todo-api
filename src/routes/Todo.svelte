@@ -92,7 +92,7 @@
      */
 
     /**
-     *  @type {Todo[]}
+     * @type {Todo[]}
      */
     let todos = [];
 

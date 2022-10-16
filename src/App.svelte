@@ -121,6 +121,7 @@
                 <span></span>
                 <span></span>
             </li>
+            <li on:click="{() => push('/notice')}">공지사항</li>
             {#if login_status == false}
                 <li on:click="{() => push('/login')}">로그인</li>
                 <li on:click="{() => push('/sign-up')}">회원가입</li>

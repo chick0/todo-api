@@ -193,3 +193,62 @@ class Pin(db.Model):
         db.String(128),
         nullable=True
     )
+
+
+class Admin(db.Model):
+    __tablename__ = "td_admin"
+
+    id = db.Column(
+        db.Integer,
+        unique=True,
+        primary_key=True,
+        nullable=False
+    )
+
+    user = db.Column(
+        db.Integer,
+        db.ForeignKey(USER_ID),
+        nullable=False
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+    )
+
+
+class Notice(db.Model):
+    __tablename__ = "td_notice"
+
+    id = db.Column(
+        db.Integer,
+        unique=True,
+        primary_key=True,
+        nullable=False
+    )
+
+    owner = db.Column(
+        db.Integer,
+        db.ForeignKey(USER_ID),
+        nullable=False
+    )
+
+    title = db.Column(
+        db.String(80),
+        nullable=False
+    )
+
+    text = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+    )
+
+    updated_at = db.Column(
+        db.DateTime,
+        nullable=True,
+    )

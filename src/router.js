@@ -5,6 +5,8 @@ export const routes = {
     "/login": wrap({ asyncComponent: () => import("routes/Login.svelte") }),
     "/logout": wrap({ asyncComponent: () => import("routes/Logout.svelte") }),
 
+    "/notice": wrap({ asyncComponent: () => import("routes/Notice.svelte") }),
+
     "/sign-up": wrap({ asyncComponent: () => import("routes/SignUp.svelte") }),
     "/verify": wrap({ asyncComponent: () => import("routes/Verify.svelte") }),
 

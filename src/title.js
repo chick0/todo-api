@@ -3,6 +3,8 @@ export const titles = {
     "/login": "로그인",
     "/logout": "로그아웃",
 
+    "/notice": "공지사항",
+
     "/sign-up": "회원가입",
     "/verify": "이메일 인증",
 
