@@ -90,8 +90,21 @@ def create_app():
     )
 
     try:
-        commit_hash = open(join(".git", open(join(".git", "HEAD"), mode="r").read()[5:].strip()), mode="r").read()[:7]
-    except (FileNotFoundError, Exception):
+        target = "ref:"
+        path = None
+
+        with open(join(".git", "HEAD"), mode="r") as head_reader:
+            for data in head_reader.read().split("\n"):
+                if data.startswith(target):
+                    result = data[len(target):].strip()
+                    path = join(".git", result)
+
+        if path is None:
+            raise FileNotFoundError
+
+        with open(path, mode="r") as commit_reader:
+            commit_hash = commit_reader.read()[:7]
+    except FileNotFoundError:
         commit_hash = "-------"
 
     app.commit_hash = commit_hash

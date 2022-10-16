@@ -3,6 +3,7 @@ from glob import glob
 from zipfile import ZipFile
 from zipfile import ZIP_DEFLATED
 from subprocess import run
+from subprocess import CalledProcessError
 
 
 def get_files() -> list:
@@ -13,15 +14,19 @@ def get_files() -> list:
 
 def tape():
     try:
-        hash = argv[1]
-        hash = hash[:7]
+        hash = argv[1][:7]
     except IndexError:
         hash = None
 
     if hash is None:
         try:
-            hash = run("git rev-parse --short HEAD", capture_output=True).stdout.decode().strip()
-        except:  # noqa: E722
+            hash = run(
+                "git rev-parse --short HEAD",
+                capture_output=True,
+                timeout=1,
+                check=True
+            ).stdout.decode().strip()
+        except (FileNotFoundError, CalledProcessError):
             hash = "undefined"
 
     files = get_files()

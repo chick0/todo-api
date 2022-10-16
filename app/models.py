@@ -1,5 +1,7 @@
 from app import db
 
+USER_ID = "td_user.id"
+
 
 class User(db.Model):
     __tablename__ = "td_user"
@@ -50,7 +52,7 @@ class Todo(db.Model):
 
     owner = db.Column(
         db.Integer,
-        db.ForeignKey("td_user.id"),
+        db.ForeignKey(USER_ID),
         nullable=False
     )
 
@@ -87,7 +89,7 @@ class History(db.Model):
 
     owner = db.Column(
         db.Integer,
-        db.ForeignKey("td_user.id"),
+        db.ForeignKey(USER_ID),
         nullable=False
     )
 
@@ -119,7 +121,7 @@ class DBSession(db.Model):
 
     owner = db.Column(
         db.Integer,
-        db.ForeignKey("td_user.id"),
+        db.ForeignKey(USER_ID),
         nullable=False
     )
 
@@ -153,7 +155,7 @@ class Pin(db.Model):
 
     owner = db.Column(
         db.Integer,
-        db.ForeignKey("td_user.id"),
+        db.ForeignKey(USER_ID),
         nullable=False
     )
 

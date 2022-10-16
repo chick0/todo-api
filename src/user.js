@@ -31,7 +31,7 @@ export function get_payload() {
         return null;
     }
 
-    const [head, payload, sign] = token.split(".");
+    const payload = token.split(".")[1];
 
     if (payload == null) {
         return null;

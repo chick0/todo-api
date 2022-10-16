@@ -15,7 +15,7 @@ function calc_level(label) {
 }
 
 /**
- * Check todo has label
+ * Check 'text' has a label
  *
  * @param {string} text
  * @returns {boolean}
@@ -25,14 +25,14 @@ export function has_label(text) {
 }
 
 /**
- * Simple todo label
+ * Simple label
  * @typedef {Object} Label
  * @property {number} level
  * @property {string} text
  */
 
 /**
- * Parse labels from todo text(markdown)
+ * Parse labels from 'text'
  *
  * @param {string} text
  * @returns {Label[]} labels
