@@ -53,7 +53,7 @@
             .then((json) => {
                 alert(json.message);
 
-                if (json.status == true) {
+                if (json.status) {
                     sessionStorage.removeItem("to-do:verify_token");
                 }
 

@@ -66,7 +66,7 @@
             })
                 .then((resp) => resp.json())
                 .then((json) => {
-                    if (json.admin == true) {
+                    if (json.admin === true) {
                         is_admin = true;
                     }
                 });
@@ -76,7 +76,7 @@
 
 <div class="container">
     <h1>공지사항</h1>
-    {#if is_loading == true}
+    {#if is_loading}
         <div class="spinner"></div>
     {:else}
         {#if notice_list.length == 0}
@@ -84,7 +84,7 @@
             <p>등록된 공지가 없습니다!</p>
         {/if}
 
-        {#if is_admin == true}
+        {#if is_admin}
             <br />
             {#if open_new_todo == false}
                 <p
@@ -118,9 +118,9 @@
                     </div>
 
                     <button
-                        class="button max {new_notice_loading == true ? 'spin' : ''}"
+                        class="button max {new_notice_loading ? 'spin' : ''}"
                         on:click="{() => {
-                            if (new_notice_loading == true) {
+                            if (new_notice_loading) {
                                 return;
                             }
 
@@ -148,7 +148,7 @@
                                     alert(json.message);
                                     new_notice_loading = false;
 
-                                    if (json.logout_required == true) {
+                                    if (json.logout_required) {
                                         push('/logout');
                                     }
                                 })
@@ -168,7 +168,7 @@
 
                 <div class="notice content">{@html get_html(notice.text)}</div>
 
-                {#if notice_edit_mode == true && notice_edit_id == notice.id}
+                {#if notice_edit_mode && notice_edit_id == notice.id}
                     <div class="field">
                         <div class="field">
                             <label for="edit-title">제목</label>
@@ -184,9 +184,9 @@
                         </div>
 
                         <button
-                            class="button max {notice_edit_loading == true ? 'spin' : ''}"
+                            class="button max {notice_edit_loading ? 'spin' : ''}"
                             on:click="{() => {
-                                if (notice_edit_loading == true) {
+                                if (notice_edit_loading) {
                                     return;
                                 }
 
@@ -209,8 +209,8 @@
                                     },
                                     body: JSON.stringify({
                                         id: notice.id,
-                                        title: title_edited == true ? notice_edit_title : null,
-                                        text: text_edited == true ? notice_edit_text : null,
+                                        title: title_edited ? notice_edit_title : null,
+                                        text: text_edited ? notice_edit_text : null,
                                     }),
                                 })
                                     .then((resp) => resp.json())
@@ -219,12 +219,14 @@
                                             notice.title = json.notice.title;
                                             notice.text = json.notice.text;
                                             notice.updated_at = json.notice.updated_at;
+
+                                            notice_edit_mode = false;
                                         }
 
                                         alert(json.message);
                                         notice_edit_loading = false;
 
-                                        if (json.logout_required == true) {
+                                        if (json.logout_required) {
                                             push('/logout');
                                         }
                                     })
@@ -243,11 +245,11 @@
                         / <b>수정됨</b> {to_string(notice.updated_at)}
                     {/if}
 
-                    {#if is_admin == true}
+                    {#if is_admin}
                         <b
                             class="clickable edit"
                             on:click="{() => {
-                                if (notice_edit_mode == true) {
+                                if (notice_edit_mode) {
                                     if (notice_edit_id == notice.id) {
                                         notice_edit_mode = false;
                                         return;
@@ -263,7 +265,7 @@
                         <b
                             class="clickable delete"
                             on:click="{() => {
-                                if (is_loading == true) {
+                                if (is_loading) {
                                     return;
                                 }
 
@@ -289,7 +291,7 @@
                                         alert(json.message);
                                         is_loading = false;
 
-                                        if (json.logout_required == true) {
+                                        if (json.logout_required) {
                                             push('/logout');
                                         }
                                     })

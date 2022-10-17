@@ -40,7 +40,7 @@
 
 <div class="container">
     <h1>비밀번호 재설정</h1>
-    {#if is_loading == true}
+    {#if is_loading}
         <div class="spinner"></div>
     {:else if step == 1}
         <p>5분마다 한 번씩 시도할 수 있습니다.</p>
@@ -82,7 +82,7 @@
                     .then((json) => {
                         alert(json.message);
 
-                        if (json.status == true) {
+                        if (json.status) {
                             push('/');
                         } else {
                             is_loading = false;
@@ -135,7 +135,7 @@
                     .then((json) => {
                         alert(json.message);
 
-                        if (json.status == true) {
+                        if (json.status) {
                             push('/login');
                         } else {
                             is_loading = false;

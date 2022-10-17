@@ -29,7 +29,7 @@
 <div class="container">
     <h1>로그인</h1>
 
-    {#if is_loading == true}
+    {#if is_loading}
         <div class="spinner"></div>
     {:else}
         <div class="buttons">
@@ -88,7 +88,7 @@
                 })
                     .then((resp) => resp.json())
                     .then((json) => {
-                        if (json.status === true) {
+                        if (json.status) {
                             set_token(json.token);
 
                             let push_to = '/todo';

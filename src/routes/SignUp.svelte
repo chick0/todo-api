@@ -20,7 +20,7 @@
 <div class="container">
     <h1>회원가입</h1>
 
-    {#if is_loading == true}
+    {#if is_loading}
         <div class="spinner"></div>
     {:else}
         <div class="field">
@@ -77,7 +77,7 @@
                     .then((json) => {
                         alert(json.message);
 
-                        if (json.status === true) {
+                        if (json.status) {
                             push('/login');
                         } else {
                             is_loading = false;

@@ -25,7 +25,7 @@
 
 <div class="container">
     <h1>PIN</h1>
-    {#if is_loading == true}
+    {#if is_loading}
         <div class="spinner"></div>
     {:else}
         <div class="buttons">
@@ -68,7 +68,7 @@
                 })
                     .then((resp) => resp.json())
                     .then((json) => {
-                        if (json.status == true) {
+                        if (json.status) {
                             set_token(json.token);
                             push('/todo');
                         } else {
@@ -76,7 +76,7 @@
                             is_loading = false;
                             pin = '';
 
-                            if (json.logout_required == true) {
+                            if (json.logout_required) {
                                 clear_pin_token();
                                 push('/login');
                             }

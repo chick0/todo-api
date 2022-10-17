@@ -72,6 +72,7 @@
 
     let is_component_loading = false;
     let show_loading_warning = false;
+    let show_loading_warning_timeout = undefined;
 
     /**
      * Warning! For mobile device
@@ -100,11 +101,11 @@
 
 <nav class="container">
     <div class="navbar">
-        <ul class="{vertical_open == true ? 'nav-opened' : 'nav-closed'}">
+        <ul class="{vertical_open ? 'nav-opened' : 'nav-closed'}">
             <li
                 class="head"
                 on:click="{() => {
-                    if (login_status == true) {
+                    if (login_status) {
                         push('/todo');
                     } else {
                         push('/');
@@ -143,7 +144,7 @@
 {#if is_component_loading}
     <div class="container">
         <div class="spinner"></div>
-        {#if show_loading_warning == true}
+        {#if show_loading_warning}
             <div in:fade>
                 <p>페이지 로딩이 생각보다 느려지고 있습니다.</p>
                 <p>아래의 버튼을 클릭해 페이지를 새로 고칠 수 있습니다.</p>
@@ -165,11 +166,12 @@
         is_component_loading = true;
         show_loading_warning = false;
 
-        setTimeout(() => {
+        show_loading_warning_timeout = setTimeout(() => {
             show_loading_warning = true;
         }, 1500);
     }}"
     on:routeLoaded="{() => {
         is_component_loading = false;
         show_loading_warning = false;
+        clearTimeout(show_loading_warning_timeout);
     }}" />

@@ -25,7 +25,7 @@
 
 <div class="container">
     <h1>이메일 인증</h1>
-    {#if is_loading == true}
+    {#if is_loading}
         <div class="spinner"></div>
     {:else}
         <p>5분마다 한 번씩 시도할 수 있습니다.</p>
@@ -70,7 +70,7 @@
                         is_loading = false;
                         alert(json.message);
 
-                        if (json.status === true) {
+                        if (json.status) {
                             push('/login');
                         }
                     })

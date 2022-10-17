@@ -29,7 +29,7 @@
                     alert(json.message);
                 }
 
-                if (json.logout_required == true) {
+                if (json.logout_required) {
                     push("/logout");
                 }
             })
@@ -111,7 +111,7 @@
                                     is_loading = false;
                                 }
 
-                                if (json.logout_required == true) {
+                                if (json.logout_required) {
                                     push('/logout');
                                 }
                             })

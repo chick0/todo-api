@@ -17,7 +17,7 @@
         })
             .then((resp) => resp.json())
             .then((json) => {
-                if (json.status === true) {
+                if (json.status) {
                     todos = json.todos.map((todo) => {
                         let labels = parse_labels(todo.text);
 
@@ -35,7 +35,7 @@
                     });
 
                     todos.sort((a, b) => {
-                        if (a.checked == true || b.checked == true) {
+                        if (a.checked || b.checked) {
                             return Number(a.checked) - Number(b.checked);
                         }
 
@@ -51,7 +51,7 @@
                     alert(json.message);
                 }
 
-                if (json.logout_required == true) {
+                if (json.logout_required) {
                     push("/logout");
                 }
             })
@@ -127,7 +127,7 @@
 
     <br class="breakpoint" />
 
-    {#if is_loading == true}
+    {#if is_loading}
         <div class="spinner"></div>
     {:else}
         {#if newTodoOpen == false}
@@ -155,7 +155,7 @@
                     on:keydown="{(e) => {
                         if (e.key == 'Escape') {
                             newTodoElement.blur();
-                        } else if (e.ctrlKey == true && e.key == 'Enter') {
+                        } else if (e.ctrlKey && e.key == 'Enter') {
                             if (newTodo.length != 0) {
                                 newTodoElement.blur();
                                 newTodoSave.click();
@@ -170,10 +170,10 @@
                 <p>{newTodo.length}/500자</p>
                 <br />
                 <button
-                    class="button max {newTodoLoading == true ? 'spin' : ''}"
+                    class="button max {newTodoLoading ? 'spin' : ''}"
                     bind:this="{newTodoSave}"
                     on:click="{() => {
-                        if (newTodoLoading == true) {
+                        if (newTodoLoading) {
                             return;
                         }
 
@@ -191,11 +191,11 @@
                         })
                             .then((resp) => resp.json())
                             .then((json) => {
-                                if (json.status == true) {
+                                if (json.status) {
                                     newTodo = '';
 
                                     setTimeout(() => {
-                                        if (newTodoOpen == true) {
+                                        if (newTodoOpen) {
                                             autosize(newTodoElement);
                                             newTodoElement?.focus();
                                         }
@@ -211,7 +211,7 @@
 
                                 newTodoLoading = false;
 
-                                if (json.logout_required == true) {
+                                if (json.logout_required) {
                                     push('/logout');
                                 }
                             })
@@ -230,10 +230,10 @@
         {/if}
 
         {#each todos as todo}
-            <div class="todo {todo.checked == true ? 'checked' : ''}">
+            <div class="todo {todo.checked ? 'checked' : ''}">
                 <input
                     type="checkbox"
-                    disabled="{todo.checked_pending == true}"
+                    disabled="{todo.checked_pending}"
                     bind:checked="{todo.checked}"
                     on:change="{() => {
                         todo.checked_at = Date.now() / 1000;
@@ -253,14 +253,14 @@
                             .then((resp) => resp.json())
                             .then((json) => {
                                 todo.checked_pending = false;
-                                if (json.status == true) {
+                                if (json.status) {
                                     todo.checked = json.checked;
                                     todo.checked_at = json.checked_at;
                                 } else {
                                     alert(json.message);
                                 }
 
-                                if (json.logout_required == true) {
+                                if (json.logout_required) {
                                     push('/logout');
                                 }
                             })
@@ -270,10 +270,10 @@
                             });
                     }}" />
 
-                {#if todo.editmode == true}
+                {#if todo.editmode}
                     <textarea
                         maxlength="500"
-                        readonly="{todo.loading == true}"
+                        readonly="{todo.loading}"
                         bind:this="{todo.textarea}"
                         bind:value="{todo.text}"
                         on:input="{() => autosize(todo.textarea)}"
@@ -288,7 +288,7 @@
                         on:keydown="{(e) => {
                             if (e.key == 'Escape') {
                                 todo.textarea.blur();
-                            } else if (e.ctrlKey == true && e.key == 'Enter') {
+                            } else if (e.ctrlKey && e.key == 'Enter') {
                                 todo.textarea.blur();
 
                                 if (todo.editmode) {
@@ -309,10 +309,10 @@
                     </p>
                     <br />
                     <button
-                        class="button max {todo.loading == true ? 'spin' : ''}"
+                        class="button max {todo.loading ? 'spin' : ''}"
                         bind:this="{todo.button}"
                         on:click="{() => {
-                            if (todo.loading == true) {
+                            if (todo.loading) {
                                 return;
                             }
 
@@ -333,7 +333,7 @@
                                 .then((json) => {
                                     todo.loading = false;
 
-                                    if (json.status == true) {
+                                    if (json.status) {
                                         todo.text = json.text;
                                         todo.reset = json.text;
                                         todo.editmode = false;
@@ -345,7 +345,7 @@
                                         }
                                     }
 
-                                    if (json.logout_required == true) {
+                                    if (json.logout_required) {
                                         push('/logout');
                                     }
                                 })
@@ -410,7 +410,7 @@
                                             alert(json.message);
                                         }
 
-                                        if (json.logout_required == true) {
+                                        if (json.logout_required) {
                                             push('/logout');
                                         }
                                     })

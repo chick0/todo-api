@@ -32,7 +32,7 @@
         })
             .then((resp) => resp.json())
             .then((json) => {
-                if (json.status === true) {
+                if (json.status) {
                     count = json.count;
                     pin_list = json.pin_list;
                     session_list = json.session_list;
@@ -55,7 +55,7 @@
                     alert(json.message);
                 }
 
-                if (json.logout_required == true) {
+                if (json.logout_required) {
                     push("/logout");
                 }
             })
@@ -68,7 +68,7 @@
 <div class="container">
     <h1>계정 정보</h1>
 
-    {#if is_loading == true}
+    {#if is_loading}
         <div class="spinner"></div>
     {:else}
         <br />
@@ -140,7 +140,7 @@
                                                         pin_list = pin_list.filter((x) => x.id != pin.id);
                                                     }
 
-                                                    if (json.logout_required == true) {
+                                                    if (json.logout_required) {
                                                         push('/logout');
                                                     }
                                                 })
@@ -186,7 +186,7 @@
                         })
                             .then((resp) => resp.json())
                             .then((json) => {
-                                if (json.status === true) {
+                                if (json.status) {
                                     alert('전체 세션 삭제에 성공했습니다.');
                                     push('/logout');
                                 } else {
@@ -194,7 +194,7 @@
                                     is_loading = false;
                                 }
 
-                                if (json.logout_required == true) {
+                                if (json.logout_required) {
                                     push('/logout');
                                 }
                             })
@@ -246,7 +246,7 @@
                                                     alert(json.message);
                                                 }
 
-                                                if (json.logout_required == true) {
+                                                if (json.logout_required) {
                                                     push('/logout');
                                                 }
                                             })
@@ -297,9 +297,9 @@
         </div>
         <br />
         <button
-            class="button max {loading_more_history == true ? 'spin' : ''}"
+            class="button max {loading_more_history ? 'spin' : ''}"
             on:click="{() => {
-                if (loading_more_history == true) {
+                if (loading_more_history) {
                     return;
                 }
 
@@ -314,7 +314,7 @@
                 })
                     .then((resp) => resp.json())
                     .then((json) => {
-                        if (json.status == true) {
+                        if (json.status) {
                             json.history_list.forEach((history) => {
                                 history_list.push(history);
                             });
@@ -324,7 +324,7 @@
                             alert(json.message);
                         }
 
-                        if (json.logout_required == true) {
+                        if (json.logout_required) {
                             push('/logout');
                         }
 

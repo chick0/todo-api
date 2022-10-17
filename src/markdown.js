@@ -54,9 +54,9 @@ renderer.hr = () => {
  * @param {boolean} checked
  */
 renderer.listitem = (text, task, checked) => {
-    if (task == true) {
+    if (task) {
         text = text.replace(/<input [a-z=" ]*"> /g, "");
-        text = `<i class="todo-task ${checked == true ? "checked" : "not-checked"}"></i> ${text}`;
+        text = `<i class="todo-task ${checked ? "checked" : "not-checked"}"></i> ${text}`;
     }
 
     return `<li>${text}</li>`;

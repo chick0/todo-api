@@ -23,7 +23,7 @@
 <div class="container">
     <h1>회원 탈퇴</h1>
     <br />
-    {#if is_loading == true}
+    {#if is_loading}
         <div class="spinner"></div>
     {:else if step == 1}
         <p>회원 탈퇴를 계속하려면, 비밀번호를 다시 입력해주세요.</p>
@@ -63,7 +63,7 @@
                 })
                     .then((resp) => resp.json())
                     .then((json) => {
-                        if (json.status === true) {
+                        if (json.status) {
                             quit_token = json.token;
                             step = 2;
                         }
@@ -72,7 +72,7 @@
                         is_loading = false;
                         password = '';
 
-                        if (json.logout_required == true) {
+                        if (json.logout_required) {
                             push('/logout');
                         }
                     })
@@ -103,14 +103,14 @@
                 })
                     .then((resp) => resp.json())
                     .then((json) => {
-                        if (json.status === true) {
+                        if (json.status) {
                             json.logout_required = true;
                         }
 
                         alert(json.message);
                         is_loading = false;
 
-                        if (json.logout_required == true) {
+                        if (json.logout_required) {
                             push('/logout');
                         }
                     })
