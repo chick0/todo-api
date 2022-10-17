@@ -1,22 +1,16 @@
-/* Content area */
-div.todo-content {
-    min-height: 25px;
-    overflow-x: auto;
-}
-
 /* Heading */
-h1.todo-content,
-h2.todo-content {
+h1.markdown,
+h2.markdown {
     font-size: 30px;
 }
 
-h3.todo-content,
-h4.todo-content {
+h3.markdown,
+h4.markdown {
     font-size: 25px;
 }
 
 /* Breakpoint */
-hr.todo-content {
+hr.markdown {
     margin-top: 10px;
     margin-bottom: 5px;
     border-bottom: 1px dashed var(--color);
@@ -34,4 +28,18 @@ hr.todo-content {
 
 code {
     font-family: D2Coding, Pretendard, monospace;
+}
+
+/* checkbox */
+ul i.todo-task {
+    font-style: normal;
+    margin-left: -10px;
+}
+
+ul i.checked::before {
+    content: "✔️";
+}
+
+ul i.not-checked::before {
+    content: "❌";
 }

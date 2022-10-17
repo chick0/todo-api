@@ -5,7 +5,6 @@
     import { has_label, parse_labels } from "src/label.js";
     import { to_string } from "src/time.js";
     import { get_html } from "src/markdown.js";
-    import "src/todo-content.css";
 
     /**
      * Fetch todo list from api server
@@ -437,14 +436,20 @@
 </div>
 
 <style>
-    /* New todo UI Open/Close button */
+    /* New To-Do UI Open/Close button */
     p.clickable > b {
         display: inline-block;
         width: 15px;
         text-align: center;
     }
 
-    /* Todo Element */
+    /* To-Do Content area */
+    div.todo-content {
+        min-height: 25px;
+        overflow-x: auto;
+    }
+
+    /* To-Do Element */
     .todo {
         margin-top: 20px;
         margin-bottom: 20px;
@@ -463,25 +468,25 @@
         border-bottom: 1px solid var(--color);
     }
 
-    /* Change checked todo color */
+    /* Change checked To-Do color */
     .todo.checked > div {
         color: var(--gray);
     }
 
-    /* Todo checkbox */
+    /* To-Do checkbox */
     .todo > input[type="checkbox"] {
         width: 30px;
         height: 30px;
     }
 
-    /* Todo date/time text */
+    /* To-Do date/time text */
     .todo > p {
         margin-top: 10px;
         font-size: 18px;
         font-weight: 400;
     }
 
-    /* Todo delete button */
+    /* To-Do delete button */
     .delete {
         font-weight: 600;
         color: var(--red);
@@ -492,7 +497,7 @@
         text-shadow: 0 0 var(--text-shadow) var(--red);
     }
 
-    /* Todo edit button */
+    /* To-Do edit button */
     .edit {
         font-weight: 600;
         color: var(--green);

@@ -1,6 +1,7 @@
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import { remove_label } from "src/label.js";
+import "src/markdown.css";
 
 DOMPurify.addHook("afterSanitizeAttributes", function (node) {
     let tag = node.tagName.toLowerCase();
@@ -40,11 +41,25 @@ renderer.table = (head, body) => {
  * @param {number} level
  */
 renderer.heading = (text, level) => {
-    return `<h${level} class="todo-content">${text}</h${level}>`;
+    return `<h${level} class="markdown">${text}</h${level}>`;
 };
 
 renderer.hr = () => {
-    return "<hr class='todo-content'>";
+    return "<hr class='markdown'>";
+};
+
+/**
+ * @param {string} text
+ * @param {boolean} task
+ * @param {boolean} checked
+ */
+renderer.listitem = (text, task, checked) => {
+    if (task == true) {
+        text = text.replace(/<input [a-z=" ]*"> /g, "");
+        text = `<i class="todo-task ${checked == true ? "checked" : "not-checked"}"></i> ${text}`;
+    }
+
+    return `<li>${text}</li>`;
 };
 
 /**
