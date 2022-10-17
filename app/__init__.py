@@ -45,10 +45,16 @@ def create_app():
     DIST_DIR = join(BASE_DIR, "dist")
 
     def not_found_error(error):
-        return send_from_directory(
-            directory=DIST_DIR,
-            path="404.html"
-        ), 404
+        try:
+            return send_from_directory(
+                directory=DIST_DIR,
+                path="404.html"
+            ), 404
+        except NotFound:
+            return {
+                "status": False,
+                "message": "Not Found"
+            }, 404
 
     @app.get("/")
     @app.get("/<path:path>")
@@ -62,10 +68,7 @@ def create_app():
                 path=path
             )
         except NotFound:
-            return {
-                "status": False,
-                "message": "Not Found"
-            }, 404
+            return not_found_error(None)
 
         if path.endswith(".js"):
             response.content_type = "text/javascript; charset=utf-8"
