@@ -42,14 +42,14 @@
                         push("/todo");
                     } else {
                         /**
-                         * @type {HTMLElement} New todo input area open button
+                         * @type {HTMLElement} New To-Do input area open button
                          */
                         let open = document.querySelector("p.clickable.open");
                         open?.click();
 
                         setTimeout(() => {
                             /**
-                             * @type {HTMLElement} New todo input textarea
+                             * @type {HTMLElement} New To-Do input textarea
                              */
                             let textarea = document.querySelector("div.todo.new > textarea");
 

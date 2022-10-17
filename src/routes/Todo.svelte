@@ -74,7 +74,7 @@
     const TOKEN = get_token();
 
     /**
-     * @typedef {Object} Todo
+     * @typedef {Object} To_Do To-Do
      * @property {number} id
      * @property {boolean} checked
      * @property {string} text
@@ -91,7 +91,7 @@
      */
 
     /**
-     * @type {Todo[]}
+     * @type {To_Do[]}
      */
     let todos = [];
 
