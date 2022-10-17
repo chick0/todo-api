@@ -13,6 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from redis import Redis
 from pydantic.error_wrappers import ValidationError
+from werkzeug.exceptions import NotFound
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -55,10 +56,16 @@ def create_app():
         if path is None:
             path = "index.html"
 
-        response: Response = send_from_directory(
-            directory=DIST_DIR,
-            path=path
-        )
+        try:
+            response: Response = send_from_directory(
+                directory=DIST_DIR,
+                path=path
+            )
+        except NotFound:
+            return {
+                "status": False,
+                "message": "Not Found"
+            }, 404
 
         if path.endswith(".js"):
             response.content_type = "text/javascript; charset=utf-8"
