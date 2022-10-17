@@ -71,7 +71,7 @@ a:hover:not(.button) {
 
 /* Block */
 blockquote {
-    padding: 5px;
+    padding: 10px;
     border: 1px dashed var(--blue);
     border-left: 3px solid var(--blue);
     margin-top: 5px;
