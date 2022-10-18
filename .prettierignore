@@ -1,5 +1,6 @@
 .git/
 .github/
+.pytest_cache/
 .vscode/
 .yarn/
 __pycache__/
@@ -8,12 +9,14 @@ dist/
 migrations/
 node_modules/
 public/minireset.min.css
+scheduler/
+tests/
 venv/
 .env
 .env.example
 .flake8
 .jwt.json
-yarn.lock
-start.py
 requirements.in
 requirements.txt
+*.py
+yarn.lock

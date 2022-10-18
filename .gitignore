@@ -15,6 +15,10 @@ __pycache__/
 dist/
 dist-*.zip
 
+# test temp file
+.pytest_cache/
+test.db
+
 # etc..
 .env
 .jwt.json
