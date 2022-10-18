@@ -121,26 +121,28 @@
                 }}">
                 <b>To-Do</b>
             </li>
-            <li class="head trigger" on:click="{() => (vertical_open = !vertical_open)}">
-                <span></span>
-                <span></span>
-                <span></span>
-            </li>
-            {#if login_status == false}
-                <li on:click="{() => push('/login')}">로그인</li>
-                <li on:click="{() => push('/sign-up')}">회원가입</li>
-            {:else}
-                <li on:click="{() => push('/user')}">계정 정보</li>
-                <li
-                    on:click="{() => {
-                        if (confirm('로그아웃 하시겠습니까?')) {
-                            push('/logout');
-                        }
-                    }}">
-                    로그아웃
+            {#if is_component_loading == false}
+                <li class="head trigger" on:click="{() => (vertical_open = !vertical_open)}">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </li>
+                {#if login_status == false}
+                    <li on:click="{() => push('/login')}">로그인</li>
+                    <li on:click="{() => push('/sign-up')}">회원가입</li>
+                {:else}
+                    <li on:click="{() => push('/user')}">계정 정보</li>
+                    <li
+                        on:click="{() => {
+                            if (confirm('로그아웃 하시겠습니까?')) {
+                                push('/logout');
+                            }
+                        }}">
+                        로그아웃
+                    </li>
+                {/if}
+                <li on:click="{() => push('/notice')}">공지사항</li>
             {/if}
-            <li on:click="{() => push('/notice')}">공지사항</li>
         </ul>
     </div>
 </nav>
