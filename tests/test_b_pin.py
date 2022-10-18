@@ -4,6 +4,7 @@ from .flag import set_flag
 from .flag import get_flag
 
 path = "/api/pin"
+path_login = path + "/login"
 
 
 def test_create_pin(client):
@@ -28,7 +29,7 @@ def test_login_with_pin_fail_wrong_code(client):
     pin_token = get_flag("pin_token")
 
     response: TestResponse = client.post(
-        path + "/login",
+        path_login,
         headers={
             "x-pin": pin_token
         },
@@ -44,7 +45,7 @@ def test_login_with_pin(client):
     pin_token = get_flag("pin_token")
 
     response: TestResponse = client.post(
-        path + "/login",
+        path_login,
         headers={
             "x-pin": pin_token
         },
@@ -78,7 +79,7 @@ def test_login_with_pin_fail_deleted_pin(client):
     pin_token = get_flag("pin_token")
 
     response: TestResponse = client.post(
-        path + "/login",
+        path_login,
         headers={
             "x-pin": pin_token
         },

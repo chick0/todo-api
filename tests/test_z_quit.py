@@ -8,12 +8,14 @@ from .flag import set_flag
 from .flag import get_flag
 from .test_a_login import TEST_PASSWORD
 
+path = "/api/quit"
+
 
 def test_quit_step_1(client):
     auth_token = get_flag("auth_by_pin")
 
     response: TestResponse = client.post(
-        "/api/quit",
+        path,
         headers={
             "x-auth": auth_token
         },
@@ -31,7 +33,7 @@ def test_quit_step_2_fail(client):
     quit_token = get_flag("quit_token")
 
     response: TestResponse = client.delete(
-        "/api/quit",
+        path,
         headers={
             "x-auth": auth_token,
             "x-quit": quit_token
@@ -53,7 +55,7 @@ def test_quit_step_2(app, client):
     quit_token = get_flag("quit_token")
 
     response: TestResponse = client.delete(
-        "/api/quit",
+        path,
         headers={
             "x-auth": auth_token,
             "x-quit": quit_token

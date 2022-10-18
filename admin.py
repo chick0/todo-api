@@ -28,13 +28,16 @@ class AdminController:
         self.session = factory()
 
     def print(self):
+        def sep():
+            print("+----------+----------+---------------------+--------------------------------+")
+
         admin_list: list[Admin] = self.session.query(Admin).all()
 
         id_length = 8
 
-        print("+----------+----------+---------------------+--------------------------------+")
+        sep()
         print("| admin id |  user id |      created at     |           user email           |")
-        print("+----------+----------+---------------------+--------------------------------+")
+        sep()
         for admin in admin_list:
             email = self.session.query(User).filter_by(
                 id=admin.user
@@ -58,7 +61,7 @@ class AdminController:
                 sep=""
             )
 
-        print("+----------+----------+---------------------+--------------------------------+")
+        sep()
 
     def select(self, user_id: int) -> Admin:
         return self.session.query(Admin).filter_by(
