@@ -2,6 +2,7 @@
     "files.exclude": {
         ".git/": true,
         ".github/": true,
+        ".pytest_cache/": true,
         ".vscode/": true,
         ".yarn/": true,
         "dist/": true,
