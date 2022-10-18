@@ -107,7 +107,7 @@ def create_auth_token(user: User, pin: Pin = None) -> str:
         pin.last_access = now
 
     history = History()
-    history.owner = user.id,
+    history.owner = user.id
     history.created_at = now
     history.ip = get_ip()
     history.user_agent = str(request.user_agent).strip()[:500]
@@ -127,7 +127,7 @@ def create_auth_token(user: User, pin: Pin = None) -> str:
     payload = AuthToken(
         sid=dbs.id,
         email=user.email,
-        exp=int(dbs.dropped_at.timestamp()),
+        exp=int(dbs.dropped_at.timestamp())
     ).dict()
 
     return ct(payload, name)
