@@ -63,6 +63,10 @@
                     if (where_am_i != "/user") {
                         push("/user");
                     }
+                } else if (e.key == "!") {
+                    if (where_am_i != "/notice") {
+                        push("/notice");
+                    }
                 }
             }
         });
@@ -122,7 +126,6 @@
                 <span></span>
                 <span></span>
             </li>
-            <li on:click="{() => push('/notice')}">공지사항</li>
             {#if login_status == false}
                 <li on:click="{() => push('/login')}">로그인</li>
                 <li on:click="{() => push('/sign-up')}">회원가입</li>
@@ -137,6 +140,7 @@
                     로그아웃
                 </li>
             {/if}
+            <li on:click="{() => push('/notice')}">공지사항</li>
         </ul>
     </div>
 </nav>

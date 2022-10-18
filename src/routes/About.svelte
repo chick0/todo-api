@@ -87,6 +87,10 @@
             </thead>
             <tbody>
                 <tr>
+                    <td>Shift + 1</td>
+                    <td>공자사항 화면으로 이동합니다.</td>
+                </tr>
+                <tr>
                     <td>Shift + 2</td>
                     <td>로그인 화면으로 이동하거나 로그아웃합니다.</td>
                 </tr>
