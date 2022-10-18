@@ -19,6 +19,17 @@
             );
     }
 
+    /**
+     * Click Navbar item when focused and press <Enter>
+     *
+     * @param event
+     */
+    function enter_move(event) {
+        if (event.key == "Enter") {
+            event.currentTarget.click();
+        }
+    }
+
     onMount(() => {
         update_theme_color();
         window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => update_theme_color());
@@ -106,42 +117,61 @@
 <nav class="container">
     <div class="navbar">
         <ul class="{vertical_open ? 'nav-opened' : 'nav-closed'}">
-            <li
-                class="head"
-                on:click="{() => {
-                    if (login_status) {
-                        push('/todo');
-                    } else {
-                        push('/');
-                    }
-                }}"
-                on:dblclick="{() => {
-                    window.getSelection()?.removeAllRanges();
-                    push('/version');
-                }}">
-                <b>To-Do</b>
+            <li class="head">
+                <a
+                    href="/"
+                    on:click="{(event) => {
+                        if (login_status) {
+                            event.preventDefault();
+                            push('/todo');
+                        }
+                    }}"
+                    on:dblclick="{(event) => {
+                        event.preventDefault();
+                        window.getSelection()?.removeAllRanges();
+                        push('/version');
+                    }}">
+                    <b>To-Do</b>
+                </a>
             </li>
             {#if is_component_loading == false}
-                <li class="head trigger" on:click="{() => (vertical_open = !vertical_open)}">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <li class="head">
+                    <a
+                        class="trigger"
+                        href="?navbar_clicked"
+                        on:click="{(event) => {
+                            event.preventDefault();
+                            vertical_open = !vertical_open;
+                        }}">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
                 </li>
                 {#if login_status == false}
-                    <li on:click="{() => push('/login')}">로그인</li>
-                    <li on:click="{() => push('/sign-up')}">회원가입</li>
+                    <li>
+                        <a href="#/login">로그인</a>
+                    </li>
+                    <li>
+                        <a href="#/sign-up">회원가입</a>
+                    </li>
                 {:else}
-                    <li on:click="{() => push('/user')}">계정 정보</li>
-                    <li
-                        on:click="{() => {
-                            if (confirm('로그아웃 하시겠습니까?')) {
-                                push('/logout');
-                            }
-                        }}">
-                        로그아웃
+                    <li>
+                        <a href="#/user">계정 정보</a>
+                    </li>
+                    <li>
+                        <a
+                            href="#/logout"
+                            on:click="{(event) => {
+                                if (!confirm('로그아웃 하시겠습니까?')) {
+                                    event.preventDefault();
+                                }
+                            }}">로그아웃</a>
                     </li>
                 {/if}
-                <li on:click="{() => push('/notice')}">공지사항</li>
+                <li>
+                    <a href="#/notice">공지사항</a>
+                </li>
             {/if}
         </ul>
     </div>
