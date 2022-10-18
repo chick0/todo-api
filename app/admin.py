@@ -16,7 +16,7 @@ def admin_required(f):
 
         if admin is None:
             raise APIError(
-                code=400,
+                code=403,
                 message="해당 계정은 관리자가 아닙니다."
             )
 

@@ -49,7 +49,7 @@ def login():
 
     if pin is None:
         raise APIError(
-            code=403,
+            code=404,
             message="등록된 PIN이 아닙니다.",
             logout_required=True
         )
@@ -59,7 +59,7 @@ def login():
         db.session.commit()
 
         raise APIError(
-            code=403,
+            code=400,
             message=f"올바르지 않은 PIN을 입력했습니다. (실패 횟수:{pin.fail_count}/5)"
         )
 
@@ -76,7 +76,7 @@ def login():
         db.session.commit()
 
         raise APIError(
-            code=403,
+            code=400,
             message=f"토큰 시그니쳐가 올바르지 않습니다. (실패 횟수:{pin.fail_count}/5)"
         )
 

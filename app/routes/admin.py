@@ -23,7 +23,7 @@ def is_admin(session: AuthSession):
     if admin is None:
         return AdminResponse(
             admin=False
-        ).dict(), 400
+        ).dict(), 403
 
     return AdminResponse(
         admin=True

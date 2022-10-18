@@ -10,6 +10,7 @@ from app.models import Todo
 from app.models import History
 from app.models import DBSession
 from app.models import Pin
+from app.models import Admin
 from app.auth import AuthSession
 from app.auth import login_required
 from app.quit import create_token
@@ -58,6 +59,14 @@ def check_password(session: AuthSession):
 @login_required
 @check_quit_session
 def quit(session: AuthSession):
+    if Admin.query.filter_by(
+        user=session.user_id
+    ).first() is not None:
+        raise APIError(
+            code=400,
+            message="관리자는 계정을 삭제할 수 없습니다."
+        )
+
     # 로그인 세선 (디비 세션)
     # - 계정
     # - 로그인 기록

@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker
 
 from app.models import User
 from app.models import Admin
+from app.models import Notice
 
 if "SQLALCHEMY_DATABASE_URI" not in environ:
     load_dotenv()
@@ -31,8 +32,16 @@ class AdminController:
 
         id_length = 8
 
-        print("| admin id |  user id |      created at     | user email")
+        print("+----------+----------+---------------------+--------------------------------+")
+        print("| admin id |  user id |      created at     |           user email           |")
+        print("+----------+----------+---------------------+--------------------------------+")
         for admin in admin_list:
+            email = self.session.query(User).filter_by(
+                id=admin.user
+            ).with_entities(
+                User.email
+            ).first().email
+
             print(
                 "| ",
                 admin.id,
@@ -42,14 +51,14 @@ class AdminController:
                 " " * (id_length - len(str(admin.user))),
                 " | ",
                 admin.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-                " |      ",
-                self.session.query(User).filter_by(
-                    id=admin.user
-                ).with_entities(
-                    User.email
-                ).first().email,
+                " | ",
+                email,
+                " " * (30 - len(str(email))),
+                " |",
                 sep=""
             )
+
+        print("+----------+----------+---------------------+--------------------------------+")
 
     def select(self, user_id: int) -> Admin:
         return self.session.query(Admin).filter_by(
@@ -73,8 +82,16 @@ class AdminController:
             self.session.commit()
         else:
             ad: Admin = obj
-            self.session.delete(ad)
-            self.session.commit()
+
+            notice_list = self.session.query(Notice).filter_by(
+                owner=ad.user
+            ).all()
+
+            if len(notice_list) == 0:
+                self.session.delete(ad)
+                self.session.commit()
+            else:
+                print("> *Warning* You must delete a notice created by that user.")
 
 
 if __name__ == "__main__":
@@ -82,19 +99,18 @@ if __name__ == "__main__":
     ac.print()
 
     try:
-        user_id = int(input("user_id: "))
+        user_id = int(input(">>> user_id: "))
     except (TypeError, ValueError):
-        print("Wrong user_id inputed, program exited!")
+        print("> Wrong user_id inputed, program exited!")
         exit(2)
 
     admin = ac.select(user_id)
 
     if admin is None:
-        print("Normal user selected.")
+        print("> Normal user selected.")
         ac.update(user_id)
     else:
-        print("Admin selected.")
+        print("> Admin selected.")
         ac.update(admin)
 
-    print()
     ac.print()
