@@ -80,6 +80,7 @@
         background-color: var(--background);
         text-align: center;
         text-decoration: none;
+        margin: 0;
         padding: 0;
         padding-top: 15px;
         padding-left: 10px;
@@ -87,7 +88,12 @@
     }
 
     .navbar li:first-child {
+        text-align: left;
         padding-left: 0;
+    }
+
+    .navbar li:nth-child(2) {
+        display: none;
     }
 }
 
