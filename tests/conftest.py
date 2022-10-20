@@ -14,6 +14,9 @@ def app():
 
     # Setup test database
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DIR
+    db.init_app(app)
+
+    assert app.config['SQLALCHEMY_DATABASE_URI'] == DATABASE_DIR
 
     with app.app_context():
         db.create_all()
