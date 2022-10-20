@@ -121,13 +121,16 @@
                 <a
                     href="/"
                     on:click="{(event) => {
+                        event.preventDefault();
+
                         if (login_status) {
-                            event.preventDefault();
                             push('/todo');
+                        } else {
+                            push('/');
                         }
                     }}"
                     on:dblclick="{(event) => {
-                        event.preventDefault();
+                        event.stopPropagation();
                         window.getSelection()?.removeAllRanges();
                         push('/version');
                     }}">
