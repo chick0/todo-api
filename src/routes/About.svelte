@@ -21,11 +21,7 @@
 <div class="container">
     <h2>할 일</h2>
     <br />
-    <p>
-        <b>To-Do</b>는 할 일을
-        <a href="https://ko.wikipedia.org/wiki/%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4" target="_blank">마크다운</a>을
-        이용해 작성할 수 있습니다.
-    </p>
+    <p><b>To-Do</b>는 할 일을 마크다운을 이용해 작성할 수 있습니다.</p>
     <br />
     <p>#을 이용해서 제목을 표현할 수 있습니다.</p>
     <p>제목은 1단계부터 6단계까지 있으며, 단계가 높을수록 하위 제목입니다.</p>

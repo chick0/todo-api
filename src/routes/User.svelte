@@ -118,6 +118,7 @@
                     <tbody>
                         {#each pin_list as pin}
                             <tr>
+                                <!-- svelte-ignore a11y-click-events-have-key-events -->
                                 <td
                                     class="clickable"
                                     on:click="{() => {
@@ -219,6 +220,7 @@
                 <tbody>
                     {#each session_list as session}
                         <tr>
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
                             <td
                                 class="clickable"
                                 on:click="{() => {
