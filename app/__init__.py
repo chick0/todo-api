@@ -15,6 +15,8 @@ from redis import Redis
 from pydantic.error_wrappers import ValidationError
 from werkzeug.exceptions import NotFound
 
+from git import get_commit_id
+
 db = SQLAlchemy()
 migrate = Migrate()
 logger = getLogger()
@@ -27,6 +29,11 @@ def create_app():
     app.config.algorithms = [
         "HS256",
     ]
+
+    app.config['VERSION'] = {
+        "started_at": datetime.now().timestamp(),
+        "commit": get_commit_id()
+    }
 
     try:
         from flask_cors import CORS
@@ -123,24 +130,4 @@ def create_app():
         f=not_found_error
     )
 
-    try:
-        target = "ref:"
-        path = None
-
-        with open(join(".git", "HEAD"), mode="r") as head_reader:
-            for data in head_reader.read().split("\n"):
-                if data.startswith(target):
-                    result = data[len(target):].strip()
-                    path = join(".git", result)
-
-        if path is None:
-            raise FileNotFoundError
-
-        with open(path, mode="r") as commit_reader:
-            commit_hash = commit_reader.read()[:7]
-    except FileNotFoundError:
-        commit_hash = "-------"
-
-    app.commit_hash = commit_hash
-    app.started_at = datetime.now()
     return app

@@ -5,15 +5,15 @@
     let tag = TAG;
     let build_date = new Date(BUILD_DATE);
 
-    let server_id = "정보없음";
-    let started_at = undefined;
+    let server_commit = "-";
+    let server_started_at = "-";
 
     onMount(() => {
         fetch(VERSION)
             .then((resp) => resp.json())
             .then((json) => {
-                server_id = json.id;
-                started_at = new Date(json.started_at * 1000).toLocaleString();
+                server_started_at = new Date(json.started_at * 1000).toLocaleString();
+                server_commit = json.commit.slice(0, 7);
             })
             .catch(() => {
                 alert("서버 정보를 가져오는데 실패했습니다.");
@@ -38,7 +38,7 @@
             <tbody>
                 <tr>
                     <td>{tag}</td>
-                    <td>{server_id}</td>
+                    <td>{server_commit}</td>
                 </tr>
             </tbody>
         </table>
@@ -48,7 +48,7 @@
     <p>- {build_date.toLocaleString()}</p>
     <br />
     <h3>서버 시작 날짜</h3>
-    <p>- {started_at}</p>
+    <p>- {server_started_at}</p>
 </div>
 
 <style>
