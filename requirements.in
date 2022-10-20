@@ -1,4 +1,3 @@
-Flake8
 Flask
 Flask-SQLAlchemy
 Flask-Migrate
@@ -11,3 +10,6 @@ PyJWT
 redis
 User-Agents
 APScheduler
+# For testing and code quality
+pytest
+Flake8
