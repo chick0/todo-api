@@ -30,7 +30,31 @@ def create_app():
 
     try:
         from flask_cors import CORS
-        CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+        CORS(
+            app,
+            resources={
+                r"/api/*": dict(
+                    origins="*",
+                    send_wildcard=False,
+                    methods=[
+                        "OPTIONS",
+                        "GET",
+                        "POST",
+                        "PATCH",
+                        "DELETE"
+                    ],
+                    allow_headers=[
+                        "User-Agent",
+                        "Content-Type",
+                        "x-auth",
+                        "x-quit",
+                        "x-reset"
+                    ]
+                )
+            }
+        )
+
         logger.info("CORS is enabled")
     except ImportError:
         logger.info("CORS is disabled")
