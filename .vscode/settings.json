@@ -21,5 +21,9 @@
     },
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
-    "python.linting.pylintEnabled": false
+    "python.linting.pylintEnabled": false,
+    "svelte.plugin.svelte.compilerWarnings": {
+        "unused-export-let": "ignore",
+        "a11y-click-events-have-key-events": "ignore"
+    }
 }

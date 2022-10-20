@@ -68,7 +68,7 @@
                                 window.scrollTo(0, textarea.offsetTop - 20);
                                 textarea.focus();
                             }
-                        }, 150);
+                        }, 100);
                     }
                 } else if (e.key == "$") {
                     if (where_am_i != "/user") {

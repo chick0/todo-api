@@ -146,6 +146,7 @@
                 }}">
                 [<b>-</b>] 접기
             </p>
+
             <div class="todo new">
                 <textarea
                     maxlength="500"
@@ -361,7 +362,7 @@
                                 todo.editmode = true;
                                 setTimeout(() => {
                                     todo.textarea?.focus();
-                                }, 10);
+                                }, 100);
                             }
                         }}">
                         {#if has_label(todo.text)}
@@ -426,7 +427,7 @@
                                 todo.editmode = true;
                                 setTimeout(() => {
                                     todo.textarea?.focus();
-                                }, 10);
+                                }, 100);
                             }}">수정</b>
                     {/if}
                 </p>
