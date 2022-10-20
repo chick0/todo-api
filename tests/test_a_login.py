@@ -1,3 +1,4 @@
+from secrets import token_hex
 from datetime import datetime
 from hashlib import sha512
 
@@ -9,7 +10,7 @@ from app.models import User
 from .flag import set_flag
 
 TEST_EMAIL = "chick_0@to-do.kr"
-TEST_PASSWORD = "TestP@ssw0rd"
+TEST_PASSWORD = token_hex(16)
 TEST_HASHED_PASSWORD = sha512(TEST_PASSWORD.encode("utf-8")).hexdigest()
 TEST_CREATED_AT = datetime.now()
 TEST_LASTLOGIN = None
