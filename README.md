@@ -1,8 +1,6 @@
 # To-Do
 
-**To-Do**는 웹에서 사용하는 간단한 할 일 목록 웹 애플리케이션입니다.
-
-> 해당 프로젝트는 API와 클라이언트가 동일한 저장소를 사용하고 있습니다.
+**To-Do**는 간단한 할 일 목록 애플리케이션입니다.
 
 ## API
 
@@ -16,20 +14,6 @@ API 서버는 Flask 프레임워크로 개발되었습니다.
 
 또 [pydantic](https://github.com/pydantic/pydantic)을 이용해 요청과 응답 값의 타입을 체크하고 있습니다.
 
-추가로 '**선택적**' 의존성이 있습니다. [flask-cors](https://github.com/corydolphin/flask-cors) 패키지를 설치하면 CORS 설정이 적용됩니다. CORS 기능이 선택적으로 제공되는 이유는 API 서버의 `/` 루트가 프론트엔드로 연결되어있기 때문입니다. (프론트엔드는 `yarn`을 이용해 빌드하거나 릴리즈에서 다운로드 받을수 있습니다.)
-
-## 클라이언트
-
-클라이언트는 Svelte 프레임워크로 개발되었습니다.
-
-[svelte-spa-router](https://github.com/ItalyPaleAle/svelte-spa-router)를 이용해 해시 기반 라우팅을 사용하고 있습니다.
-
-스타일은 자체 제작 스타일입니다. 폰트는 [Pretendard](https://github.com/orioncactus/pretendard)를 사용하고 있습니다. 해당 폰트는 공개중인 폰트와 다르게 영문, 기호, 일부 한글만 포함하고 있습니다. (총 2,927자) 또 브라우저간의 동일한 스타일을 위해 [minireset.css](https://github.com/jgthms/minireset.css)를 사용하고 있습니다.
-
-웹 사이트의 아이콘의 경우에는 [Check Box Icon Tick Mark](https://pixabay.com/images/id-1294836/)를 수정해서 사용하고 있습니다.
-
-모바일 환경의 개선을 위해 PWA를 사용하고 있습니다. 서비스 워커가 캐싱하는 종류는 프리캐시와 런타임 캐시로 분류됩니다. 프리캐시는 웹 사이트에 접속하면 캐싱하는 자주 변하지 않는 정적 컨텐츠 입니다. (아이콘, 폰트, 일부 스타일) 반대로 런타임 캐시는 코드가 수정되거나 빌드할 때마다 변경되는 파일입니다. 캐싱된 파일들은 [캐시 관리자](https://github.com/chick0/to-do/blob/master/public/cache.html)를 이용해 확인 및 삭제할 수 있습니다.
-
 # 설치 및 설정
 
 ## 주의사항
@@ -38,12 +22,6 @@ API 서버는 Flask 프레임워크로 개발되었습니다.
 2. 이 프로그램은 인증 시도 타이머 기능에 redis를 사용됩니다.
 3. 이 프로그램은 인증 메일을 발송하기 위한 SMTP 서버가 필요합니다. 또 starttls를 사용해 세션을 암호화하고 있습니다.
 
-## 클라이언트
-
-클라이언트의 경우에는 yarn을 이용해 의존성을 설치하고 빌드 할 수 있습니다.
-
-다만 [릴리즈](https://github.com/chick0/to-do/releases) 메뉴에서 빌드된 결과물을 에셋에서 다운로드 할 수 있습니다.
-
 ## API
 
 > 파이썬 3.9버전과 3.10버전에서 테스트되었습니다.
@@ -51,6 +29,8 @@ API 서버는 Flask 프레임워크로 개발되었습니다.
 본 프로그램은 의존성 관리를 위해 [pip-tools](https://github.com/jazzband/pip-tools)를 사용하고 있습니다.
 
 `pip-tools`를 사용한다면 다음의 방법을 통해 의존성을 설치 할 수 있습니다.
+
+> 개발 환경이라면 `requirements-dev.in` 파일을 사용하는 것을 권장합니다.
 
 1. 의존성 빌드 후 설치
     ```
@@ -68,13 +48,10 @@ API 서버는 Flask 프레임워크로 개발되었습니다.
 
 만약 파이썬 버전이 3.10보다 아래라면 `importlib-metadata` 패키지를 추가 설치해야합니다.
 
-추가로 선택적 의존성이 있습니다.
+### 설정
 
-Flask-CORS: 기본적으로 API 서버의 최상위 경로가 프론트와 연결되어 있지만, API 서버와 프론트를 분리해서 사용하는 경우에는 해당 의존성을 설치해야합니다.
-
-### 서버 설정
-
-서버의 모든 설정은 환경 변수에서 가져오고, `.env` 파일을 이용해 관리하고 있습니다.
+모든 설정 정보는 환경 변수에서 가져오고, `.env` 파일을 이용해 관리하고 있습니다.
+또는 다른 방법을 사용해 환경 변수를 관리할 수 있습니다.
 
 `.env.example` 파일을 복사해 `.env`를 만든 다음 본인의 상황에 알맞게 수정하면 됩니다.
 
@@ -109,11 +86,3 @@ flask db upgrade
 ```
 
 명령어를 통해 데이터베이스 모델을 업데이트 할 수 있습니다.
-
-# 저작권
-
-[@chick0](https://github.com/chick0) 이 작성한 API와 클라이언트는 모두 [MIT License](https://github.com/chick0/to-do/blob/master/LICENSE)를 따르고 있습니다.
-
-단 사용된 Pretendard 폰트의 경우에는 [OFL-1.1](https://github.com/orioncactus/pretendard/blob/main/LICENSE)를 따르고 있습니다.
-
-또 스타일 초기화를 위해 사용하는 minireset.css [MIT License](https://github.com/jgthms/minireset.css/blob/master/LICENSE)를 따르고 있습니다.
