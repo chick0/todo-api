@@ -1,23 +1,6 @@
-# javascript
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-node_modules/
-
 # python
 venv/
 __pycache__/
-
-# build output
-dist/
-dist-*.zip
-
-# test temp file
-.pytest_cache/
-test.db
 
 # etc..
 .env
