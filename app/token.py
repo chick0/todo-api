@@ -12,7 +12,7 @@ def create_token(payload: dict, name: str) -> str:
     return encode(
         payload=payload,
         key=get_secret(name=name),
-        algorithm=app.config.algorithms[0]
+        algorithm=app.config['algorithms'][0]
     )
 
 
@@ -21,7 +21,7 @@ def parse_token(token: str, name: str) -> dict:
         return decode(
             jwt=token,
             key=get_secret(name=name),
-            algorithms=app.config.algorithms
+            algorithms=app.config['algorithms']
         )
     except ExpiredSignatureError as e:
         raise APIError(

@@ -17,7 +17,19 @@ def handle_api_error(error: APIError):
 
 def validation_error(error):
     del error
-    return handle_api_error(APIError(
-        code=400,
-        message="요청이 올바르지 않습니다."
-    ))
+    return handle_api_error(
+        APIError(
+            code=400,
+            message="요청이 올바르지 않습니다."
+        )
+    )
+
+
+def not_found_error(error):
+    del error
+    return handle_api_error(
+        APIError(
+            code=404,
+            message="올바른 경로가 아닙니다."
+        )
+    )

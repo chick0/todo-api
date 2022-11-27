@@ -1,4 +1,5 @@
 from os import environ
+from typing import Optional
 from datetime import datetime
 
 from flask import request
@@ -8,10 +9,15 @@ from user_agents import parse
 
 
 def get_ip() -> str:
-    return request.headers.get("X-Forwarded-For", request.remote_addr)
+    remote_addr = request.remote_addr
+
+    if remote_addr is None:
+        remote_addr = "?"
+
+    return request.headers.get("X-Forwarded-For", remote_addr)
 
 
-def timestamp(stamp: datetime) -> int or None:
+def timestamp(stamp: datetime) -> Optional[int]:
     if stamp is None:
         return None
 
@@ -33,4 +39,4 @@ def get_help_mail() -> str:
 
 
 def get_redis() -> Redis:
-    return app.redis
+    return app.config['redis']
