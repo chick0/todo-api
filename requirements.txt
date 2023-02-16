@@ -12,8 +12,6 @@ async-timeout==4.0.2
     # via redis
 click==8.1.3
     # via flask
-colorama==0.4.6
-    # via click
 flask==2.2.2
     # via
     #   -r requirements.in
@@ -69,9 +67,7 @@ sqlalchemy==1.4.44
 typing-extensions==4.4.0
     # via pydantic
 tzdata==2022.6
-    # via
-    #   pytz-deprecation-shim
-    #   tzlocal
+    # via pytz-deprecation-shim
 tzlocal==4.2
     # via apscheduler
 ua-parser==0.16.1
@@ -80,7 +76,7 @@ user-agents==2.2.0
     # via -r requirements.in
 waitress==2.1.2
     # via -r requirements.in
-werkzeug==2.2.2
+werkzeug==2.2.3
     # via flask
 
 # The following packages are considered to be unsafe in a requirements file:
